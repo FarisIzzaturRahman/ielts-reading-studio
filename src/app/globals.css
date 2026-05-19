@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fafaf8;
+  --foreground: #111827;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+::selection {
+  background: #fde68a;
+  color: #111827;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.reading-prose {
+  font-size: 1rem;
+  line-height: 1.82;
+}
+
+.test-panel {
+  border: 1px solid rgb(203 213 225);
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.05);
+}
