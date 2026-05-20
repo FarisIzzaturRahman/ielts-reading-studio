@@ -1,4 +1,5 @@
 import type { FlaggedQuestions, UserAnswers } from "@/data/types";
+import type { DiagnosisResult } from "./diagnosis";
 
 export type AttemptStatus = "in-progress" | "completed";
 
@@ -24,6 +25,7 @@ export type SavedResult = SavedProgress & {
   totalQuestions: number;
   percentage: number;
   estimatedBand: string;
+  diagnosis?: DiagnosisResult;
 };
 
 const APP_PREFIX = "ielts-reading:v1";
@@ -34,6 +36,14 @@ export function progressKey(testId: string) {
 
 export function resultKey(testId: string) {
   return `${APP_PREFIX}:result:${testId}`;
+}
+
+export function diagnosisKey(testId: string) {
+  return `${APP_PREFIX}:diagnosis:${testId}`;
+}
+
+export function diagnosisHistoryKey() {
+  return `${APP_PREFIX}:diagnosis-history`;
 }
 
 export function loadJson<T>(key: string): T | null {

@@ -4,12 +4,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { ReadingTest } from "@/data/types";
 import { getRecommendedNextTest } from "@/data/tests";
+import { generateDiagnosis } from "@/lib/diagnosis";
 import { scoreTest } from "@/lib/scoring";
 import { loadJson, resultKey, type SavedResult } from "@/lib/storage";
-import { QuestionTypeDiagnosis } from "./QuestionTypeDiagnosis";
+import { MistakePatternSummary } from "./MistakePatternSummary";
+import { PerformanceBreakdown } from "./PerformanceBreakdown";
+import { Recommendations } from "./Recommendations";
 import { ResultSummary } from "./ResultSummary";
 import { ReviewQuestion } from "./ReviewQuestion";
-import { SkillDiagnosis } from "./SkillDiagnosis";
 
 export function ResultPageClient({ test }: { test: ReadingTest }) {
   const [savedResult, setSavedResult] = useState<SavedResult | null>(null);
@@ -54,23 +56,52 @@ export function ResultPageClient({ test }: { test: ReadingTest }) {
   }
 
   const score = scoreTest(test, savedResult.answers);
+  const diagnosis = savedResult.diagnosis ?? generateDiagnosis(test.testId, score, savedResult.submittedAt);
   const nextTest = getRecommendedNextTest(test.testId, score.correct);
+  const passageTitleById = new Map(test.passages.map((passage) => [passage.passageId, passage.title]));
 
   return (
     <div className="space-y-6">
       <ResultSummary
         test={test}
         score={score}
+        diagnosis={diagnosis}
         elapsedSeconds={savedResult.elapsedSeconds}
         nextTestId={nextTest?.testId}
       />
-      <SkillDiagnosis skillBreakdown={score.skillBreakdown} />
-      <QuestionTypeDiagnosis score={score} />
-      <section className="test-panel p-6">
+      <div className="grid gap-6 xl:grid-cols-2">
+        <PerformanceBreakdown
+          title="Performance by question type"
+          description="This shows which IELTS Academic Reading task formats were easiest and hardest in this attempt."
+          entries={diagnosis.questionTypePerformance}
+          strongest={diagnosis.strongestQuestionType}
+          weakest={diagnosis.weakestQuestionType}
+        />
+        <PerformanceBreakdown
+          title="Performance by reading skill"
+          description="This shows the underlying reading skills tested by your correct, incorrect and unanswered questions."
+          entries={diagnosis.skillPerformance}
+          strongest={diagnosis.strongestSkill}
+          weakest={diagnosis.weakestSkill}
+        />
+      </div>
+      <PerformanceBreakdown
+        title="Trap type pattern"
+        description="Trap types explain why an attractive wrong answer may seem correct before the evidence is checked carefully."
+        entries={diagnosis.trapTypePerformance}
+        weakest={diagnosis.mostCommonTrap}
+      />
+      <MistakePatternSummary diagnosis={diagnosis} />
+      <Recommendations recommendations={diagnosis.recommendations} />
+      <section id="answer-explanations" className="test-panel p-6">
         <h2 className="text-xl font-semibold tracking-tight text-slate-950">Answer explanations</h2>
         <div className="mt-5 grid gap-4">
           {score.questionResults.slice(0, 6).map((result) => (
-            <ReviewQuestion key={result.question.id} result={result} />
+            <ReviewQuestion
+              key={result.question.id}
+              result={result}
+              passageTitle={passageTitleById.get(result.question.passageId)}
+            />
           ))}
         </div>
         <Link

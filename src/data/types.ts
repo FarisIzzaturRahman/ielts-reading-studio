@@ -21,13 +21,39 @@ export type QuestionType =
   | "matching-sentence-endings";
 
 export type SkillTag =
-  | "Skimming"
-  | "Scanning"
-  | "Inference"
-  | "Vocabulary in context"
-  | "Matching information"
-  | "True/False/Not Given"
-  | "Summary completion";
+  | "Locating explicit information"
+  | "Understanding main idea"
+  | "Identifying writer's opinion"
+  | "Recognising paraphrase"
+  | "Understanding detail"
+  | "Making inference"
+  | "Distinguishing fact from claim"
+  | "Following reference words"
+  | "Understanding vocabulary in context"
+  | "Identifying paragraph function"
+  | "Recognising contrast"
+  | "Recognising cause and effect"
+  | "Understanding comparison"
+  | "Avoiding overgeneralisation"
+  | "Time-efficient scanning";
+
+export type TrapType =
+  | "Synonym trap"
+  | "Opposite meaning trap"
+  | "Extreme wording trap"
+  | "Overgeneralisation trap"
+  | "Not Given trap"
+  | "Partial match trap"
+  | "Similar keyword trap"
+  | "Wrong paragraph trap"
+  | "Distractor detail trap"
+  | "Chronology trap"
+  | "Cause-effect confusion"
+  | "Comparison confusion"
+  | "Writer opinion confusion"
+  | "Grammar form trap"
+  | "Assumption trap"
+  | "No major trap";
 
 export type PassageParagraph = {
   label: string;
@@ -54,7 +80,12 @@ export type Question = {
   explanation: string;
   evidenceParagraph?: string;
   evidenceText?: string;
+  whyCorrect: string;
+  whyWrong: string;
   skill: SkillTag;
+  secondarySkills?: SkillTag[];
+  trapType: TrapType;
+  strategyTip: string;
   difficulty: ReadingDifficulty;
   groupTitle?: string;
   maxWords?: number;

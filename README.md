@@ -21,7 +21,8 @@ The current version is a stabilized MVP for exam simulation and reading practice
 - Submit confirmation with answered, unanswered, and flagged counts.
 - Automatic raw score, percentage, and approximate mini-band estimate.
 - Result page with performance by skill and question type.
-- Review page with user answer, correct answer, explanation, evidence reference, skill, and difficulty.
+- Result page with mistake pattern summary, trap type pattern, and rule-based recommendations.
+- Review page with user answer, correct answer, explanation, evidence reference, why-correct/why-wrong notes, trap type, strategy tip, skill, and difficulty.
 - Retake/restart support.
 
 ## IELTS Academic-Only Scope
@@ -72,11 +73,13 @@ src/components/          UI and simulator workflow components
 src/data/tests.ts        Original Academic Reading test seed content
 src/data/types.ts        Stabilized reading-test schema
 src/lib/attempt.ts       Start, restart, status, and result helpers
+src/lib/diagnosis.ts     Performance, mistake pattern, and recommendation logic
 src/lib/scoring.ts       Answer normalization and scoring
 src/lib/storage.ts       Safe LocalStorage helpers
 src/lib/timer.ts         Deadline-based timer helpers
 docs/product-plan.md     Product strategy and architecture
 docs/stabilization-step-1.md  Step 1 audit, gaps, and QA checklist
+docs/phase-2a-diagnosis.md    Phase 2A diagnosis plan and QA checklist
 ```
 
 ## Content Format
@@ -105,7 +108,12 @@ Each question includes:
 - `explanation`
 - `evidenceParagraph`
 - `evidenceText`
+- `whyCorrect`
+- `whyWrong`
 - `skill`
+- `secondarySkills`
+- `trapType`
+- `strategyTip`
 - `difficulty`
 - `tags`
 
@@ -129,7 +137,8 @@ Do not copy official IELTS, Cambridge, British Council, IDP, or commercial test-
 ## Roadmap
 
 - Step 1: Stabilize the simulator and mini-test workflow.
-- Step 2: Improve original content quality and add question-type practice.
+- Phase 2A: Enhanced review, skill diagnosis, mistake patterns, and basic recommendations.
+- Phase 2B: Improve original content quality and add question-type practice.
 - Step 3: Add optional learner progress dashboards without requiring login.
 - Step 4: Add full 40-question Academic Reading simulations.
 

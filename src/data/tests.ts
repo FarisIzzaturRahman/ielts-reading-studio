@@ -1,4 +1,12 @@
 import type { Question, ReadingDifficulty, ReadingTest } from "./types";
+import {
+  secondarySkillsForQuestion,
+  skillForQuestion,
+  strategyTipForQuestion,
+  trapForQuestion,
+  whyCorrectForQuestion,
+  whyWrongForQuestion,
+} from "@/lib/review-metadata";
 
 type TopicBlueprint = {
   testId: string;
@@ -403,7 +411,19 @@ function makePassages(blueprint: TopicBlueprint): ReadingTest["passages"] {
 
 function makeQuestions(blueprint: TopicBlueprint): Question[] {
   const mainPurpose = `To discuss how ${blueprint.field} can turn evidence into practical decisions`;
-  const allQuestions: Array<Omit<Question, "questionNumber" | "tags">> = [
+  const allQuestions: Array<
+    Omit<
+      Question,
+      | "questionNumber"
+      | "tags"
+      | "skill"
+      | "secondarySkills"
+      | "trapType"
+      | "strategyTip"
+      | "whyCorrect"
+      | "whyWrong"
+    >
+  > = [
     {
       id: 1,
       passageId: "p1",
@@ -412,7 +432,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       options: ["True", "False", "Not Given"],
       answer: "True",
       explanation: "Paragraph A states this challenge directly.",
-      skill: "True/False/Not Given",
       difficulty: blueprint.difficulty,
       paragraphRef: "A",
     },
@@ -424,7 +443,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       options: ["True", "False", "Not Given"],
       answer: "False",
       explanation: "Paragraph A says early projects often treated the problem as technical.",
-      skill: "True/False/Not Given",
       difficulty: blueprint.difficulty,
       paragraphRef: "A",
     },
@@ -436,7 +454,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       options: ["True", "False", "Not Given"],
       answer: "Not Given",
       explanation: "Funding is not mentioned in the passage.",
-      skill: "True/False/Not Given",
       difficulty: "Medium",
     },
     {
@@ -452,7 +469,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       ],
       answer: mainPurpose,
       explanation: "The passage balances method, evidence, limits and policy use.",
-      skill: "Skimming",
       difficulty: blueprint.difficulty,
     },
     {
@@ -469,7 +485,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       ],
       answer: "A measure selected for repeated checking",
       explanation: `Paragraph C explains why ${blueprint.measure} was used as a repeatable measure.`,
-      skill: "Matching information",
       difficulty: blueprint.difficulty,
       paragraphRef: "C",
     },
@@ -481,7 +496,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       answer: blueprint.method,
       acceptedAnswers: [blueprint.method],
       explanation: `Paragraph C names ${blueprint.method} as the comparison method.`,
-      skill: "Scanning",
       difficulty: "Medium",
       maxWords: 3,
       paragraphRef: "C",
@@ -494,7 +508,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       answer: blueprint.measure,
       acceptedAnswers: [blueprint.measure],
       explanation: `The answer is stated in Paragraph C.`,
-      skill: "Scanning",
       difficulty: "Medium",
       maxWords: 4,
       paragraphRef: "C",
@@ -507,7 +520,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       answer: blueprint.benefit,
       acceptedAnswers: [blueprint.benefit],
       explanation: `Paragraph D links ${blueprint.innovation} with ${blueprint.benefit}.`,
-      skill: "Summary completion",
       difficulty: blueprint.difficulty,
       maxWords: 6,
       paragraphRef: "D",
@@ -521,7 +533,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       options: ["A", "B", "C", "D", "E"],
       answer: "D",
       explanation: "The limitation is named in Paragraph D.",
-      skill: "Matching information",
       difficulty: blueprint.difficulty,
       paragraphRef: "D",
     },
@@ -533,7 +544,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       options: ["Yes", "No", "Not Given"],
       answer: "Yes",
       explanation: "Paragraph E explicitly states that evidence must be read alongside practical constraints.",
-      skill: "Inference",
       difficulty: blueprint.difficulty,
       paragraphRef: "E",
     },
@@ -545,7 +555,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       options: ["True", "False", "Not Given"],
       answer: "False",
       explanation: "Paragraph A says innovations are often harder to maintain at ordinary institutional scale.",
-      skill: "True/False/Not Given",
       difficulty: "Medium",
       paragraphRef: "A",
     },
@@ -563,7 +572,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       ],
       answer: blueprint.stakeholder,
       explanation: `Paragraph B says ${blueprint.stakeholder} translate evidence into routines.`,
-      skill: "Matching information",
       difficulty: blueprint.difficulty,
       paragraphRef: "B",
     },
@@ -575,7 +583,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       answer: "assumptions",
       acceptedAnswers: ["assumption", "assumptions"],
       explanation: "Paragraph C states that assumptions behind recommendations should be published.",
-      skill: "Vocabulary in context",
       difficulty: "Medium",
       maxWords: 1,
       paragraphRef: "C",
@@ -588,7 +595,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       answer: "training",
       acceptedAnswers: ["training"],
       explanation: "Paragraph C says transparency is most useful when paired with training.",
-      skill: "Scanning",
       difficulty: "Easy",
       maxWords: 1,
       paragraphRef: "C",
@@ -601,7 +607,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       answer: blueprint.method,
       acceptedAnswers: [blueprint.method],
       explanation: `Paragraph D says the original ${blueprint.method} became less relevant when feedback was ignored.`,
-      skill: "Summary completion",
       difficulty: blueprint.difficulty,
       maxWords: 3,
       paragraphRef: "D",
@@ -614,7 +619,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       answer: "clearer decisions",
       acceptedAnswers: ["clearer decisions", "usable evidence"],
       explanation: "The passage repeatedly connects feedback and explanation with more usable evidence.",
-      skill: "Inference",
       difficulty: blueprint.difficulty,
       maxWords: 2,
     },
@@ -631,7 +635,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       ],
       answer: "Progress is likely to come from careful improvements rather than dramatic claims.",
       explanation: "Paragraph E says the future is likely to be modest and based on better loops and clearer language.",
-      skill: "Inference",
       difficulty: blueprint.difficulty,
       paragraphRef: "E",
     },
@@ -649,7 +652,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       ],
       answer: "careful design can make evidence more usable.",
       explanation: "This phrase is stated at the end of Paragraph E.",
-      skill: "Skimming",
       difficulty: "Medium",
       paragraphRef: "E",
     },
@@ -665,7 +667,6 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
         "people expected to act",
       ],
       explanation: "Paragraph C says raw explanations can be too technical for the people expected to act on them.",
-      skill: "Scanning",
       difficulty: "Hard",
       maxWords: 7,
       paragraphRef: "C",
@@ -678,22 +679,50 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       options: ["Yes", "No", "Not Given"],
       answer: "Yes",
       explanation: "Paragraph D says long-term value lasted only when feedback from users was collected regularly.",
-      skill: "Inference",
       difficulty: blueprint.difficulty,
       paragraphRef: "D",
     },
   ];
 
-  return allQuestions.map((question) => ({
-    ...question,
-    questionNumber: question.id,
-    evidenceParagraph: question.paragraphRef,
-    evidenceText:
-      question.paragraphRef
-        ? `See Passage ${question.passageId.replace("p", "")}, Paragraph ${question.paragraphRef}. ${question.explanation}`
-        : question.explanation,
-    tags: [question.type, question.skill, question.difficulty],
-  }));
+  return allQuestions.map((question) => {
+    const skill = skillForQuestion(question.type, question.answer);
+    const secondarySkills = secondarySkillsForQuestion(question.type, question.answer);
+    const trapType = trapForQuestion(question.type, question.answer, question.prompt);
+    const strategyTip = strategyTipForQuestion(question.type, trapType);
+    const evidenceParagraph = question.paragraphRef
+      ? `Paragraph ${question.paragraphRef}`
+      : question.answer === "Not Given"
+        ? "No specific paragraph"
+        : undefined;
+    const evidenceText = question.paragraphRef
+      ? `Passage ${question.passageId.replace("p", "")}, Paragraph ${question.paragraphRef}: ${question.explanation}`
+      : question.answer === "Not Given"
+        ? "The passage does not provide enough information to confirm or contradict this statement."
+        : question.explanation;
+    const enrichedQuestion = {
+      ...question,
+      questionNumber: question.id,
+      evidenceParagraph,
+      evidenceText,
+      skill,
+      secondarySkills,
+      trapType,
+      strategyTip,
+      tags: [
+        "academic-reading",
+        question.type,
+        skill,
+        trapType,
+        question.difficulty.toLowerCase().replace(/\s+/g, "-"),
+      ],
+    };
+
+    return {
+      ...enrichedQuestion,
+      whyCorrect: whyCorrectForQuestion(enrichedQuestion),
+      whyWrong: whyWrongForQuestion(enrichedQuestion),
+    };
+  });
 }
 
 function makeTest(blueprint: TopicBlueprint): ReadingTest {

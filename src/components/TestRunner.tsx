@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { FlaggedQuestions, ReadingTest, UserAnswers } from "@/data/types";
-import { buildResult, getSavedProgress, startNewAttempt } from "@/lib/attempt";
+import { buildResult, getSavedProgress, saveDiagnosisResult, startNewAttempt } from "@/lib/attempt";
 import { scoreTest } from "@/lib/scoring";
 import { isStorageAvailable, progressKey, resultKey, saveJson, type SavedProgress } from "@/lib/storage";
 import { clampRemaining, createDeadline, secondsUntil } from "@/lib/timer";
@@ -138,10 +138,11 @@ export function TestRunner({ test }: { test: ReadingTest }) {
       timeRemainingSeconds: timeRemaining,
       updatedAt: new Date().toISOString(),
     };
-    const result = buildResult(test, progress, score.correct, elapsedSeconds);
+    const result = buildResult(test, progress, score, elapsedSeconds);
 
     saveJson(resultKey(test.testId), result);
     saveJson(progressKey(test.testId), result);
+    saveDiagnosisResult(result);
     router.push(`/tests/${test.testId}/results`);
   }, [answers, deadlineAt, flagged, highlights, initialSeconds, notes, router, startedAt, test, timeRemaining]);
 

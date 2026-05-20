@@ -1,6 +1,9 @@
 import type { ReadingTest } from "@/data/types";
-import { estimateMiniBand } from "./scoring";
+import { generateDiagnosis } from "./diagnosis";
+import type { ScoreResult } from "./scoring";
 import {
+  diagnosisHistoryKey,
+  diagnosisKey,
   loadJson,
   progressKey,
   removeSavedItem,
@@ -31,7 +34,6 @@ export function createInitialProgress(test: ReadingTest): SavedProgress {
 
 export function startNewAttempt(test: ReadingTest) {
   const progress = createInitialProgress(test);
-  removeSavedItem(resultKey(test.testId));
   removeSavedItem(progressKey(test.testId));
   return {
     progress,
@@ -57,18 +59,18 @@ export function getAttemptStatus(test: ReadingTest) {
   const result = getSavedResult(test.testId);
   const progress = getSavedProgress(test.testId);
 
-  if (result) {
+  if (progress?.status === "in-progress") {
     return {
-      status: "Completed" as const,
+      status: "In Progress" as const,
       result,
       progress,
     };
   }
 
-  if (progress?.status === "in-progress") {
+  if (result) {
     return {
-      status: "In Progress" as const,
-      result: null,
+      status: "Completed" as const,
+      result,
       progress,
     };
   }
@@ -83,22 +85,35 @@ export function getAttemptStatus(test: ReadingTest) {
 export function buildResult(
   test: ReadingTest,
   progress: SavedProgress,
-  rawScore: number,
+  score: ScoreResult,
   elapsedSeconds: number,
 ): SavedResult {
-  const totalQuestions = test.questions.length;
-  const percentage = totalQuestions ? Math.round((rawScore / totalQuestions) * 100) : 0;
+  const completedAt = new Date().toISOString();
+  const diagnosis = generateDiagnosis(test.testId, score, completedAt);
 
   return {
     ...progress,
     status: "completed",
     timeRemainingSeconds: Math.max(0, progress.timeRemainingSeconds),
-    updatedAt: new Date().toISOString(),
-    submittedAt: new Date().toISOString(),
+    updatedAt: completedAt,
+    submittedAt: completedAt,
     elapsedSeconds,
-    rawScore,
-    totalQuestions,
-    percentage,
-    estimatedBand: estimateMiniBand(rawScore, totalQuestions),
+    rawScore: score.correct,
+    totalQuestions: score.total,
+    percentage: score.percentage,
+    estimatedBand: score.estimatedBand,
+    diagnosis,
   };
+}
+
+export function saveDiagnosisResult(result: SavedResult) {
+  if (result.diagnosis) {
+    saveJson(diagnosisKey(result.testId), result.diagnosis);
+
+    const history = loadJson<Record<string, SavedResult["diagnosis"]>>(diagnosisHistoryKey()) ?? {};
+    saveJson(diagnosisHistoryKey(), {
+      ...history,
+      [result.testId]: result.diagnosis,
+    });
+  }
 }

@@ -4,27 +4,24 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { ReadingTest } from "@/data/types";
 import { startNewAttempt } from "@/lib/attempt";
+import type { DiagnosisResult } from "@/lib/diagnosis";
 import type { ScoreResult } from "@/lib/scoring";
 import { formatDuration } from "@/lib/scoring";
 
 export function ResultSummary({
   test,
   score,
+  diagnosis,
   elapsedSeconds,
   nextTestId,
 }: {
   test: ReadingTest;
   score: ScoreResult;
+  diagnosis: DiagnosisResult;
   elapsedSeconds: number;
   nextTestId?: string;
 }) {
   const router = useRouter();
-  const weakestSkill = Object.entries(score.skillBreakdown)
-    .sort(([, a], [, b]) => a.correct / a.total - b.correct / b.total)
-    .at(0);
-  const strongestSkill = Object.entries(score.skillBreakdown)
-    .sort(([, a], [, b]) => b.correct / b.total - a.correct / a.total)
-    .at(0);
 
   function retakeTest() {
     startNewAttempt(test);
@@ -45,8 +42,10 @@ export function ResultSummary({
           </p>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
             Your estimated band range is {score.estimatedBand} for this mini test.{" "}
-            {strongestSkill ? `Your strongest area was ${strongestSkill[0]}. ` : ""}
-            {weakestSkill ? `Review ${weakestSkill[0]} questions before starting another test.` : ""}
+            {diagnosis.strongestSkill ? `Your strongest area was ${diagnosis.strongestSkill.label}. ` : ""}
+            {diagnosis.weakestSkill
+              ? `Review ${diagnosis.weakestSkill.label} questions before starting another test.`
+              : ""}
           </p>
         </div>
         <dl className="grid grid-cols-2 gap-3 lg:grid-cols-3">
@@ -79,7 +78,7 @@ export function ResultSummary({
           <div className="rounded-md bg-slate-50 p-4">
             <dt className="text-sm text-slate-500">Focus skill</dt>
             <dd className="mt-1 text-base font-semibold text-slate-950">
-              {weakestSkill ? weakestSkill[0] : "Balanced review"}
+              {diagnosis.weakestSkill ? diagnosis.weakestSkill.label : "Balanced review"}
             </dd>
           </div>
         </dl>

@@ -30,6 +30,7 @@ export function ReviewPageClient({ test }: { test: ReadingTest }) {
     () => (savedResult ? scoreTest(test, savedResult.answers) : null),
     [savedResult, test],
   );
+  const passageTitleById = new Map(test.passages.map((passage) => [passage.passageId, passage.title]));
 
   if (!hydrated) {
     return (
@@ -74,7 +75,11 @@ export function ReviewPageClient({ test }: { test: ReadingTest }) {
           </p>
         </div>
         {score.questionResults.map((result) => (
-          <ReviewQuestion key={result.question.id} result={result} />
+          <ReviewQuestion
+            key={result.question.id}
+            result={result}
+            passageTitle={passageTitleById.get(result.question.passageId)}
+          />
         ))}
       </section>
     </div>
