@@ -22,8 +22,14 @@ export default function Home() {
                 href="/tests"
                 className="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-800"
               >
-                Start practice
+                Start mini test
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link
+                href="/practice"
+                className="inline-flex items-center rounded-md border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+              >
+                Focused practice
               </Link>
               <Link
                 href="/about"
@@ -54,8 +60,12 @@ export default function Home() {
         <div className="grid gap-4 md:grid-cols-3">
           {[
             [TimerReset, "Timed realism", "A sticky timer, unanswered warnings and exam-style submission flow."],
-            [BookOpenCheck, "Academic Reading tasks", "TFNG, matching, completion, short-answer and inference practice."],
-            [BarChart3, "Learning feedback", "Raw score, estimated mini-band, explanations and skill breakdown."],
+            [
+              BookOpenCheck,
+              "Academic Reading tasks",
+              "True / False / Not Given, matching, completion, short-answer and inference practice.",
+            ],
+            [BarChart3, "Learning feedback", "Scores, explanations, skill diagnosis and focused practice routes."],
           ].map(([Icon, title, body]) => (
             <div key={title as string} className="test-panel p-5">
               <Icon className="h-5 w-5 text-emerald-700" aria-hidden="true" />

@@ -1,7 +1,7 @@
 "use client";
 
 import type { QuestionResult } from "@/lib/scoring";
-import { QUESTION_TYPE_LABELS } from "@/lib/question-labels";
+import { formatPassageLabel, QUESTION_TYPE_LABELS } from "@/lib/question-labels";
 
 export function ReviewQuestion({ result, passageTitle }: { result: QuestionResult; passageTitle?: string }) {
   const label =
@@ -13,7 +13,7 @@ export function ReviewQuestion({ result, passageTitle }: { result: QuestionResul
         <div>
           <h3 className="font-semibold text-slate-950">Question {result.question.questionNumber}</h3>
           <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
-            Passage {result.question.passageId.replace("p", "")} · {QUESTION_TYPE_LABELS[result.question.type]}
+            Passage {formatPassageLabel(result.question.passageId)} · {QUESTION_TYPE_LABELS[result.question.type]}
           </p>
         </div>
         <span

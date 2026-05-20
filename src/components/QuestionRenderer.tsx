@@ -2,7 +2,7 @@
 
 import { Flag } from "lucide-react";
 import type { FlaggedQuestions, Question, UserAnswers } from "@/data/types";
-import { QUESTION_TYPE_LABELS } from "@/lib/question-labels";
+import { formatPassageLabel, QUESTION_TYPE_LABELS } from "@/lib/question-labels";
 
 export function QuestionRenderer({
   questions,
@@ -38,7 +38,7 @@ export function QuestionRenderer({
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
-                Question {question.questionNumber} · Passage {question.passageId.replace("p", "")} ·{" "}
+                Question {question.questionNumber} · Passage {formatPassageLabel(question.passageId)} ·{" "}
                 {QUESTION_TYPE_LABELS[question.type]}
               </p>
               {question.groupTitle ? (

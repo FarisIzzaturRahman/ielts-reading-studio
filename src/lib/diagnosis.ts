@@ -1,6 +1,7 @@
 import type { QuestionType, SkillTag, TrapType } from "@/data/types";
 import { QUESTION_TYPE_LABELS } from "./question-labels";
 import type { QuestionResult, ScoreResult } from "./scoring";
+import { skillSlug } from "./taxonomy";
 
 export type PerformanceEntry = {
   id: string;
@@ -209,7 +210,7 @@ export function generateRecommendations(score: ScoreResult, diagnosis: {
       title: "Review Matching Headings strategy",
       description: "Practise identifying paragraph main ideas before looking at individual details.",
       reason: "Matching Headings was your weakest question type.",
-      href: "/tests?focus=matching-headings",
+      href: "/practice/question-types/matching-headings",
       priority: "high",
     });
   }
@@ -222,8 +223,8 @@ export function generateRecommendations(score: ScoreResult, diagnosis: {
       id: "tfng-exact-meaning",
       title: "Practise True / False / Not Given exact meaning",
       description: "Focus on the difference between contradiction and missing information.",
-      reason: "TFNG accuracy was below 60% in this test.",
-      href: "/tests?focus=true-false-not-given",
+      reason: "True / False / Not Given accuracy was below 60% in this test.",
+      href: "/practice/question-types/true-false-not-given",
       priority: "high",
     });
   }
@@ -234,7 +235,7 @@ export function generateRecommendations(score: ScoreResult, diagnosis: {
       title: "Practise evidence-based inference",
       description: "Work on implied meaning without adding outside knowledge.",
       reason: "Making inference was your weakest reading skill.",
-      href: "/tests?focus=inference",
+      href: "/practice/skills/making-inference",
       priority: "high",
     });
   }
@@ -245,7 +246,7 @@ export function generateRecommendations(score: ScoreResult, diagnosis: {
       title: "Review Not Given traps",
       description: "Practise deciding when the passage does not give enough evidence.",
       reason: "Not Given traps appeared in your mistake pattern.",
-      href: "/tests?focus=not-given",
+      href: "/practice/drills/tfng-drill-001",
       priority: "medium",
     });
   }
@@ -256,7 +257,7 @@ export function generateRecommendations(score: ScoreResult, diagnosis: {
       title: "Do timed scanning practice",
       description: "Use shorter drills to improve speed without losing evidence accuracy.",
       reason: "More than 20% of questions were unanswered.",
-      href: "/tests?focus=timed-scanning",
+      href: "/practice/skills/time-efficient-scanning",
       priority: "high",
     });
   }
@@ -278,7 +279,7 @@ export function generateRecommendations(score: ScoreResult, diagnosis: {
       title: "Review Academic Reading foundations",
       description: "Start with easier tests and practise vocabulary, paraphrase and exact meaning.",
       reason: "Your overall accuracy was below 50%.",
-      href: "/tests?difficulty=easy",
+      href: "/practice",
       priority: "high",
     });
   }
@@ -289,7 +290,7 @@ export function generateRecommendations(score: ScoreResult, diagnosis: {
       title: `Practise ${diagnosis.weakestSkill.label}`,
       description: "Review the questions linked to this skill, then try another mini test with careful evidence checking.",
       reason: `${diagnosis.weakestSkill.label} was your weakest skill area.`,
-      href: `/tests?skill=${encodeURIComponent(diagnosis.weakestSkill.id)}`,
+      href: `/practice/skills/${skillSlug(diagnosis.weakestSkill.label)}`,
       priority: "medium",
     });
   }

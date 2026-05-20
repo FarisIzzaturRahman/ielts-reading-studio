@@ -1,6 +1,7 @@
 "use client";
 
 import type { Passage } from "@/data/types";
+import { formatPassageLabel } from "@/lib/question-labels";
 
 export function PassageViewer({
   passages,
@@ -50,7 +51,7 @@ export function PassageViewer({
         {passages.map((passage) => (
           <article key={passage.passageId} className="mb-10">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
-              Passage {passage.passageId.replace("p", "")}
+              Passage {formatPassageLabel(passage.passageId)}
             </p>
             <h3 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">{passage.title}</h3>
             <p className="mt-1 text-xs text-slate-500">{passage.sourceNote}</p>

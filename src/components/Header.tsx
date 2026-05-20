@@ -17,6 +17,9 @@ export function Header() {
           <Link className="rounded-md px-3 py-2 text-slate-700 hover:bg-slate-100" href="/tests">
             Tests
           </Link>
+          <Link className="rounded-md px-3 py-2 text-slate-700 hover:bg-slate-100" href="/practice">
+            Practice
+          </Link>
           <Link className="rounded-md px-3 py-2 text-slate-700 hover:bg-slate-100" href="/about">
             About
           </Link>

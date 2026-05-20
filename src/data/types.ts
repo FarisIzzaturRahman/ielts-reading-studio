@@ -112,3 +112,40 @@ export type ReadingTest = {
 export type UserAnswers = Record<number, string>;
 
 export type FlaggedQuestions = Record<number, boolean>;
+
+export type PracticeMode = "question-type" | "skill";
+
+export type WorkedExample = {
+  statement: string;
+  passageText: string;
+  answer: string;
+  explanation: string;
+};
+
+export type StrategyLesson = {
+  lessonId: string;
+  title: string;
+  questionType?: QuestionType;
+  skill?: SkillTag;
+  skillFocus: SkillTag[];
+  whatItTests: string;
+  whyItMatters: string;
+  steps: string[];
+  commonTraps: string[];
+  workedExample: WorkedExample;
+};
+
+export type DrillSet = {
+  drillId: string;
+  title: string;
+  practiceMode: PracticeMode;
+  questionType?: QuestionType;
+  skill?: SkillTag;
+  skillFocus: SkillTag[];
+  difficulty: ReadingDifficulty;
+  estimatedTimeMinutes: number;
+  description: string;
+  strategyLessonId: string;
+  passages: Passage[];
+  questions: Question[];
+};

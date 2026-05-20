@@ -12,7 +12,12 @@ export const QUESTION_TYPE_LABELS: Record<QuestionType, string> = {
   "note-completion": "Note Completion",
   "table-completion": "Table Completion",
   "flow-chart-completion": "Flow-chart Completion",
-  "short-answer": "Short Answer",
+  "short-answer": "Short Answer Questions",
   "diagram-label-completion": "Diagram Label Completion",
   "matching-sentence-endings": "Matching Sentence Endings",
 };
+
+export function formatPassageLabel(passageId: string) {
+  const match = passageId.match(/p(\d+)$/i);
+  return match ? match[1] : passageId;
+}
