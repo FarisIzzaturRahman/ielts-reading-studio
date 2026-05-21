@@ -367,11 +367,11 @@ Prepared but not implemented in Phase 3A:
 | Lint errors | Pass |
 | Vercel readiness | Build-ready; live Vercel deployment not run locally |
 
-Phase 3A-2 update:
+Historical Phase 3A-2 update, now superseded by the realism reset:
 
-- The library now contains 30 mini tests, 87 drills and 29 strategy lessons.
-- `npm run validate:content` now reports 0 errors and 0 warnings.
-- All question types, reading skills and major trap types have focused drill coverage.
+- The generated scale experiment reached 30 mini tests, 87 drills and 29 strategy lessons.
+- That scale was later reduced after the realism audit found the content too templated.
+- Current published scale is tracked in `docs/phase-3a-realism-expansion.md`.
 
 See `docs/phase-3a2-large-scale-content.md` for the large-scale expansion strategy and QA results.
 

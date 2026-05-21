@@ -18,13 +18,13 @@ console.log(
   `Difficulty mix: ${quality.difficultyDistribution.map((entry) => `${entry.label} ${entry.count}`).join(", ")}`,
 );
 console.log(
-  `Question-type coverage: ${quality.coverageGaps.questionTypesWithoutDrills.length ? `${quality.coverageGaps.questionTypesWithoutDrills.length} gaps` : "all question types have drills"}.`,
+  `Question-type drill coverage: ${quality.coverageGaps.questionTypesWithoutDrills.length ? `${quality.coverageGaps.questionTypesWithoutDrills.length} types intentionally held for later realism batches` : "all question types have drills"}.`,
 );
 console.log(
-  `Skill coverage: ${quality.coverageGaps.skillsWithoutDrills.length ? `${quality.coverageGaps.skillsWithoutDrills.length} gaps` : "all skills have drills"}.`,
+  `Skill drill coverage: ${quality.coverageGaps.skillsWithoutDrills.length ? `${quality.coverageGaps.skillsWithoutDrills.length} skills intentionally held for later realism batches` : "all skills have drills"}.`,
 );
 console.log(
-  `Trap coverage: ${quality.coverageGaps.trapsWithoutDrills.length ? `${quality.coverageGaps.trapsWithoutDrills.length} trap expansion gaps` : "all major traps have drills"}.`,
+  `Trap drill coverage: ${quality.coverageGaps.trapsWithoutDrills.length ? `${quality.coverageGaps.trapsWithoutDrills.length} traps intentionally held for later realism batches` : "all major traps have drills"}.`,
 );
 
 if (report.issues.length) {

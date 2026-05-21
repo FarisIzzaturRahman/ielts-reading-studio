@@ -6,11 +6,11 @@ Free, no-login IELTS Academic Reading practice for self-learners.
 
 IELTS Reading Studio is an independent IELTS Academic Reading simulator. Learners can open the website, choose a mini Academic Reading test, answer timed questions, submit, view an approximate score, and review explanations without creating an account.
 
-The current version is a stabilized MVP for exam simulation and reading practice. It does not include IELTS General Training, payment, subscriptions, accounts, teacher dashboards, AI tutoring, community features, or locked content.
+The current version is in a controlled realism-expansion phase. The app keeps the stable simulator and practice architecture, and published content is expanded only in small reviewed batches that pass evidence, taxonomy, answer-balance, repetition and realism checks. It does not include IELTS General Training, payment, subscriptions, accounts, teacher dashboards, AI tutoring, community features, or locked content.
 
 ## Features
 
-- 30 original IELTS-style Academic Reading mini tests.
+- 9 realism-reviewed IELTS-style Academic Reading mini tests.
 - 2 passages and 20 questions per mini test.
 - 30-minute timer for 20-question tests.
 - Split-screen desktop test interface.
@@ -25,13 +25,13 @@ The current version is a stabilized MVP for exam simulation and reading practice
 - Review page with user answer, correct answer, explanation, evidence reference, why-correct/why-wrong notes, trap type, strategy tip, skill, and difficulty.
 - Practice Hub for focused IELTS Academic Reading drills.
 - Practice by question type and by reading skill.
-- 87 focused drills across question types, skills, traps, and Band 8-9 challenge practice.
+- 26 drill-native focused practice sets rebuilt for realism rather than recycled from mini tests.
 - Strategy lessons before drill attempts.
 - Drill scoring, drill review, mistake summary, and local practice history.
 - Centralized content taxonomy for question types, reading skills, traps, topics, difficulty, and recommendations.
 - Structured metadata for tests, passages, questions, drills, and lessons.
 - Content relationship index for future recommendation and adaptive-practice features.
-- Content validation command for taxonomy, metadata, evidence, and relationship checks.
+- Content validation command for taxonomy, metadata, evidence, relationship checks, answer-position bias, structural repetition, and weak evidence patterns.
 - Retake/restart support.
 
 ## IELTS Academic-Only Scope
@@ -82,10 +82,10 @@ src/app/                 App Router pages
 src/components/          UI and simulator workflow components
 src/components/practice/ Focused-practice UI components
 src/data/content-library.ts  Central content registry and relationship index
-src/data/drills.ts       Question-type and skill drill content
+src/data/drills.ts       Drill-native question-type and skill practice content
 src/data/strategy-lessons.ts  Short practice strategy lessons
 src/data/taxonomy/       Master taxonomy definitions
-src/data/tests.ts        Original Academic Reading test seed content
+src/data/tests.ts        Human-edited flagship Academic Reading tests
 src/data/types.ts        Stabilized reading-test schema
 src/lib/attempt.ts       Start, restart, status, and result helpers
 src/lib/content-metadata.ts Metadata builders for generated content
@@ -105,6 +105,8 @@ docs/phase-2a-diagnosis.md    Phase 2A diagnosis plan and QA checklist
 docs/phase-2b-practice-mode.md Phase 2B practice mode plan and QA checklist
 docs/phase-3a-content-system.md Phase 3A taxonomy, metadata and QA pipeline
 docs/phase-3a2-large-scale-content.md Phase 3A-2 large-scale content expansion
+docs/phase-3a-realism-overhaul.md Phase 3A-REALISM editorial and psychometric overhaul
+docs/phase-3a-realism-expansion.md Phase 3A-REALISM-EXPANSION controlled content scaling
 ```
 
 ## Content Format
@@ -173,7 +175,7 @@ Run the content QA pipeline before publishing new tests, drills, lessons, or tax
 npm run validate:content
 ```
 
-The validator checks taxonomy uniqueness, metadata consistency, evidence references, Academic-only scope, drill lesson links, question counts, and recommendation relationships. Errors fail the command; warnings identify content expansion gaps or editorial items to review.
+The validator checks taxonomy uniqueness, metadata consistency, evidence references, Academic-only scope, drill lesson links, question counts, recommendation relationships, answer-position concentration, repeated question structures, repeated paragraph openings, and generic evidence text. Errors fail the command; warnings identify editorial items to review.
 
 ## Deployment
 
@@ -198,8 +200,10 @@ Do not copy official IELTS, Cambridge, British Council, IDP, or commercial test-
 - Phase 2A: Enhanced review, skill diagnosis, mistake patterns, and basic recommendations.
 - Phase 2B: Question-type and skill-based focused practice.
 - Phase 3A: Content taxonomy, metadata standards, relationship index and validation pipeline.
-- Phase 3A-2: Expand to 30 mini tests and 50+ drills with scale validation.
-- Phase 3B: Add blueprint templates, topic balance reports, UI filters and editorial QA workflow.
+- Phase 3A-2: Large-scale content expansion architecture. Paused after the realism audit.
+- Phase 3A-REALISM: Rebuild flagship tests, drill-native practice, real evidence, distractors, difficulty calibration and validation guardrails.
+- Phase 3A-REALISM-EXPANSION: Controlled Batches A and B expand the reviewed library to 9 mini tests and 26 drill-native practice sets.
+- Phase 3B: Resume broader product expansion only after controlled content batches continue passing QA.
 - Phase 4: Add optional local trend dashboards and mistake notebook without requiring login.
 - Step 4: Add full 40-question Academic Reading simulations.
 

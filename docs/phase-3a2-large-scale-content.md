@@ -1,5 +1,7 @@
 # Phase 3A-2: Large-Scale Content Expansion System
 
+> Status update: large-scale expansion is paused. A later realism audit found that the generated library scaled structurally but did not yet meet the realism, distractor quality, evidence quality and psychometric standards required for further growth. The realism reset is recorded in `docs/phase-3a-realism-overhaul.md`, and the current controlled expansion batch is maintained in `docs/phase-3a-realism-expansion.md`.
+
 ## Implementation Plan
 
 1. Expand the mini-test blueprint library from 15 to 30 IELTS Academic Reading mini tests.
@@ -15,7 +17,7 @@
 
 The library now scales through structured blueprints instead of random bulk generation.
 
-Current launch scale after Phase 3A-2:
+Historical scale before the realism pause:
 
 - 30 IELTS Academic Reading mini tests.
 - 87 focused drills.
@@ -27,7 +29,7 @@ The content remains local TypeScript data for the MVP. When the library becomes 
 
 ## Mini-Test Expansion Plan
 
-The mini-test library now contains 30 tests, each with:
+The historical Phase 3A-2 mini-test library contained 30 tests, each with:
 
 - 2 Academic Reading passages.
 - 20 questions.
@@ -51,7 +53,7 @@ Long-term target:
 
 ## Drill Expansion Plan
 
-The drill library now includes:
+The historical Phase 3A-2 drill library included:
 
 - Launch drills from Phase 2B.
 - Question-type drill expansions for every standard IELTS Academic Reading question type.
@@ -59,7 +61,7 @@ The drill library now includes:
 - Trap-focused drills for all major trap types.
 - Band 8-9 challenge drills.
 
-Current drill count:
+Historical drill count before the realism pause:
 
 - 87 focused drills.
 

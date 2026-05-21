@@ -40,7 +40,16 @@ const skillIds = new Set(READING_SKILLS.map((item) => item.id));
 const trapTypeIds = new Set(TRAP_TYPES.map((item) => item.id));
 const difficultyIds = new Set(DIFFICULTY_LEVELS.map((item) => item.id));
 const topicIds = new Set(TOPICS.map((item) => item.id));
-const contentStatuses = new Set(["draft", "reviewed", "validated", "published"]);
+const contentStatuses = new Set([
+  "generated",
+  "realism-reviewed",
+  "psychometric-reviewed",
+  "finalized",
+  "published",
+  "draft",
+  "reviewed",
+  "validated",
+]);
 
 function issue(
   severity: ValidationSeverity,
@@ -391,22 +400,177 @@ function validateRecommendationRelationships(library: ContentLibrary): Validatio
   return issues;
 }
 
-function validateScaleReadiness(library: ContentLibrary): ValidationIssue[] {
+function firstSentence(text: string) {
+  return text.split(/[.!?]/)[0]?.trim().toLowerCase() ?? "";
+}
+
+function optionAnswerIndex(question: Question) {
+  if (!question.options?.length) return undefined;
+  return question.options.findIndex((option) => option === question.answer);
+}
+
+function validateAnswerDistribution(library: ContentLibrary): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const optionQuestions = [
+    ...library.tests.flatMap((test) =>
+      test.questions.map((question) => ({
+        contentId: `${test.testId}:q${question.questionNumber}`,
+        question,
+      })),
+    ),
+    ...library.drills.flatMap((drill) =>
+      drill.questions.map((question) => ({
+        contentId: `${drill.drillId}:q${question.questionNumber}`,
+        question,
+      })),
+    ),
+  ].filter((item) => item.question.options?.length);
+  const byType = new Map<string, number[]>();
+
+  for (const item of optionQuestions) {
+    const index = optionAnswerIndex(item.question);
+    if (index === undefined || index < 0) continue;
+    const indexes = byType.get(item.question.type) ?? [];
+    indexes.push(index);
+    byType.set(item.question.type, indexes);
+  }
+
+  for (const [questionType, indexes] of byType.entries()) {
+    if (indexes.length < 5) continue;
+    const counts = indexes.reduce(
+      (acc, index) => {
+        acc[index] = (acc[index] ?? 0) + 1;
+        return acc;
+      },
+      {} as Record<number, number>,
+    );
+    const dominant = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+    const dominantShare = dominant ? dominant[1] / indexes.length : 0;
+
+    if (dominantShare >= 0.75) {
+      issues.push(
+        issue(
+          "warning",
+          "question",
+          questionType,
+          "answerDistribution",
+          `Correct answers for ${questionType} are concentrated in option position ${Number(dominant[0]) + 1}.`,
+        ),
+      );
+    }
+  }
+
+  return issues;
+}
+
+function validateStructuralRepetition(library: ContentLibrary): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const testSequences = new Map<string, string[]>();
+  const paragraphOpeners = new Map<string, string[]>();
+
+  for (const test of library.tests) {
+    const sequence = test.questions.map((question) => question.type).join("|");
+    testSequences.set(sequence, [...(testSequences.get(sequence) ?? []), test.testId]);
+
+    for (const passage of test.passages) {
+      for (const paragraph of passage.paragraphs) {
+        const opener = firstSentence(paragraph.text);
+        if (!opener) continue;
+        paragraphOpeners.set(opener, [
+          ...(paragraphOpeners.get(opener) ?? []),
+          `${test.testId}:${passage.passageId}:${paragraph.label}`,
+        ]);
+      }
+    }
+  }
+
+  for (const [sequence, testIds] of testSequences.entries()) {
+    if (library.tests.length > 2 && testIds.length >= Math.ceil(library.tests.length * 0.75)) {
+      issues.push(
+        issue(
+          "warning",
+          "test",
+          testIds.join(","),
+          "questionSequence",
+          `Most tests share the same question-type sequence: ${sequence}.`,
+        ),
+      );
+    }
+  }
+
+  for (const [opener, locations] of paragraphOpeners.entries()) {
+    if (locations.length >= 3) {
+      issues.push(
+        issue(
+          "warning",
+          "passage",
+          locations.slice(0, 5).join(","),
+          "paragraphOpening",
+          `Repeated paragraph opening detected: "${opener}".`,
+        ),
+      );
+    }
+  }
+
+  return issues;
+}
+
+function validateEvidenceRealism(library: ContentLibrary): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const weakEvidencePatterns = [
+    "paragraph a states",
+    "paragraph b states",
+    "paragraph c states",
+    "paragraph d states",
+    "paragraph e states",
+    "the answer is stated",
+    "the limitation is named",
+    "the passage repeatedly connects",
+    "the evidence in the excerpt supports",
+  ];
+
+  const allQuestions = [
+    ...library.tests.flatMap((test) =>
+      test.questions.map((question) => ({
+        contentId: `${test.testId}:q${question.questionNumber}`,
+        question,
+      })),
+    ),
+    ...library.drills.flatMap((drill) =>
+      drill.questions.map((question) => ({
+        contentId: `${drill.drillId}:q${question.questionNumber}`,
+        question,
+      })),
+    ),
+  ];
+
+  for (const { contentId, question } of allQuestions) {
+    const evidence = question.evidenceText?.toLowerCase() ?? "";
+    if (question.answer !== "Not Given" && weakEvidencePatterns.some((pattern) => evidence.includes(pattern))) {
+      issues.push(
+        issue(
+          "warning",
+          "question",
+          contentId,
+          "evidenceText",
+          "Evidence should quote or closely reproduce passage wording, not describe the evidence generically.",
+        ),
+      );
+    }
+  }
+
+  return issues;
+}
+
+function validateRealismReadiness(library: ContentLibrary): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   const quality = analyzeContentLibrary(library);
 
-  if (library.tests.length < 30) {
-    issues.push(issue("error", "metadata", "content-library", "tests", "Phase 3A-2 requires at least 30 Academic mini tests."));
+  if (library.tests.length < 3) {
+    issues.push(issue("error", "metadata", "content-library", "tests", "Phase 3A-REALISM requires at least three flagship Academic mini tests."));
   }
-  if (library.drills.length < 50) {
-    issues.push(issue("error", "metadata", "content-library", "drills", "Phase 3A-2 requires at least 50 focused drills."));
-  }
-
-  for (const questionType of quality.coverageGaps.questionTypesWithoutDrills) {
-    issues.push(issue("warning", "relationship", questionType, "questionType", "No focused drill currently targets this question type."));
-  }
-  for (const skill of quality.coverageGaps.skillsWithoutDrills) {
-    issues.push(issue("warning", "relationship", skill, "skill", "No focused drill currently targets this skill."));
+  if (library.drills.length < 8) {
+    issues.push(issue("error", "metadata", "content-library", "drills", "Phase 3A-REALISM requires a small drill-native practice set before scaling resumes."));
   }
 
   const missingDifficulty = DIFFICULTY_LEVELS.filter(
@@ -416,11 +580,16 @@ function validateScaleReadiness(library: ContentLibrary): ValidationIssue[] {
     issues.push(issue("warning", "metadata", difficulty.id, "difficulty", "No content currently uses this difficulty level."));
   }
 
-  if (quality.duplicateQuestionPrompts.some((entry) => entry.count > 100)) {
-    issues.push(issue("warning", "question", "content-library", "prompt", "Some generated prompt templates are heavily reused and should be diversified in editorial batches."));
+  if (quality.duplicateQuestionPrompts.some((entry) => entry.count > 12)) {
+    issues.push(issue("warning", "question", "content-library", "prompt", "Some prompt templates are heavily reused and should be diversified before publishing more content."));
   }
 
-  return issues;
+  return [
+    ...issues,
+    ...validateAnswerDistribution(library),
+    ...validateStructuralRepetition(library),
+    ...validateEvidenceRealism(library),
+  ];
 }
 
 export function validateContentLibrary(library: ContentLibrary): ValidationReport {
@@ -431,7 +600,7 @@ export function validateContentLibrary(library: ContentLibrary): ValidationRepor
     ...library.drills.flatMap((drill) => validateDrill(drill, lessonIds)),
     ...library.lessons.flatMap(validateLesson),
     ...validateRecommendationRelationships(library),
-    ...validateScaleReadiness(library),
+    ...validateRealismReadiness(library),
   ];
 
   return {

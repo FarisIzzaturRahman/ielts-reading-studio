@@ -65,7 +65,15 @@ export type SentenceComplexity = "Low" | "Moderate" | "High" | "Very high";
 
 export type EvidenceStrength = "Direct" | "Paraphrased" | "Inferred" | "Distributed" | "Missing";
 
-export type ContentStatus = "draft" | "reviewed" | "validated" | "published";
+export type ContentStatus =
+  | "generated"
+  | "realism-reviewed"
+  | "psychometric-reviewed"
+  | "finalized"
+  | "published"
+  | "draft"
+  | "reviewed"
+  | "validated";
 
 export type ContentRelationship = {
   contentType: "test" | "passage" | "question" | "drill" | "lesson" | "recommendation";

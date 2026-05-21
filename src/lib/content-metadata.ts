@@ -167,7 +167,7 @@ export function recommendationCategoryForDrill(
 export function buildDrillMetadata(drill: Omit<DrillSet, "metadata">): DrillMetadata {
   return {
     status: "published",
-    batchId: drill.tags.find((tag) => tag.startsWith("phase-")) ?? "phase-3a2-drill-expansion",
+    batchId: drill.tags.find((tag) => tag.startsWith("phase-")) ?? "phase-3a-realism-drill",
     practiceMode: drill.practiceMode,
     questionTypeFocus: drill.questionType,
     skillFocus: drill.skillFocus,

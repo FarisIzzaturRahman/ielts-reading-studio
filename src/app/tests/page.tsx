@@ -12,8 +12,9 @@ export default function TestLibraryPage() {
               IELTS Academic Reading test library
             </h1>
             <p className="mt-3 max-w-3xl leading-7 text-slate-600">
-              {readingTests.length} free, original mini simulations for self-learners. Choose an Academic Reading
-              topic, continue an unfinished attempt, or retake a completed test without creating an account.
+              {readingTests.length} free, realism-reviewed mini simulations for self-learners. Choose an
+              Academic Reading topic, continue an unfinished attempt, or retake a completed test without creating an
+              account.
             </p>
           </div>
           <div className="rounded-md border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">
