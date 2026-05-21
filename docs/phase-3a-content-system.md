@@ -367,15 +367,13 @@ Prepared but not implemented in Phase 3A:
 | Lint errors | Pass |
 | Vercel readiness | Build-ready; live Vercel deployment not run locally |
 
-Current validation warnings:
+Phase 3A-2 update:
 
-- No lesson or drill currently targets: Identifying writer's opinion.
-- No lesson or drill currently targets: Following reference words.
-- No lesson or drill currently targets: Recognising contrast.
-- No lesson or drill currently targets: Recognising cause and effect.
-- No lesson or drill currently targets: Understanding comparison.
+- The library now contains 30 mini tests, 87 drills and 29 strategy lessons.
+- `npm run validate:content` now reports 0 errors and 0 warnings.
+- All question types, reading skills and major trap types have focused drill coverage.
 
-These are expansion priorities, not launch blockers.
+See `docs/phase-3a2-large-scale-content.md` for the large-scale expansion strategy and QA results.
 
 ## Remaining Issues For Future Phases
 

@@ -1,4 +1,8 @@
-import type { DrillSet, Passage, Question, QuestionType, SkillTag } from "./types";
+import type { DrillSet, Passage, Question, QuestionType, SkillTag, TrapType } from "./types";
+import { QUESTION_TYPES } from "./taxonomy/question-types";
+import { READING_SKILLS } from "./taxonomy/skills";
+import { skillSlug } from "./taxonomy/skills";
+import { slugifyLabel } from "./taxonomy/utils";
 import { readingTests } from "./tests";
 import {
   buildDrillMetadata,
@@ -30,6 +34,7 @@ type DrillBlueprint = Omit<
   | "metadata"
 > & {
   refs: DrillReference[];
+  trapFocusOverride?: TrapType[];
 };
 
 function getSourceQuestion(ref: DrillReference) {
@@ -109,23 +114,29 @@ function materializeDrill(blueprint: DrillBlueprint): DrillSet {
     description: blueprint.description,
     strategyLessonId: blueprint.strategyLessonId,
   };
+  const trapFocus = blueprint.trapFocusOverride ?? inferTrapFocus(questions);
   const drillWithoutMetadata: Omit<DrillSet, "metadata"> = {
     ...baseDrill,
     passages,
     questions,
-    trapFocus: inferTrapFocus(questions),
+    trapFocus,
     targetBand: inferTargetBand(blueprint.difficulty),
     totalQuestions: questions.length,
     topicFocus: inferTopicFocus(passages),
-    recommendationCategory: recommendationCategoryForDrill({
-      practiceMode: blueprint.practiceMode,
-      trapFocus: inferTrapFocus(questions),
-      questionType: blueprint.questionType,
-      skill: blueprint.skill,
-    }),
+    recommendationCategory: blueprint.drillId.startsWith("trap-")
+      ? "trap-repair"
+      : blueprint.drillId.startsWith("band9-")
+        ? "challenge-test"
+        : recommendationCategoryForDrill({
+            practiceMode: blueprint.practiceMode,
+            trapFocus: [],
+            questionType: blueprint.questionType,
+            skill: blueprint.skill,
+          }),
     tags: [
       "academic-reading",
       "focused-drill",
+      blueprint.drillId.includes("001") ? "phase-2b-launch-drill" : "phase-3a2-drill-expansion",
       blueprint.practiceMode,
       blueprint.questionType ?? "skill-practice",
       blueprint.skill ?? "question-type-practice",
@@ -152,7 +163,7 @@ function mixedRefs(items: Array<[string, number]>): DrillReference[] {
 const firstFive = ["test-01", "test-02", "test-03", "test-04", "test-05"];
 const secondFive = ["test-06", "test-07", "test-08", "test-09", "test-10"];
 
-const drillBlueprints: DrillBlueprint[] = [
+const seedDrillBlueprints: DrillBlueprint[] = [
   {
     drillId: "tfng-drill-001",
     title: "True / False / Not Given Drill 1: Exact Meaning",
@@ -285,6 +296,317 @@ const drillBlueprints: DrillBlueprint[] = [
     strategyLessonId: "strategy-scanning",
     refs: refs(secondFive, 9),
   },
+];
+
+function testId(number: number) {
+  const normalized = ((number - 1) % 30) + 1;
+  return `test-${String(normalized).padStart(2, "0")}`;
+}
+
+function windowRefs(startTestNumber: number, questionIds: number[], length = 5): DrillReference[] {
+  return Array.from({ length }, (_, index) => ({
+    testId: testId(startTestNumber + index),
+    questionId: questionIds[index % questionIds.length],
+  }));
+}
+
+const questionIdsByType: Record<QuestionType, number[]> = {
+  "true-false-not-given": [1, 2, 3, 11],
+  "yes-no-not-given": [10, 20],
+  "multiple-choice": [4, 17],
+  "matching-headings": [5],
+  "matching-information": [9],
+  "matching-features": [12],
+  "sentence-completion": [6],
+  "summary-completion": [8],
+  "note-completion": [13],
+  "table-completion": [14],
+  "flow-chart-completion": [15],
+  "short-answer": [7, 19],
+  "diagram-label-completion": [16],
+  "matching-sentence-endings": [18],
+};
+
+const lessonIdByQuestionType: Record<QuestionType, string> = {
+  "true-false-not-given": "strategy-tfng",
+  "yes-no-not-given": "strategy-yes-no-not-given",
+  "multiple-choice": "strategy-multiple-choice",
+  "matching-headings": "strategy-matching-headings",
+  "matching-information": "strategy-matching-information",
+  "matching-features": "strategy-matching-features",
+  "sentence-completion": "strategy-sentence-completion",
+  "summary-completion": "strategy-summary-completion",
+  "note-completion": "strategy-note-completion",
+  "table-completion": "strategy-table-completion",
+  "flow-chart-completion": "strategy-flow-chart-completion",
+  "short-answer": "strategy-short-answer-questions",
+  "diagram-label-completion": "strategy-diagram-label-completion",
+  "matching-sentence-endings": "strategy-matching-sentence-endings",
+};
+
+const lessonIdBySkill: Partial<Record<SkillTag, string>> = {
+  "Recognising paraphrase": "strategy-paraphrase",
+  "Understanding main idea": "strategy-main-idea",
+  "Making inference": "strategy-inference",
+  "Time-efficient scanning": "strategy-scanning",
+};
+
+function strategyLessonForSkill(skill: SkillTag) {
+  return lessonIdBySkill[skill] ?? `strategy-skill-${skillSlug(skill)}`;
+}
+
+function primarySkillForQuestionType(questionType: QuestionType): SkillTag[] {
+  return QUESTION_TYPES.find((item) => item.id === questionType)?.commonSkills.slice(0, 2) ?? ["Understanding detail"];
+}
+
+function questionTypeDrillBlueprints(): DrillBlueprint[] {
+  return QUESTION_TYPES.flatMap((questionType, questionTypeIndex) =>
+    [2, 3, 4].map((variant) => ({
+      drillId: `${questionType.slug}-drill-${String(variant).padStart(3, "0")}`,
+      title: `${questionType.displayName} Drill ${variant}: ${variant === 2 ? "Evidence Control" : variant === 3 ? "Paraphrase and Traps" : "Timed Accuracy"}`,
+      practiceMode: "question-type" as const,
+      questionType: questionType.id,
+      skillFocus: primarySkillForQuestionType(questionType.id),
+      difficulty: variant === 4 ? "Hard" : questionType.difficulty,
+      estimatedTimeMinutes: variant === 4 ? 10 : questionType.estimatedTimeMinutes,
+      description: `Structured ${questionType.displayName} practice using original Academic Reading excerpts from the expanded library.`,
+      strategyLessonId: lessonIdByQuestionType[questionType.id],
+      refs: windowRefs(16 + questionTypeIndex + variant, questionIdsByType[questionType.id]),
+    })),
+  );
+}
+
+function skillDrillBlueprints(): DrillBlueprint[] {
+  return READING_SKILLS.map((skill, index) => {
+    const questionIds = skill.commonQuestionTypes.flatMap((questionType) => questionIdsByType[questionType]).slice(0, 5);
+
+    return {
+      drillId: `skill-${skill.slug}-drill-001`,
+      title: `${skill.displayName} Drill 1`,
+      practiceMode: "skill",
+      skill: skill.id,
+      skillFocus: [skill.id],
+      difficulty: skill.difficulty,
+      estimatedTimeMinutes: skill.estimatedTimeMinutes,
+      description: `Focused Academic Reading practice for ${skill.displayName.toLowerCase()}.`,
+      strategyLessonId: strategyLessonForSkill(skill.id),
+      refs: windowRefs(3 + index * 2, questionIds.length ? questionIds : [1, 4, 8, 9, 17]),
+    };
+  });
+}
+
+const trapDrillSpecs: Array<{
+  trapType: TrapType;
+  title: string;
+  skill: SkillTag;
+  questionIds: number[];
+  strategyLessonId: string;
+  difficulty: DrillBlueprint["difficulty"];
+}> = [
+  {
+    trapType: "Not Given trap",
+    title: "Not Given Trap Drill 1",
+    skill: "Distinguishing fact from claim",
+    questionIds: [3],
+    strategyLessonId: "strategy-tfng",
+    difficulty: "Medium",
+  },
+  {
+    trapType: "Extreme wording trap",
+    title: "Extreme Wording Drill 1",
+    skill: "Avoiding overgeneralisation",
+    questionIds: [2, 11],
+    strategyLessonId: "strategy-tfng",
+    difficulty: "Medium",
+  },
+  {
+    trapType: "Overgeneralisation trap",
+    title: "Overgeneralisation Drill 1",
+    skill: "Avoiding overgeneralisation",
+    questionIds: [1],
+    strategyLessonId: "strategy-tfng",
+    difficulty: "Medium",
+  },
+  {
+    trapType: "Partial match trap",
+    title: "Partial Match Drill 1",
+    skill: "Understanding main idea",
+    questionIds: [5, 18],
+    strategyLessonId: "strategy-main-idea",
+    difficulty: "Medium",
+  },
+  {
+    trapType: "Similar keyword trap",
+    title: "Similar Keyword Drill 1",
+    skill: "Locating explicit information",
+    questionIds: [7, 12, 14, 19],
+    strategyLessonId: "strategy-matching-information",
+    difficulty: "Medium",
+  },
+  {
+    trapType: "Wrong paragraph trap",
+    title: "Wrong Paragraph Drill 1",
+    skill: "Time-efficient scanning",
+    questionIds: [9],
+    strategyLessonId: "strategy-scanning",
+    difficulty: "Medium",
+  },
+  {
+    trapType: "Distractor detail trap",
+    title: "Distractor Detail Drill 1",
+    skill: "Recognising paraphrase",
+    questionIds: [4, 17],
+    strategyLessonId: "strategy-multiple-choice",
+    difficulty: "Hard",
+  },
+  {
+    trapType: "Grammar form trap",
+    title: "Grammar Form Drill 1",
+    skill: "Understanding vocabulary in context",
+    questionIds: [6, 13, 14],
+    strategyLessonId: "strategy-summary-completion",
+    difficulty: "Medium",
+  },
+  {
+    trapType: "Cause-effect confusion",
+    title: "Cause and Effect Trap Drill 1",
+    skill: "Recognising cause and effect",
+    questionIds: [15, 16],
+    strategyLessonId: "strategy-skill-recognising-cause-and-effect",
+    difficulty: "Hard",
+  },
+  {
+    trapType: "Synonym trap",
+    title: "Synonym Trap Drill 1",
+    skill: "Recognising paraphrase",
+    questionIds: [8],
+    strategyLessonId: "strategy-summary-completion",
+    difficulty: "Medium",
+  },
+  {
+    trapType: "Opposite meaning trap",
+    title: "Opposite Meaning Drill 1",
+    skill: "Recognising contrast",
+    questionIds: [2, 11],
+    strategyLessonId: "strategy-skill-recognising-contrast",
+    difficulty: "Medium",
+  },
+  {
+    trapType: "Chronology trap",
+    title: "Chronology Trap Drill 1",
+    skill: "Following reference words",
+    questionIds: [15, 18],
+    strategyLessonId: "strategy-skill-following-reference-words",
+    difficulty: "Medium",
+  },
+  {
+    trapType: "Comparison confusion",
+    title: "Comparison Confusion Drill 1",
+    skill: "Understanding comparison",
+    questionIds: [14, 17],
+    strategyLessonId: "strategy-skill-understanding-comparison",
+    difficulty: "Medium",
+  },
+  {
+    trapType: "Assumption trap",
+    title: "Assumption Trap Drill 1",
+    skill: "Making inference",
+    questionIds: [16],
+    strategyLessonId: "strategy-inference",
+    difficulty: "Hard",
+  },
+];
+
+function trapDrillBlueprints(): DrillBlueprint[] {
+  return trapDrillSpecs.map((spec, index) => ({
+    drillId: `trap-${slugifyLabel(spec.trapType)}-drill-001`,
+    title: spec.title,
+    practiceMode: "skill",
+    skill: spec.skill,
+    skillFocus: [spec.skill],
+    difficulty: spec.difficulty,
+    estimatedTimeMinutes: spec.difficulty === "Hard" ? 10 : 8,
+    description: `Trap-focused practice for ${spec.trapType.toLowerCase()} using Academic Reading evidence checks.`,
+    strategyLessonId: spec.strategyLessonId,
+    refs: windowRefs(6 + index * 2, spec.questionIds),
+    trapFocusOverride: [spec.trapType],
+  }));
+}
+
+const challengeDrillSpecs: Array<{
+  drillId: string;
+  title: string;
+  questionType?: QuestionType;
+  skill?: SkillTag;
+  questionIds: number[];
+  strategyLessonId: string;
+}> = [
+  {
+    drillId: "band9-challenge-inference-001",
+    title: "Band 8-9 Challenge Drill 1: Inference Under Pressure",
+    skill: "Making inference",
+    questionIds: [16, 17],
+    strategyLessonId: "strategy-inference",
+  },
+  {
+    drillId: "band9-challenge-multiple-choice-001",
+    title: "Band 8-9 Challenge Drill 2: Advanced Distractors",
+    questionType: "multiple-choice",
+    questionIds: [4, 17],
+    strategyLessonId: "strategy-multiple-choice",
+  },
+  {
+    drillId: "band9-challenge-headings-001",
+    title: "Band 8-9 Challenge Drill 3: Dense Paragraph Functions",
+    questionType: "matching-headings",
+    questionIds: [5],
+    strategyLessonId: "strategy-matching-headings",
+  },
+  {
+    drillId: "band9-challenge-ynng-001",
+    title: "Band 8-9 Challenge Drill 4: Writer View and Evidence",
+    questionType: "yes-no-not-given",
+    questionIds: [10, 20],
+    strategyLessonId: "strategy-yes-no-not-given",
+  },
+  {
+    drillId: "band9-challenge-summary-001",
+    title: "Band 8-9 Challenge Drill 5: Compressed Academic Meaning",
+    questionType: "summary-completion",
+    questionIds: [8, 13],
+    strategyLessonId: "strategy-summary-completion",
+  },
+  {
+    drillId: "band9-challenge-scanning-001",
+    title: "Band 8-9 Challenge Drill 6: Low-Overlap Scanning",
+    skill: "Time-efficient scanning",
+    questionIds: [9, 19],
+    strategyLessonId: "strategy-scanning",
+  },
+];
+
+function challengeDrillBlueprints(): DrillBlueprint[] {
+  return challengeDrillSpecs.map((spec) => ({
+    drillId: spec.drillId,
+    title: spec.title,
+    practiceMode: spec.questionType ? "question-type" : "skill",
+    questionType: spec.questionType,
+    skill: spec.skill,
+    skillFocus: spec.skill ? [spec.skill] : spec.questionType ? primarySkillForQuestionType(spec.questionType) : ["Making inference"],
+    difficulty: "Band 8-9 Challenge",
+    estimatedTimeMinutes: 12,
+    description: "Advanced Academic Reading practice with denser language, subtle paraphrase and less obvious evidence.",
+    strategyLessonId: spec.strategyLessonId,
+    refs: mixedRefs([10, 14, 26, 28, 30].map((testNumber, itemIndex) => [testId(testNumber), spec.questionIds[itemIndex % spec.questionIds.length]])),
+  }));
+}
+
+const drillBlueprints: DrillBlueprint[] = [
+  ...seedDrillBlueprints,
+  ...questionTypeDrillBlueprints(),
+  ...skillDrillBlueprints(),
+  ...trapDrillBlueprints(),
+  ...challengeDrillBlueprints(),
 ];
 
 export const practiceDrills: DrillSet[] = drillBlueprints.map(materializeDrill);

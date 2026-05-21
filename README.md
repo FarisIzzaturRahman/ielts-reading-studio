@@ -10,7 +10,7 @@ The current version is a stabilized MVP for exam simulation and reading practice
 
 ## Features
 
-- 15 original IELTS-style Academic Reading mini tests.
+- 30 original IELTS-style Academic Reading mini tests.
 - 2 passages and 20 questions per mini test.
 - 30-minute timer for 20-question tests.
 - Split-screen desktop test interface.
@@ -25,6 +25,7 @@ The current version is a stabilized MVP for exam simulation and reading practice
 - Review page with user answer, correct answer, explanation, evidence reference, why-correct/why-wrong notes, trap type, strategy tip, skill, and difficulty.
 - Practice Hub for focused IELTS Academic Reading drills.
 - Practice by question type and by reading skill.
+- 87 focused drills across question types, skills, traps, and Band 8-9 challenge practice.
 - Strategy lessons before drill attempts.
 - Drill scoring, drill review, mistake summary, and local practice history.
 - Centralized content taxonomy for question types, reading skills, traps, topics, difficulty, and recommendations.
@@ -103,6 +104,7 @@ docs/stabilization-step-1.md  Step 1 audit, gaps, and QA checklist
 docs/phase-2a-diagnosis.md    Phase 2A diagnosis plan and QA checklist
 docs/phase-2b-practice-mode.md Phase 2B practice mode plan and QA checklist
 docs/phase-3a-content-system.md Phase 3A taxonomy, metadata and QA pipeline
+docs/phase-3a2-large-scale-content.md Phase 3A-2 large-scale content expansion
 ```
 
 ## Content Format
@@ -196,7 +198,8 @@ Do not copy official IELTS, Cambridge, British Council, IDP, or commercial test-
 - Phase 2A: Enhanced review, skill diagnosis, mistake patterns, and basic recommendations.
 - Phase 2B: Question-type and skill-based focused practice.
 - Phase 3A: Content taxonomy, metadata standards, relationship index and validation pipeline.
-- Phase 3B: Add richer drill coverage, blueprint templates, topic balance reports and editorial QA workflow.
+- Phase 3A-2: Expand to 30 mini tests and 50+ drills with scale validation.
+- Phase 3B: Add blueprint templates, topic balance reports, UI filters and editorial QA workflow.
 - Phase 4: Add optional local trend dashboards and mistake notebook without requiring login.
 - Step 4: Add full 40-question Academic Reading simulations.
 

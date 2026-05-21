@@ -65,6 +65,8 @@ export type SentenceComplexity = "Low" | "Moderate" | "High" | "Very high";
 
 export type EvidenceStrength = "Direct" | "Paraphrased" | "Inferred" | "Distributed" | "Missing";
 
+export type ContentStatus = "draft" | "reviewed" | "validated" | "published";
+
 export type ContentRelationship = {
   contentType: "test" | "passage" | "question" | "drill" | "lesson" | "recommendation";
   contentId: string;
@@ -81,6 +83,8 @@ export type ContentRelationship = {
 };
 
 export type PassageMetadata = {
+  status: ContentStatus;
+  batchId: string;
   topic: string;
   subtopic: string;
   difficulty: ReadingDifficulty;
@@ -97,6 +101,8 @@ export type PassageMetadata = {
 };
 
 export type QuestionMetadata = {
+  status: ContentStatus;
+  batchId: string;
   questionType: QuestionType;
   primarySkill: SkillTag;
   secondarySkills: SkillTag[];
@@ -112,6 +118,8 @@ export type QuestionMetadata = {
 };
 
 export type DrillMetadata = {
+  status: ContentStatus;
+  batchId: string;
   practiceMode: PracticeMode;
   questionTypeFocus?: QuestionType;
   skillFocus: SkillTag[];
@@ -126,6 +134,8 @@ export type DrillMetadata = {
 };
 
 export type LessonMetadata = {
+  status: ContentStatus;
+  batchId: string;
   relatedQuestionTypes: QuestionType[];
   relatedSkills: SkillTag[];
   relatedTraps: TrapType[];
@@ -135,6 +145,8 @@ export type LessonMetadata = {
 };
 
 export type TestMetadata = {
+  status: ContentStatus;
+  batchId: string;
   testType: "Academic";
   difficulty: ReadingDifficulty;
   targetBand: string;

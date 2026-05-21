@@ -13,6 +13,7 @@ import type {
 } from "@/data/types";
 import type { ContentLibrary } from "@/lib/content-relationships";
 import { buildContentRelationshipIndex } from "@/lib/content-relationships";
+import { analyzeContentLibrary } from "@/lib/content-quality";
 import { countWords } from "@/lib/content-metadata";
 
 export type ValidationSeverity = "error" | "warning";
@@ -39,6 +40,7 @@ const skillIds = new Set(READING_SKILLS.map((item) => item.id));
 const trapTypeIds = new Set(TRAP_TYPES.map((item) => item.id));
 const difficultyIds = new Set(DIFFICULTY_LEVELS.map((item) => item.id));
 const topicIds = new Set(TOPICS.map((item) => item.id));
+const contentStatuses = new Set(["draft", "reviewed", "validated", "published"]);
 
 function issue(
   severity: ValidationSeverity,
@@ -136,6 +138,13 @@ export function validateMetadata(content: Passage | Question | DrillSet | Strate
   if (!("metadata" in content) || !content.metadata) {
     issues.push(issue("error", "metadata", "unknown", "metadata", "Metadata object is missing."));
     return issues;
+  }
+
+  if (!contentStatuses.has(content.metadata.status)) {
+    issues.push(issue("error", "metadata", "unknown", "metadata.status", `Unknown publishing status: ${content.metadata.status}`));
+  }
+  if (!content.metadata.batchId?.trim()) {
+    issues.push(issue("error", "metadata", "unknown", "metadata.batchId", "Content batch id is missing."));
   }
 
   if ("paragraphs" in content) {
@@ -382,6 +391,38 @@ function validateRecommendationRelationships(library: ContentLibrary): Validatio
   return issues;
 }
 
+function validateScaleReadiness(library: ContentLibrary): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const quality = analyzeContentLibrary(library);
+
+  if (library.tests.length < 30) {
+    issues.push(issue("error", "metadata", "content-library", "tests", "Phase 3A-2 requires at least 30 Academic mini tests."));
+  }
+  if (library.drills.length < 50) {
+    issues.push(issue("error", "metadata", "content-library", "drills", "Phase 3A-2 requires at least 50 focused drills."));
+  }
+
+  for (const questionType of quality.coverageGaps.questionTypesWithoutDrills) {
+    issues.push(issue("warning", "relationship", questionType, "questionType", "No focused drill currently targets this question type."));
+  }
+  for (const skill of quality.coverageGaps.skillsWithoutDrills) {
+    issues.push(issue("warning", "relationship", skill, "skill", "No focused drill currently targets this skill."));
+  }
+
+  const missingDifficulty = DIFFICULTY_LEVELS.filter(
+    (difficulty) => !quality.difficultyDistribution.some((entry) => entry.id === difficulty.id && entry.count > 0),
+  );
+  for (const difficulty of missingDifficulty) {
+    issues.push(issue("warning", "metadata", difficulty.id, "difficulty", "No content currently uses this difficulty level."));
+  }
+
+  if (quality.duplicateQuestionPrompts.some((entry) => entry.count > 100)) {
+    issues.push(issue("warning", "question", "content-library", "prompt", "Some generated prompt templates are heavily reused and should be diversified in editorial batches."));
+  }
+
+  return issues;
+}
+
 export function validateContentLibrary(library: ContentLibrary): ValidationReport {
   const lessonIds = new Set(library.lessons.map((lesson) => lesson.lessonId));
   const issues = [
@@ -390,6 +431,7 @@ export function validateContentLibrary(library: ContentLibrary): ValidationRepor
     ...library.drills.flatMap((drill) => validateDrill(drill, lessonIds)),
     ...library.lessons.flatMap(validateLesson),
     ...validateRecommendationRelationships(library),
+    ...validateScaleReadiness(library),
   ];
 
   return {

@@ -1,4 +1,6 @@
 import { buildLessonMetadata, inferLessonTraps } from "@/lib/content-metadata";
+import { QUESTION_TYPES, type QuestionTypeTaxonomyItem } from "./taxonomy/question-types";
+import { READING_SKILLS, type SkillTaxonomyItem } from "./taxonomy/skills";
 import { slugifyLabel } from "./taxonomy/utils";
 import type { QuestionType, ReadingDifficulty, SkillTag, StrategyLesson, TrapType } from "./types";
 
@@ -308,7 +310,53 @@ const strategyLessonBlueprints: StrategyLessonBlueprint[] = [
   },
 ];
 
-export const strategyLessons: StrategyLesson[] = strategyLessonBlueprints.map(enrichStrategyLesson);
+function createQuestionTypeLesson(questionType: QuestionTypeTaxonomyItem): StrategyLessonBlueprint {
+  return {
+    lessonId: `strategy-${questionType.slug}`,
+    title: `${questionType.displayName} Strategy`,
+    questionType: questionType.id,
+    skillFocus: questionType.commonSkills.length ? questionType.commonSkills.slice(0, 2) : ["Understanding detail"],
+    whatItTests: questionType.tests,
+    whyItMatters: `${questionType.displayName} questions reward careful evidence checking rather than keyword matching alone.`,
+    steps: questionType.recommendedStrategies,
+    commonTraps: questionType.commonTraps.map((trap) => `${trap}: the passage may mention related information while changing the exact meaning.`),
+    workedExample: {
+      statement: `A ${questionType.displayName} item asks about the exact meaning of a short academic claim.`,
+      passageText: "The passage supports a narrower version of the claim and includes a limiting phrase.",
+      answer: "Choose the option that matches the supported meaning only.",
+      explanation: "The correct response must preserve the passage's scope, evidence and grammar.",
+    },
+  };
+}
+
+function createSkillLesson(skill: SkillTaxonomyItem): StrategyLessonBlueprint {
+  return {
+    lessonId: `strategy-skill-${skill.slug}`,
+    title: `${skill.displayName} Strategy`,
+    skill: skill.id,
+    skillFocus: [skill.id],
+    whatItTests: skill.description,
+    whyItMatters: skill.whyItMatters,
+    steps: skill.strategy,
+    commonTraps: skill.commonTrapTypes.map((trap) => `${trap}: ${skill.commonMistakes[0] ?? "the question may attract a quick but unsupported answer."}`),
+    workedExample: {
+      statement: `Practise ${skill.displayName.toLowerCase()} with a short evidence-based item.`,
+      passageText: "The passage gives enough evidence, but the wording is not identical to the question.",
+      answer: "Use the evidence, not outside knowledge.",
+      explanation: "This skill improves when you compare the full meaning of the question with the passage.",
+    },
+  };
+}
+
+const authoredQuestionTypeIds = new Set(strategyLessonBlueprints.flatMap((lesson) => (lesson.questionType ? [lesson.questionType] : [])));
+const authoredSkillIds = new Set(strategyLessonBlueprints.flatMap((lesson) => (lesson.skill ? [lesson.skill] : [])));
+
+const supplementaryLessonBlueprints: StrategyLessonBlueprint[] = [
+  ...QUESTION_TYPES.filter((questionType) => !authoredQuestionTypeIds.has(questionType.id)).map(createQuestionTypeLesson),
+  ...READING_SKILLS.filter((skill) => !authoredSkillIds.has(skill.id)).map(createSkillLesson),
+];
+
+export const strategyLessons: StrategyLesson[] = [...strategyLessonBlueprints, ...supplementaryLessonBlueprints].map(enrichStrategyLesson);
 
 export function getStrategyLesson(lessonId: string) {
   return strategyLessons.find((lesson) => lesson.lessonId === lessonId);

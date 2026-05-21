@@ -1,13 +1,31 @@
 import { contentLibrary } from "../src/data/content-library";
+import { analyzeContentLibrary } from "../src/lib/content-quality";
 import { validateContentLibrary } from "../src/lib/validation/content";
 
 const report = validateContentLibrary(contentLibrary);
+const quality = analyzeContentLibrary(contentLibrary);
 
 const { errors, warnings, checkedItems } = report.summary;
 
 console.log(`Content validation checked ${checkedItems} items.`);
 console.log(`Errors: ${errors}`);
 console.log(`Warnings: ${warnings}`);
+console.log("");
+console.log(
+  `Library scale: ${quality.totals.tests} mini tests, ${quality.totals.drills} drills, ${quality.totals.lessons} lessons, ${quality.totals.testQuestions} test questions, ${quality.totals.drillQuestions} drill questions.`,
+);
+console.log(
+  `Difficulty mix: ${quality.difficultyDistribution.map((entry) => `${entry.label} ${entry.count}`).join(", ")}`,
+);
+console.log(
+  `Question-type coverage: ${quality.coverageGaps.questionTypesWithoutDrills.length ? `${quality.coverageGaps.questionTypesWithoutDrills.length} gaps` : "all question types have drills"}.`,
+);
+console.log(
+  `Skill coverage: ${quality.coverageGaps.skillsWithoutDrills.length ? `${quality.coverageGaps.skillsWithoutDrills.length} gaps` : "all skills have drills"}.`,
+);
+console.log(
+  `Trap coverage: ${quality.coverageGaps.trapsWithoutDrills.length ? `${quality.coverageGaps.trapsWithoutDrills.length} trap expansion gaps` : "all major traps have drills"}.`,
+);
 
 if (report.issues.length) {
   console.log("");

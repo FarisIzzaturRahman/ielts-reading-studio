@@ -48,6 +48,17 @@ function difficultyScore(difficulty: ReadingDifficulty) {
   return 90;
 }
 
+function batchIdFromNumber(value: number) {
+  if (value <= 15) return "phase-2-seed-content";
+  if (value <= 25) return "phase-3a2-batch-1";
+  if (value <= 30) return "phase-3a2-challenge-and-diversity";
+  return "phase-3a2-expansion";
+}
+
+function testNumberFromId(testId: string) {
+  return Number(testId.match(/(\d+)$/)?.[1] ?? 0);
+}
+
 export function cognitiveLevelForQuestion(type: QuestionType, answer: string): CognitiveLevel {
   if (answer === "Not Given") return "Analyse";
 
@@ -85,6 +96,7 @@ export function buildPassageMetadata(
     difficulty: ReadingDifficulty;
     estimatedBand: string;
     subtopic?: string;
+    batchId?: string;
   },
 ): PassageMetadata {
   const text = passage.paragraphs.map((paragraph) => paragraph.text).join(" ");
@@ -95,6 +107,8 @@ export function buildPassageMetadata(
   const topicId = inferTopicId(`${passage.topic} ${passage.title}`);
 
   return {
+    status: "published",
+    batchId: context.batchId ?? "phase-3a2-generated-passage",
     topic: topicId,
     subtopic: context.subtopic ?? passage.topic,
     difficulty: context.difficulty,
@@ -118,6 +132,8 @@ export function buildQuestionMetadata(question: Omit<Question, "metadata">): Que
   const cognitiveModifier = cognitiveLevelForQuestion(question.type, question.answer) === "Infer" ? 8 : 0;
 
   return {
+    status: "published",
+    batchId: question.tags.find((tag) => tag.startsWith("phase-")) ?? "phase-3a2-generated-question",
     questionType: question.type,
     primarySkill: question.skill,
     secondarySkills,
@@ -150,6 +166,8 @@ export function recommendationCategoryForDrill(
 
 export function buildDrillMetadata(drill: Omit<DrillSet, "metadata">): DrillMetadata {
   return {
+    status: "published",
+    batchId: drill.tags.find((tag) => tag.startsWith("phase-")) ?? "phase-3a2-drill-expansion",
     practiceMode: drill.practiceMode,
     questionTypeFocus: drill.questionType,
     skillFocus: drill.skillFocus,
@@ -166,6 +184,8 @@ export function buildDrillMetadata(drill: Omit<DrillSet, "metadata">): DrillMeta
 
 export function buildLessonMetadata(lesson: Omit<StrategyLesson, "metadata">): LessonMetadata {
   return {
+    status: "published",
+    batchId: lesson.tags.find((tag) => tag.startsWith("phase-")) ?? "phase-3a2-lesson-expansion",
     relatedQuestionTypes: lesson.relatedQuestionTypes,
     relatedSkills: lesson.relatedSkills,
     relatedTraps: lesson.relatedTraps,
@@ -176,7 +196,11 @@ export function buildLessonMetadata(lesson: Omit<StrategyLesson, "metadata">): L
 }
 
 export function buildTestMetadata(test: Omit<ReadingTest, "metadata">): TestMetadata {
+  const testNumber = testNumberFromId(test.testId);
+
   return {
+    status: "published",
+    batchId: batchIdFromNumber(testNumber),
     testType: "Academic",
     difficulty: test.difficulty,
     targetBand: test.targetBand,
