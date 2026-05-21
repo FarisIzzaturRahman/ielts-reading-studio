@@ -1,12 +1,34 @@
 import type { DrillSet, Passage, Question, QuestionType, SkillTag } from "./types";
 import { readingTests } from "./tests";
+import {
+  buildDrillMetadata,
+  buildDrillRelationships,
+  buildPassageMetadata,
+  buildQuestionMetadata,
+  inferTargetBand,
+  inferTopicFocus,
+  inferTrapFocus,
+  recommendationCategoryForDrill,
+} from "@/lib/content-metadata";
 
 type DrillReference = {
   testId: string;
   questionId: number;
 };
 
-type DrillBlueprint = Omit<DrillSet, "passages" | "questions"> & {
+type DrillBlueprint = Omit<
+  DrillSet,
+  | "passages"
+  | "questions"
+  | "trapFocus"
+  | "targetBand"
+  | "totalQuestions"
+  | "topicFocus"
+  | "recommendationCategory"
+  | "tags"
+  | "relationships"
+  | "metadata"
+> & {
   refs: DrillReference[];
 };
 
@@ -31,13 +53,21 @@ function createExcerptPassage(passage: Passage, question: Question, passageId: s
   const paragraphs = question.paragraphRef
     ? passage.paragraphs.filter((paragraph) => paragraph.label === question.paragraphRef)
     : passage.paragraphs;
-
-  return {
+  const excerptWithoutMetadata: Omit<Passage, "metadata"> = {
     ...passage,
     passageId,
     title: `${passage.title} (${sourceTitle})`,
     sourceNote: "Original IELTS-style practice excerpt created for this app.",
     paragraphs: paragraphs.length ? paragraphs : passage.paragraphs,
+  };
+
+  return {
+    ...excerptWithoutMetadata,
+    metadata: buildPassageMetadata(excerptWithoutMetadata, {
+      difficulty: question.difficulty,
+      estimatedBand: passage.metadata.estimatedBand,
+      subtopic: passage.metadata.subtopic,
+    }),
   };
 }
 
@@ -50,7 +80,7 @@ function materializeDrill(blueprint: DrillBlueprint): DrillSet {
     const excerpt = createExcerptPassage(passage, question, passageId, test.title);
     passages.push(excerpt);
 
-    return {
+    const questionWithoutMetadata: Omit<Question, "metadata"> = {
       ...question,
       id: index + 1,
       questionNumber: index + 1,
@@ -60,12 +90,54 @@ function materializeDrill(blueprint: DrillBlueprint): DrillSet {
       whyCorrect: `The correct answer is ${question.answer} because the evidence in the excerpt supports that meaning.`,
       tags: [...question.tags, "focused-drill", blueprint.drillId],
     };
+
+    return {
+      ...questionWithoutMetadata,
+      metadata: buildQuestionMetadata(questionWithoutMetadata),
+    };
   });
 
-  return {
-    ...blueprint,
+  const baseDrill = {
+    drillId: blueprint.drillId,
+    title: blueprint.title,
+    practiceMode: blueprint.practiceMode,
+    questionType: blueprint.questionType,
+    skill: blueprint.skill,
+    skillFocus: blueprint.skillFocus,
+    difficulty: blueprint.difficulty,
+    estimatedTimeMinutes: blueprint.estimatedTimeMinutes,
+    description: blueprint.description,
+    strategyLessonId: blueprint.strategyLessonId,
+  };
+  const drillWithoutMetadata: Omit<DrillSet, "metadata"> = {
+    ...baseDrill,
     passages,
     questions,
+    trapFocus: inferTrapFocus(questions),
+    targetBand: inferTargetBand(blueprint.difficulty),
+    totalQuestions: questions.length,
+    topicFocus: inferTopicFocus(passages),
+    recommendationCategory: recommendationCategoryForDrill({
+      practiceMode: blueprint.practiceMode,
+      trapFocus: inferTrapFocus(questions),
+      questionType: blueprint.questionType,
+      skill: blueprint.skill,
+    }),
+    tags: [
+      "academic-reading",
+      "focused-drill",
+      blueprint.practiceMode,
+      blueprint.questionType ?? "skill-practice",
+      blueprint.skill ?? "question-type-practice",
+      blueprint.difficulty.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    ],
+    relationships: [],
+  };
+
+  return {
+    ...drillWithoutMetadata,
+    relationships: buildDrillRelationships(drillWithoutMetadata),
+    metadata: buildDrillMetadata(drillWithoutMetadata),
   };
 }
 

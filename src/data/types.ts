@@ -1,3 +1,7 @@
+import type { CognitiveLevel } from "./taxonomy/cognitive-levels";
+import type { PassageStyle } from "./taxonomy/passage-styles";
+import type { RecommendationType } from "./taxonomy/recommendation-types";
+
 export type ReadingDifficulty =
   | "Easy"
   | "Medium"
@@ -55,6 +59,92 @@ export type TrapType =
   | "Assumption trap"
   | "No major trap";
 
+export type DensityLevel = "Low" | "Moderate" | "High" | "Very high";
+
+export type SentenceComplexity = "Low" | "Moderate" | "High" | "Very high";
+
+export type EvidenceStrength = "Direct" | "Paraphrased" | "Inferred" | "Distributed" | "Missing";
+
+export type ContentRelationship = {
+  contentType: "test" | "passage" | "question" | "drill" | "lesson" | "recommendation";
+  contentId: string;
+  relationship:
+    | "belongs-to-topic"
+    | "targets-question-type"
+    | "targets-skill"
+    | "targets-trap"
+    | "uses-lesson"
+    | "contains-question"
+    | "contains-passage"
+    | "recommended-after";
+  targetId: string;
+};
+
+export type PassageMetadata = {
+  topic: string;
+  subtopic: string;
+  difficulty: ReadingDifficulty;
+  estimatedBand: string;
+  passageStyle: PassageStyle;
+  wordCount: number;
+  paragraphCount: number;
+  lexicalDensity: DensityLevel;
+  sentenceComplexity: SentenceComplexity;
+  inferenceDensity: DensityLevel;
+  paraphraseDensity: DensityLevel;
+  estimatedReadingTime: number;
+  tags: string[];
+};
+
+export type QuestionMetadata = {
+  questionType: QuestionType;
+  primarySkill: SkillTag;
+  secondarySkills: SkillTag[];
+  trapType: TrapType;
+  difficulty: ReadingDifficulty;
+  cognitiveLevel: CognitiveLevel;
+  evidenceStrength: EvidenceStrength;
+  evidenceParagraph?: string;
+  evidenceText?: string;
+  strategyTip: string;
+  estimatedDifficultyScore: number;
+  tags: string[];
+};
+
+export type DrillMetadata = {
+  practiceMode: PracticeMode;
+  questionTypeFocus?: QuestionType;
+  skillFocus: SkillTag[];
+  trapFocus: TrapType[];
+  difficulty: ReadingDifficulty;
+  targetBand: string;
+  estimatedTimeMinutes: number;
+  totalQuestions: number;
+  topicFocus: string[];
+  recommendationCategory: RecommendationType;
+  tags: string[];
+};
+
+export type LessonMetadata = {
+  relatedQuestionTypes: QuestionType[];
+  relatedSkills: SkillTag[];
+  relatedTraps: TrapType[];
+  targetLevel: ReadingDifficulty;
+  estimatedStudyTime: number;
+  tags: string[];
+};
+
+export type TestMetadata = {
+  testType: "Academic";
+  difficulty: ReadingDifficulty;
+  targetBand: string;
+  totalPassages: number;
+  totalQuestions: number;
+  estimatedTimeMinutes: number;
+  topicFocus: string[];
+  tags: string[];
+};
+
 export type PassageParagraph = {
   label: string;
   text: string;
@@ -66,6 +156,7 @@ export type Passage = {
   topic: string;
   sourceNote: string;
   paragraphs: PassageParagraph[];
+  metadata: PassageMetadata;
 };
 
 export type Question = {
@@ -91,6 +182,7 @@ export type Question = {
   maxWords?: number;
   paragraphRef?: string;
   tags: string[];
+  metadata: QuestionMetadata;
 };
 
 export type ReadingTest = {
@@ -107,6 +199,7 @@ export type ReadingTest = {
   totalQuestions: number;
   passages: Passage[];
   questions: Question[];
+  metadata: TestMetadata;
 };
 
 export type UserAnswers = Record<number, string>;
@@ -128,11 +221,18 @@ export type StrategyLesson = {
   questionType?: QuestionType;
   skill?: SkillTag;
   skillFocus: SkillTag[];
+  relatedQuestionTypes: QuestionType[];
+  relatedSkills: SkillTag[];
+  relatedTraps: TrapType[];
+  targetLevel: ReadingDifficulty;
+  estimatedStudyTime: number;
   whatItTests: string;
   whyItMatters: string;
   steps: string[];
   commonTraps: string[];
   workedExample: WorkedExample;
+  tags: string[];
+  metadata: LessonMetadata;
 };
 
 export type DrillSet = {
@@ -142,10 +242,18 @@ export type DrillSet = {
   questionType?: QuestionType;
   skill?: SkillTag;
   skillFocus: SkillTag[];
+  trapFocus: TrapType[];
   difficulty: ReadingDifficulty;
+  targetBand: string;
   estimatedTimeMinutes: number;
+  totalQuestions: number;
+  topicFocus: string[];
+  recommendationCategory: RecommendationType;
   description: string;
   strategyLessonId: string;
   passages: Passage[];
   questions: Question[];
+  tags: string[];
+  relationships: ContentRelationship[];
+  metadata: DrillMetadata;
 };

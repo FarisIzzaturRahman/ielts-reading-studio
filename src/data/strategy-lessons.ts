@@ -1,6 +1,55 @@
-import type { StrategyLesson } from "./types";
+import { buildLessonMetadata, inferLessonTraps } from "@/lib/content-metadata";
+import { slugifyLabel } from "./taxonomy/utils";
+import type { QuestionType, ReadingDifficulty, SkillTag, StrategyLesson, TrapType } from "./types";
 
-export const strategyLessons: StrategyLesson[] = [
+type StrategyLessonBlueprint = Omit<
+  StrategyLesson,
+  | "relatedQuestionTypes"
+  | "relatedSkills"
+  | "relatedTraps"
+  | "targetLevel"
+  | "estimatedStudyTime"
+  | "tags"
+  | "metadata"
+>;
+
+function inferTargetLevel(lesson: StrategyLessonBlueprint): ReadingDifficulty {
+  if (lesson.questionType === "multiple-choice" || lesson.skill === "Making inference") return "Hard";
+  if (lesson.skillFocus.includes("Time-efficient scanning")) return "Easy";
+  return "Medium";
+}
+
+function enrichStrategyLesson(lesson: StrategyLessonBlueprint): StrategyLesson {
+  const relatedQuestionTypes: QuestionType[] = lesson.questionType ? [lesson.questionType] : [];
+  const relatedSkills: SkillTag[] = [...new Set([...(lesson.skill ? [lesson.skill] : []), ...lesson.skillFocus])];
+  const relatedTraps: TrapType[] = inferLessonTraps(lesson.commonTraps);
+  const targetLevel = inferTargetLevel(lesson);
+  const estimatedStudyTime = Math.max(4, Math.min(8, Math.ceil((lesson.steps.length + lesson.commonTraps.length) / 2)));
+  const tags = [
+    "academic-reading",
+    "strategy-lesson",
+    ...relatedQuestionTypes.map(slugifyLabel),
+    ...relatedSkills.map(slugifyLabel),
+    ...relatedTraps.map(slugifyLabel),
+  ];
+
+  const lessonWithoutMetadata: Omit<StrategyLesson, "metadata"> = {
+    ...lesson,
+    relatedQuestionTypes,
+    relatedSkills,
+    relatedTraps,
+    targetLevel,
+    estimatedStudyTime,
+    tags,
+  };
+
+  return {
+    ...lessonWithoutMetadata,
+    metadata: buildLessonMetadata(lessonWithoutMetadata),
+  };
+}
+
+const strategyLessonBlueprints: StrategyLessonBlueprint[] = [
   {
     lessonId: "strategy-tfng",
     title: "True / False / Not Given Strategy",
@@ -258,6 +307,8 @@ export const strategyLessons: StrategyLesson[] = [
     },
   },
 ];
+
+export const strategyLessons: StrategyLesson[] = strategyLessonBlueprints.map(enrichStrategyLesson);
 
 export function getStrategyLesson(lessonId: string) {
   return strategyLessons.find((lesson) => lesson.lessonId === lessonId);

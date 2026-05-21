@@ -1,4 +1,4 @@
-import type { Question, ReadingDifficulty, ReadingTest } from "./types";
+import type { Passage, Question, ReadingDifficulty, ReadingTest } from "./types";
 import {
   secondarySkillsForQuestion,
   skillForQuestion,
@@ -7,6 +7,7 @@ import {
   whyCorrectForQuestion,
   whyWrongForQuestion,
 } from "@/lib/review-metadata";
+import { buildPassageMetadata, buildQuestionMetadata, buildTestMetadata } from "@/lib/content-metadata";
 
 type TopicBlueprint = {
   testId: string;
@@ -349,7 +350,7 @@ const BLUEPRINTS: TopicBlueprint[] = [
 ];
 
 function makePassages(blueprint: TopicBlueprint): ReadingTest["passages"] {
-  return [
+  const passages: Array<Omit<Passage, "metadata">> = [
     {
       passageId: "p1",
       title: blueprint.passageOneTitle,
@@ -407,6 +408,15 @@ function makePassages(blueprint: TopicBlueprint): ReadingTest["passages"] {
       ],
     },
   ];
+
+  return passages.map((passage) => ({
+    ...passage,
+    metadata: buildPassageMetadata(passage, {
+      difficulty: blueprint.difficulty,
+      estimatedBand: blueprint.targetBand,
+      subtopic: blueprint.paragraphFocus,
+    }),
+  }));
 }
 
 function makeQuestions(blueprint: TopicBlueprint): Question[] {
@@ -422,6 +432,7 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       | "strategyTip"
       | "whyCorrect"
       | "whyWrong"
+      | "metadata"
     >
   > = [
     {
@@ -693,13 +704,13 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       ? `Paragraph ${question.paragraphRef}`
       : question.answer === "Not Given"
         ? "No specific paragraph"
-        : undefined;
+        : "Passage-wide evidence";
     const evidenceText = question.paragraphRef
       ? `Passage ${question.passageId.replace("p", "")}, Paragraph ${question.paragraphRef}: ${question.explanation}`
       : question.answer === "Not Given"
         ? "The passage does not provide enough information to confirm or contradict this statement."
         : question.explanation;
-    const enrichedQuestion = {
+    const enrichedQuestionWithoutMetadata = {
       ...question,
       questionNumber: question.id,
       evidenceParagraph,
@@ -717,16 +728,21 @@ function makeQuestions(blueprint: TopicBlueprint): Question[] {
       ],
     };
 
+    const enrichedQuestion = {
+      ...enrichedQuestionWithoutMetadata,
+      whyCorrect: whyCorrectForQuestion(enrichedQuestionWithoutMetadata),
+      whyWrong: whyWrongForQuestion(enrichedQuestionWithoutMetadata),
+    };
+
     return {
       ...enrichedQuestion,
-      whyCorrect: whyCorrectForQuestion(enrichedQuestion),
-      whyWrong: whyWrongForQuestion(enrichedQuestion),
+      metadata: buildQuestionMetadata(enrichedQuestion),
     };
   });
 }
 
 function makeTest(blueprint: TopicBlueprint): ReadingTest {
-  return {
+  const testWithoutMetadata: Omit<ReadingTest, "metadata"> = {
     testId: blueprint.testId,
     title: blueprint.title,
     description: `${blueprint.topic} mini simulation for IELTS Academic Reading self-study.`,
@@ -740,6 +756,11 @@ function makeTest(blueprint: TopicBlueprint): ReadingTest {
     totalQuestions: 20,
     passages: makePassages(blueprint),
     questions: makeQuestions(blueprint),
+  };
+
+  return {
+    ...testWithoutMetadata,
+    metadata: buildTestMetadata(testWithoutMetadata),
   };
 }
 

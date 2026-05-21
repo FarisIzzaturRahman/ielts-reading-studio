@@ -27,6 +27,10 @@ The current version is a stabilized MVP for exam simulation and reading practice
 - Practice by question type and by reading skill.
 - Strategy lessons before drill attempts.
 - Drill scoring, drill review, mistake summary, and local practice history.
+- Centralized content taxonomy for question types, reading skills, traps, topics, difficulty, and recommendations.
+- Structured metadata for tests, passages, questions, drills, and lessons.
+- Content relationship index for future recommendation and adaptive-practice features.
+- Content validation command for taxonomy, metadata, evidence, and relationship checks.
 - Retake/restart support.
 
 ## IELTS Academic-Only Scope
@@ -64,6 +68,7 @@ npm run start -- --port 3002
 
 ```bash
 npm run lint
+npm run validate:content
 npm run build
 npm run dev
 npm run start
@@ -75,22 +80,29 @@ npm run start
 src/app/                 App Router pages
 src/components/          UI and simulator workflow components
 src/components/practice/ Focused-practice UI components
+src/data/content-library.ts  Central content registry and relationship index
 src/data/drills.ts       Question-type and skill drill content
 src/data/strategy-lessons.ts  Short practice strategy lessons
+src/data/taxonomy/       Master taxonomy definitions
 src/data/tests.ts        Original Academic Reading test seed content
 src/data/types.ts        Stabilized reading-test schema
 src/lib/attempt.ts       Start, restart, status, and result helpers
+src/lib/content-metadata.ts Metadata builders for generated content
+src/lib/content-relationships.ts Queryable content relationship index
 src/lib/diagnosis.ts     Performance, mistake pattern, and recommendation logic
 src/lib/drill-scoring.ts Focused-practice scoring and feedback
 src/lib/practice-storage.ts Browser-only drill progress and result storage
-src/lib/taxonomy.ts      Question type and skill taxonomy
+src/lib/taxonomy.ts      Compatibility re-export for taxonomy helpers
+src/lib/validation/      Content QA and validation utilities
 src/lib/scoring.ts       Answer normalization and scoring
 src/lib/storage.ts       Safe LocalStorage helpers
 src/lib/timer.ts         Deadline-based timer helpers
+scripts/validate-content.ts Content validation script
 docs/product-plan.md     Product strategy and architecture
 docs/stabilization-step-1.md  Step 1 audit, gaps, and QA checklist
 docs/phase-2a-diagnosis.md    Phase 2A diagnosis plan and QA checklist
 docs/phase-2b-practice-mode.md Phase 2B practice mode plan and QA checklist
+docs/phase-3a-content-system.md Phase 3A taxonomy, metadata and QA pipeline
 ```
 
 ## Content Format
@@ -141,6 +153,25 @@ Each focused drill includes:
 - `strategyLessonId`
 - `passages`
 - `questions`
+- `trapFocus`
+- `targetBand`
+- `totalQuestions`
+- `topicFocus`
+- `recommendationCategory`
+- `relationships`
+- `metadata`
+
+The master taxonomy lives in `src/data/taxonomy/`. Use those definitions instead of typing display labels manually.
+
+## Content Validation
+
+Run the content QA pipeline before publishing new tests, drills, lessons, or taxonomy changes:
+
+```bash
+npm run validate:content
+```
+
+The validator checks taxonomy uniqueness, metadata consistency, evidence references, Academic-only scope, drill lesson links, question counts, and recommendation relationships. Errors fail the command; warnings identify content expansion gaps or editorial items to review.
 
 ## Deployment
 
@@ -164,8 +195,9 @@ Do not copy official IELTS, Cambridge, British Council, IDP, or commercial test-
 - Step 1: Stabilize the simulator and mini-test workflow.
 - Phase 2A: Enhanced review, skill diagnosis, mistake patterns, and basic recommendations.
 - Phase 2B: Question-type and skill-based focused practice.
-- Phase 2C: Add richer drill coverage, local trend dashboard and mistake notebook.
-- Step 3: Add optional learner progress dashboards without requiring login.
+- Phase 3A: Content taxonomy, metadata standards, relationship index and validation pipeline.
+- Phase 3B: Add richer drill coverage, blueprint templates, topic balance reports and editorial QA workflow.
+- Phase 4: Add optional local trend dashboards and mistake notebook without requiring login.
 - Step 4: Add full 40-question Academic Reading simulations.
 
 ## License Recommendation
