@@ -60,7 +60,6 @@ export function ResultPageClient({ test }: { test: ReadingTest }) {
   const score = scoreTest(test, savedResult.answers);
   const diagnosis = savedResult.diagnosis ?? generateDiagnosis(test.testId, score, savedResult.submittedAt);
   const nextTest = getRecommendedNextTest(test.testId, score.correct);
-  const passageTitleById = new Map(test.passages.map((passage) => [passage.passageId, passage.title]));
 
   return (
     <div className="space-y-6">
@@ -99,11 +98,7 @@ export function ResultPageClient({ test }: { test: ReadingTest }) {
         <h2 className="text-xl font-semibold tracking-tight text-slate-950">Answer explanations</h2>
         <div className="mt-5 grid gap-4">
           {score.questionResults.slice(0, 6).map((result) => (
-            <ReviewQuestion
-              key={result.question.id}
-              result={result}
-              passageTitle={passageTitleById.get(result.question.passageId)}
-            />
+            <ReviewQuestion key={result.question.id} result={result} />
           ))}
         </div>
         <Link

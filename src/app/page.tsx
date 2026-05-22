@@ -14,9 +14,8 @@ export default function Home() {
               Practice IELTS Academic Reading in a focused exam-like workspace.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-              Free, no-login IELTS Academic Reading practice for self-learners at every level. Start with{" "}
-              {readingTests.length} human-reviewed mini simulations: two passages, twenty questions, timed
-              practice, scoring and review.
+              Free, no-login IELTS Academic Reading simulation for self-learners. Start with {readingTests.length}{" "}
+              human-reviewed tests: one long passage, twenty questions, timed practice, scoring and review.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -41,12 +40,12 @@ export default function Home() {
             </div>
           </div>
           <div className="test-panel p-6">
-            <h2 className="text-xl font-semibold tracking-tight text-slate-950">Mini-test mode</h2>
+            <h2 className="text-xl font-semibold tracking-tight text-slate-950">Simulation mode</h2>
             <div className="mt-5 grid gap-4">
               {[
-                ["20 questions", "A shorter Academic Reading format built for daily repetition."],
+                ["20 questions", "A compact Reading simulation built around one continuous passage."],
                 ["30 minutes", "Half-length timing that creates realistic exam pressure."],
-                ["Full IELTS path", "Designed to expand into 40 questions and 60 minutes."],
+                ["Review after submission", "Compare your answers with evidence and explanations after the test."],
               ].map(([title, body]) => (
                 <div key={title} className="rounded-md bg-slate-50 p-4">
                   <p className="font-semibold text-slate-950">{title}</p>
@@ -101,7 +100,7 @@ export default function Home() {
           <h2 className="text-2xl font-semibold tracking-tight text-slate-950">Band score motivation</h2>
           <p className="mt-3 max-w-3xl leading-7 text-slate-600">
             High-band Academic Reading performance is built from exact evidence location, paraphrase recognition
-            and disciplined time control. This mini-test conversion helps self-learners track momentum while
+            and disciplined time control. This test conversion helps self-learners track momentum while
             remembering that the official IELTS Academic Reading test uses 40 questions.
           </p>
         </div>

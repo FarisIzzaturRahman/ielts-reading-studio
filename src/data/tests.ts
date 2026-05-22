@@ -1,5 +1,6 @@
 import type {
   Passage,
+  PassageParagraph,
   Question,
   ReadingDifficulty,
   ReadingTest,
@@ -100,6 +101,143 @@ function makeTest(input: {
 
 function q(input: QuestionSeed): QuestionSeed {
   return input;
+}
+
+const EXAM_PASSAGE_ID = "p1";
+
+function paragraphLabel(index: number) {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  if (index < alphabet.length) return alphabet[index];
+
+  const first = Math.floor(index / alphabet.length) - 1;
+  const second = index % alphabet.length;
+  return `${alphabet[first] ?? "Z"}${alphabet[second]}`;
+}
+
+function remapParagraphLetter(
+  passageId: string,
+  letter: string | undefined,
+  labelMap: Map<string, string>,
+) {
+  if (!letter) return letter;
+  return labelMap.get(`${passageId}:${letter}`) ?? letter;
+}
+
+function remapParagraphReferences(
+  text: string | undefined,
+  passageId: string,
+  labelMap: Map<string, string>,
+) {
+  if (!text) return text;
+
+  return text
+    .replace(/\bParagraphs?\s+([A-Z])\s*[-–]\s*([A-Z])\b/g, (match, start, end) => {
+      const mappedStart = remapParagraphLetter(passageId, start, labelMap);
+      const mappedEnd = remapParagraphLetter(passageId, end, labelMap);
+      return match.startsWith("Paragraphs")
+        ? `Paragraphs ${mappedStart}-${mappedEnd}`
+        : `Paragraph ${mappedStart}-${mappedEnd}`;
+    })
+    .replace(/\bParagraphs?\s+([A-Z])\s+(and|or)\s+([A-Z])\b/g, (match, first, joiner, second) => {
+      const mappedFirst = remapParagraphLetter(passageId, first, labelMap);
+      const mappedSecond = remapParagraphLetter(passageId, second, labelMap);
+      return match.startsWith("Paragraphs")
+        ? `Paragraphs ${mappedFirst} ${joiner} ${mappedSecond}`
+        : `Paragraph ${mappedFirst} ${joiner} ${mappedSecond}`;
+    })
+    .replace(/\bParagraph\s+([A-Z])\b/g, (_match, letter) => {
+      return `Paragraph ${remapParagraphLetter(passageId, letter, labelMap)}`;
+    });
+}
+
+function usesParagraphLetterAnswers(question: Question) {
+  return question.type === "matching-information";
+}
+
+function remapParagraphAnswer(
+  value: string | undefined,
+  question: Question,
+  labelMap: Map<string, string>,
+) {
+  if (!value || !usesParagraphLetterAnswers(question)) return value;
+  return remapParagraphLetter(question.passageId, value, labelMap);
+}
+
+function mergePassagesForExamView(test: ReadingTest, index: number): ReadingTest {
+  const labelMap = new Map<string, string>();
+  const mergedParagraphs: PassageParagraph[] = [];
+
+  for (const passage of test.passages) {
+    for (const paragraph of passage.paragraphs) {
+      const nextLabel = paragraphLabel(mergedParagraphs.length);
+      labelMap.set(`${passage.passageId}:${paragraph.label}`, nextLabel);
+      mergedParagraphs.push({
+        label: nextLabel,
+        text: paragraph.text,
+      });
+    }
+  }
+
+  const mergedPassageSeed: PassageSeed = {
+    passageId: EXAM_PASSAGE_ID,
+    title: "Reading Passage",
+    topic: test.passages[0]?.topic ?? test.topic,
+    sourceNote: "Original IELTS-style practice passage created for this app.",
+    paragraphs: mergedParagraphs,
+  };
+  const mergedPassage = makePassage(mergedPassageSeed, {
+    difficulty: test.difficulty,
+    estimatedBand: test.targetBand,
+    subtopic: test.topic,
+    batchId: test.metadata.batchId,
+  });
+  const allParagraphLabels = mergedParagraphs.map((paragraph) => paragraph.label);
+
+  const questions = test.questions.map((question) => {
+    const remappedQuestion: Question = {
+      ...question,
+      passageId: EXAM_PASSAGE_ID,
+      groupTitle: remapParagraphReferences(question.groupTitle, question.passageId, labelMap),
+      prompt: remapParagraphReferences(question.prompt, question.passageId, labelMap) ?? question.prompt,
+      options: usesParagraphLetterAnswers(question) ? allParagraphLabels : question.options,
+      answer: remapParagraphAnswer(question.answer, question, labelMap) ?? question.answer,
+      acceptedAnswers: question.acceptedAnswers?.map(
+        (answer) => remapParagraphAnswer(answer, question, labelMap) ?? answer,
+      ),
+      explanation:
+        remapParagraphReferences(question.explanation, question.passageId, labelMap) ?? question.explanation,
+      evidenceParagraph: remapParagraphReferences(question.evidenceParagraph, question.passageId, labelMap),
+      whyCorrect: remapParagraphReferences(question.whyCorrect, question.passageId, labelMap) ?? question.whyCorrect,
+      whyWrong: remapParagraphReferences(question.whyWrong, question.passageId, labelMap) ?? question.whyWrong,
+      strategyTip:
+        remapParagraphReferences(question.strategyTip, question.passageId, labelMap) ?? question.strategyTip,
+      paragraphRef: remapParagraphLetter(question.passageId, question.paragraphRef, labelMap),
+    };
+
+    return {
+      ...remappedQuestion,
+      metadata: buildQuestionMetadata(remappedQuestion),
+    };
+  });
+
+  const oldPublicIds = [test.testId, test.slug, ...(test.legacyIds ?? [])];
+  const testNumber = index + 1;
+  const publicTest: Omit<ReadingTest, "metadata"> = {
+    ...test,
+    testId: `test-${testNumber}`,
+    slug: `test-${testNumber}`,
+    legacyIds: [...new Set(oldPublicIds)],
+    title: `Test ${testNumber}`,
+    description: "IELTS Academic Reading simulation with one passage and 20 questions.",
+    passages: [mergedPassage],
+    questions,
+    totalQuestions: questions.length,
+  };
+
+  return {
+    ...publicTest,
+    metadata: buildTestMetadata(publicTest),
+  };
 }
 
 const urbanHeatTest = makeTest({
@@ -7789,7 +7927,7 @@ const manuscriptMarginsRepairTest = makeTest({
   ],
 });
 
-export const readingTests: ReadingTest[] = [
+const sourceReadingTests: ReadingTest[] = [
   urbanHeatTest,
   pigmentTest,
   algorithmsTest,
@@ -7807,16 +7945,10 @@ export const readingTests: ReadingTest[] = [
   manuscriptMarginsRepairTest,
 ];
 
+export const readingTests: ReadingTest[] = sourceReadingTests.map(mergePassagesForExamView);
+
 export function getTestRouteParams() {
-  const params = new Set<string>();
-
-  for (const test of readingTests) {
-    params.add(test.slug);
-    params.add(test.testId);
-    test.legacyIds?.forEach((legacyId) => params.add(legacyId));
-  }
-
-  return [...params].map((testId) => ({ testId }));
+  return readingTests.map((test) => ({ testId: test.slug }));
 }
 
 export function getTestById(testId: string): ReadingTest | undefined {

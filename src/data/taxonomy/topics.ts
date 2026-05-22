@@ -62,7 +62,7 @@ const keywordTopicMap: Array<[RegExp, string]> = [
   [/astronomy|star|telescope|cosmic|planetary observation/i, "astronomy"],
   [/robot|robotics|autonomous machine/i, "robotics"],
   [/communication|network|signal|media infrastructure/i, "communication-systems"],
-  [/smart city|sensor network|urban data/i, "smart-cities"],
+  [/smart cit(?:y|ies)|sensor network|urban data/i, "smart-cities"],
   [/epidemiology|disease pattern|outbreak|population risk/i, "epidemiology"],
   [/nutrition|diet|metabolism|food behaviour/i, "nutrition"],
   [/mental health|wellbeing|stress|psychological wellbeing/i, "mental-health"],

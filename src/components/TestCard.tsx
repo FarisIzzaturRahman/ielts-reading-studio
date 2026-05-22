@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import type { ReadingTest } from "@/data/types";
 import { getAttemptStatus } from "@/lib/attempt";
 import { scoreTest } from "@/lib/scoring";
-import { getDifficultyById } from "@/data/taxonomy/difficulty";
 import { getTestPath } from "@/lib/test-routing";
 
 export function TestCard({ test }: { test: ReadingTest }) {
@@ -26,7 +25,6 @@ export function TestCard({ test }: { test: ReadingTest }) {
 
   const score = attemptState?.result ? scoreTest(test, attemptState.result.answers) : null;
   const status = attemptState?.status ?? "Not Started";
-  const difficulty = getDifficultyById(test.difficulty);
   const primaryLabel =
     status === "In Progress" ? "Continue or restart" : status === "Completed" ? "Review or retake" : "Open test";
 
@@ -35,26 +33,14 @@ export function TestCard({ test }: { test: ReadingTest }) {
       <div className="space-y-4">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
-              {test.difficulty}
-            </p>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">IELTS Academic Reading</p>
             <h2 className="mt-2 text-xl font-semibold tracking-tight text-slate-950">{test.title}</h2>
           </div>
           <span className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600">
-            {test.targetBand}
+            {test.questions.length} Questions
           </span>
         </div>
-        <p className="text-sm leading-6 text-slate-600">{test.description}</p>
-        {difficulty ? (
-          <p className="rounded-md bg-slate-50 px-3 py-2 text-sm leading-6 text-slate-600">
-            <strong className="text-slate-950">{difficulty.displayName}:</strong> {difficulty.description}
-          </p>
-        ) : null}
-        <dl className="grid grid-cols-3 gap-3 text-sm">
-          <div>
-            <dt className="text-slate-500">Passages</dt>
-            <dd className="font-semibold">{test.passages.length}</dd>
-          </div>
+        <dl className="grid grid-cols-2 gap-3 text-sm">
           <div>
             <dt className="text-slate-500">Questions</dt>
             <dd className="font-semibold">{test.questions.length}</dd>

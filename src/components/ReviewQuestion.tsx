@@ -1,9 +1,8 @@
 "use client";
 
 import type { QuestionResult } from "@/lib/scoring";
-import { formatPassageLabel, QUESTION_TYPE_LABELS } from "@/lib/question-labels";
 
-export function ReviewQuestion({ result, passageTitle }: { result: QuestionResult; passageTitle?: string }) {
+export function ReviewQuestion({ result }: { result: QuestionResult; passageTitle?: string }) {
   const label =
     result.status === "correct" ? "Correct" : result.status === "unanswered" ? "Unanswered" : "Incorrect";
 
@@ -12,9 +11,6 @@ export function ReviewQuestion({ result, passageTitle }: { result: QuestionResul
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h3 className="font-semibold text-slate-950">Question {result.question.questionNumber}</h3>
-          <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
-            Passage {formatPassageLabel(result.question.passageId)} · {QUESTION_TYPE_LABELS[result.question.type]}
-          </p>
         </div>
         <span
           className={`rounded-md px-2.5 py-1 text-xs font-semibold ${
@@ -43,11 +39,6 @@ export function ReviewQuestion({ result, passageTitle }: { result: QuestionResul
         <details className="rounded-md border border-slate-200 bg-slate-50 p-3" open>
           <summary className="cursor-pointer text-sm font-semibold text-slate-950">Evidence</summary>
           <div className="mt-3 text-sm leading-6 text-slate-700">
-            {passageTitle ? (
-              <p>
-                <strong>Passage title:</strong> {passageTitle}
-              </p>
-            ) : null}
             <p>
               <strong>Reference:</strong> {result.question.evidenceParagraph ?? "Evidence not specified"}
             </p>
@@ -71,28 +62,6 @@ export function ReviewQuestion({ result, passageTitle }: { result: QuestionResul
           </div>
         </details>
       </div>
-      <dl className="mt-4 grid gap-3 text-xs font-medium uppercase tracking-[0.14em] text-slate-500 md:grid-cols-3">
-        <div>
-          <dt>Skill</dt>
-          <dd className="mt-1 text-sm normal-case tracking-normal text-slate-800">{result.question.skill}</dd>
-        </div>
-        <div>
-          <dt>Trap Type</dt>
-          <dd className="mt-1 text-sm normal-case tracking-normal text-slate-800">{result.question.trapType}</dd>
-        </div>
-        <div>
-          <dt>Difficulty</dt>
-          <dd className="mt-1 text-sm normal-case tracking-normal text-slate-800">{result.question.difficulty}</dd>
-        </div>
-      </dl>
-      {result.question.secondarySkills?.length ? (
-        <p className="mt-3 text-sm leading-6 text-slate-600">
-          <strong>Secondary skills:</strong> {result.question.secondarySkills.join(", ")}
-        </p>
-      ) : null}
-      <p className="mt-4 rounded-md bg-amber-50 px-3 py-2 text-sm leading-6 text-amber-950">
-        <strong>Strategy tip:</strong> {result.question.strategyTip}
-      </p>
     </article>
   );
 }

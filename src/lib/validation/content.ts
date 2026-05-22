@@ -379,6 +379,12 @@ function validateTest(test: ReadingTest): ValidationIssue[] {
   if (test.questions.length !== 20 && test.mode === "mini") {
     issues.push(issue("warning", "test", test.testId, "totalQuestions", "Mini tests are expected to contain 20 questions."));
   }
+  if (test.mode === "mini" && test.passages.length !== 1) {
+    issues.push(issue("error", "test", test.testId, "passages", "Published test simulations must contain one reading passage."));
+  }
+  if (!/^test-\d+$/.test(test.slug)) {
+    issues.push(issue("warning", "test", test.testId, "slug", "Published test slugs should use the exam-facing test-N format."));
+  }
 
   issues.push(...validateDifficulty(test.difficulty, "test", test.testId));
   issues.push(...validateMetadata(test));

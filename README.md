@@ -1,42 +1,38 @@
 # IELTS Reading Studio
 
-Free, no-login IELTS Academic Reading practice for self-learners.
+Free, no-login IELTS Academic Reading simulation for self-learners.
 
 ## Overview
 
-IELTS Reading Studio is an independent IELTS Academic Reading simulator. Learners can open the website, choose a mini Academic Reading test, answer timed questions, submit, view an approximate score, and review explanations without creating an account.
+IELTS Reading Studio is an independent IELTS Academic Reading simulator. Learners open the site, choose a numbered test, read one long passage, answer 20 timed questions, submit, receive a score, and review evidence-based explanations.
 
-The current version has paused content expansion for a human QA revision pass. The app keeps the stable simulator and practice architecture, with clearer difficulty guidance, cleaner public test slugs, removable highlights and improved side-by-side test/review layouts. It does not include IELTS General Training, payment, subscriptions, accounts, teacher dashboards, AI tutoring, community features, or locked content.
+The current product direction is realism-first. Public test selection is intentionally simple: tests appear as `Test 1`, `Test 2`, `Test 3`, and so on. Topic titles, visible difficulty categories, and visible challenge labels are hidden from the learner-facing simulator so the experience feels closer to an exam environment than a categorized learning catalog.
+
+The app does not include IELTS General Training, payment, subscriptions, accounts, teacher dashboards, live AI tutoring, community features, or locked content.
 
 ## Features
 
-- 15 human-reviewed IELTS-style Academic Reading mini tests.
-- 2 passages and 20 questions per mini test.
-- 30-minute timer for 20-question tests.
-- Split-screen desktop test interface with independently scrollable passage and question panels.
-- Mobile fallback with Passage, Questions, and Review tabs.
+- Numbered IELTS Academic Reading simulations.
+- One continuous reading passage per test.
+- 20 questions per test.
+- 30-minute timer for the current compact simulation format.
+- Split-screen desktop interface with independently scrollable passage and question panels.
+- Mobile fallback with Passage, Questions, and Review/navigation tabs.
 - Answer inputs for common IELTS Academic Reading question types.
 - Question navigation with answered, unanswered, active, and flagged states.
-- Local auto-save for answers, flags, notes, removable highlights, timer deadline, and attempts.
+- Local auto-save for answers, flags, notes, highlights, timer deadline, and attempts.
+- Removable text highlights and clear-all highlight support.
 - Submit confirmation with answered, unanswered, and flagged counts.
-- Automatic raw score, percentage, and approximate mini-band estimate.
-- Result page with performance by skill and question type.
-- Result page with mistake pattern summary, trap type pattern, and rule-based recommendations.
-- Review page with side-by-side passage access, user answer, correct answer, explanation, evidence reference, why-correct/why-wrong notes, trap type, strategy tip, skill, and difficulty.
-- Practice Hub for focused IELTS Academic Reading drills.
-- Practice by question type and by reading skill.
-- 26 drill-native focused practice sets rebuilt for realism rather than recycled from mini tests.
-- Strategy lessons before drill attempts.
-- Drill scoring, drill review, mistake summary, and local practice history.
-- Centralized content taxonomy for question types, reading skills, traps, topics, difficulty, and recommendations.
-- Structured metadata for tests, passages, questions, drills, and lessons.
-- Content relationship index for future recommendation and adaptive-practice features.
-- Content validation command for taxonomy, metadata, evidence, relationship checks, answer-position bias, structural repetition, and weak evidence patterns.
-- Retake/restart support.
+- Automatic raw score, percentage, and approximate practice band estimate.
+- Result page with performance diagnosis and recommendations.
+- Review page with side-by-side passage access, user answer, correct answer, evidence, and explanation.
+- Practice Hub and drill system from earlier phases.
+- Central taxonomy, metadata, relationship, and validation systems kept internally for QA.
+- Content validation command for taxonomy, metadata, evidence, relationships, answer distribution, repetition, and weak evidence patterns.
 
 ## IELTS Academic-Only Scope
 
-This project focuses only on IELTS Academic Reading. Content should use academic topics, long-form reading passages, and IELTS Academic-style question tasks. Do not add IELTS General Training, workplace letters, everyday notices, social survival reading, or non-academic task formats.
+This project focuses only on IELTS Academic Reading. Content should use academic topics, long-form adapted academic passages, and IELTS Academic-style question tasks. Do not add IELTS General Training, workplace letters, everyday notices, social survival reading, or non-academic task formats.
 
 ## Tech Stack
 
@@ -78,92 +74,43 @@ npm run start
 ## Project Structure
 
 ```text
-src/app/                 App Router pages
-src/components/          UI and simulator workflow components
-src/components/practice/ Focused-practice UI components
-src/data/content-library.ts  Central content registry and relationship index
-src/data/drills.ts       Drill-native question-type and skill practice content
-src/data/strategy-lessons.ts  Short practice strategy lessons
-src/data/taxonomy/       Master taxonomy definitions
-src/data/tests.ts        Human-edited flagship Academic Reading tests
-src/data/types.ts        Stabilized reading-test schema
-src/lib/attempt.ts       Start, restart, status, and result helpers
-src/lib/content-metadata.ts Metadata builders for generated content
+src/app/                         App Router pages
+src/components/                  UI and simulator workflow components
+src/components/practice/         Focused-practice UI components
+src/data/content-library.ts      Central content registry and relationship index
+src/data/drills.ts               Drill-native question-type and skill practice content
+src/data/strategy-lessons.ts     Short practice strategy lessons
+src/data/taxonomy/               Master taxonomy definitions
+src/data/tests.ts                Human-reviewed Academic Reading tests
+src/data/types.ts                Stabilized reading-test schema
+src/lib/attempt.ts               Start, restart, status, and result helpers
+src/lib/content-metadata.ts      Metadata builders
 src/lib/content-relationships.ts Queryable content relationship index
-src/lib/diagnosis.ts     Performance, mistake pattern, and recommendation logic
-src/lib/drill-scoring.ts Focused-practice scoring and feedback
-src/lib/practice-storage.ts Browser-only drill progress and result storage
-src/lib/taxonomy.ts      Compatibility re-export for taxonomy helpers
-src/lib/test-routing.ts  Clean route helpers for user-facing test slugs
-src/lib/validation/      Content QA and validation utilities
-src/lib/scoring.ts       Answer normalization and scoring
-src/lib/storage.ts       Safe LocalStorage helpers
-src/lib/timer.ts         Deadline-based timer helpers
-scripts/validate-content.ts Content validation script
-docs/platform-documentation.md Consolidated product, technical, content and QA documentation
+src/lib/diagnosis.ts             Performance, mistake pattern, and recommendation logic
+src/lib/drill-scoring.ts         Focused-practice scoring and feedback
+src/lib/practice-storage.ts      Browser-only drill progress and result storage
+src/lib/test-routing.ts          Route helpers for numbered test slugs
+src/lib/validation/              Content QA and validation utilities
+src/lib/scoring.ts               Answer normalization and scoring
+src/lib/storage.ts               Safe LocalStorage helpers
+src/lib/timer.ts                 Deadline-based timer helpers
+scripts/validate-content.ts      Content validation script
+docs/platform-documentation.md   Consolidated product, technical, content, and QA documentation
 ```
 
-## Content Format
+## Test Architecture
 
-Each test includes:
+Public simulations use:
 
-- `testId`
-- `slug`
-- `legacyIds`
-- `title`
-- `description`
-- `difficulty`
-- `targetBand`
-- `mode`
-- `testType: "Academic"`
-- `timeLimitMinutes`
-- `totalQuestions`
-- `passages`
-- `questions`
+- `testId`: `test-1`, `test-2`, `test-3`
+- `slug`: `test-1`, `test-2`, `test-3`
+- `title`: `Test 1`, `Test 2`, `Test 3`
+- one merged passage
+- 20 questions
 
-Use `testId` for internal storage and `slug` for public routes. `legacyIds` exist only to keep older saved attempts and old links from crashing after ID cleanup.
+Older topic-based IDs and editorial IDs are retained only in `legacyIds` so old LocalStorage attempts and old links can be recovered where possible. They are not shown in the user interface.
 
-Each question includes:
-
-- `questionNumber`
-- `type`
-- `prompt`
-- `answer`
-- `acceptedAnswers`
-- `explanation`
-- `evidenceParagraph`
-- `evidenceText`
-- `whyCorrect`
-- `whyWrong`
-- `skill`
-- `secondarySkills`
-- `trapType`
-- `strategyTip`
-- `difficulty`
-- `tags`
-
-Each focused drill includes:
-
-- `drillId`
-- `title`
-- `practiceMode`
-- `questionType` or `skill`
-- `skillFocus`
-- `difficulty`
-- `estimatedTimeMinutes`
-- `description`
-- `strategyLessonId`
-- `passages`
-- `questions`
-- `trapFocus`
-- `targetBand`
-- `totalQuestions`
-- `topicFocus`
-- `recommendationCategory`
-- `relationships`
-- `metadata`
-
-The master taxonomy lives in `src/data/taxonomy/`. Use those definitions instead of typing display labels manually.
+Internal metadata still tracks difficulty calibration, topic, skill tags, trap tags, evidence strength, and QA status. That metadata supports scoring, diagnosis, recommendations, validation, and future content quality work, but it should not dominate the learner-facing simulator.
 
 ## Content Validation
 
@@ -173,7 +120,7 @@ Run the content QA pipeline before publishing new tests, drills, lessons, or tax
 npm run validate:content
 ```
 
-The validator checks taxonomy uniqueness, metadata consistency, evidence references, Academic-only scope, drill lesson links, question counts, recommendation relationships, answer-position concentration, repeated question structures, repeated paragraph openings, and generic evidence text. Errors fail the command; warnings identify editorial items to review.
+The validator checks taxonomy uniqueness, metadata consistency, Academic-only scope, one-passage published simulations, question counts, evidence references, drill lesson links, recommendation relationships, answer-position concentration, repeated question structures, repeated paragraph openings, and generic evidence text. Errors fail the command; warnings identify editorial items to review.
 
 ## Deployment
 
@@ -190,20 +137,17 @@ This website provides independent IELTS Academic Reading practice materials. It 
 
 ## Content Originality
 
-Do not copy official IELTS, Cambridge, British Council, IDP, or commercial test-book passages, questions, answer keys, diagrams, or explanations. Official resources may guide format, timing, and question taxonomy, but not content wording.
+Do not copy official IELTS, Cambridge, British Council, IDP, or commercial test-book passages, questions, answer keys, diagrams, or explanations. Official resources may guide format, timing, and broad question taxonomy, but not content wording.
 
 ## Roadmap
 
-- Step 1: Stabilize the simulator and mini-test workflow.
-- Phase 2A: Enhanced review, skill diagnosis, mistake patterns, and basic recommendations.
+- Step 1: Stabilize the simulator and compact test workflow.
+- Phase 2A: Enhanced review, skill diagnosis, mistake patterns, and recommendations.
 - Phase 2B: Question-type and skill-based focused practice.
-- Phase 3A: Content taxonomy, metadata standards, relationship index and validation pipeline.
-- Phase 3A-2: Large-scale content expansion architecture. Paused after the realism audit.
-- Phase 3A-REALISM: Rebuild flagship tests, drill-native practice, real evidence, distractors, difficulty calibration and validation guardrails.
-- Phase 3A-REALISM-EXPANSION: Controlled Batches A-D expand the reviewed library to 15 mini tests and 26 drill-native practice sets.
-- Phase 3B: Resume broader product expansion only after controlled content batches continue passing QA.
-- Phase 4: Add optional local trend dashboards and mistake notebook without requiring login.
-- Step 4: Add full 40-question Academic Reading simulations.
+- Phase 3A: Content taxonomy, metadata standards, relationship index, and validation pipeline.
+- Phase 3A-REALISM: Rebuild content realism and validation guardrails.
+- Human QA revision: remove visible test categories, simplify test naming, use one-passage simulations, and make the UI more exam-like.
+- Next priority: run another live-user QA pass before continuing controlled content expansion.
 
 ## License Recommendation
 

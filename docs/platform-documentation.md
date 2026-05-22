@@ -2,34 +2,37 @@
 
 ## Project Overview
 
-IELTS Reading Studio is a free, no-login IELTS Academic Reading practice platform for self-learners. It provides timed mini tests, focused practice drills, automatic scoring, evidence-based answer review, skill diagnosis, trap diagnosis and local progress storage.
+IELTS Reading Studio is a free, no-login IELTS Academic Reading simulation platform for self-learners. The current simulator presents numbered Academic Reading tests, each with one long passage, 20 questions, timed answering, automatic scoring, and evidence-based review.
 
-The platform is independent. It is not affiliated with, endorsed by or approved by IELTS, Cambridge, British Council, IDP or any official IELTS organisation. All reading passages, questions, answer keys and explanations are original IELTS-style practice materials.
+The platform is independent. It is not affiliated with, endorsed by, or approved by IELTS, Cambridge, British Council, IDP, or any official IELTS organisation. All passages, questions, answer keys, and explanations are original IELTS-style practice materials.
 
 ## Product Vision
 
-The product goal is to help IELTS Academic candidates practise in a serious reading environment and then understand what to improve. The platform should feel closer to a disciplined study tool than a casual quiz site: readable passages, realistic question types, fair traps, precise evidence, useful explanations and no unnecessary barriers.
+The product direction is now realism-first. The simulator should feel less like a categorized educational product and more like a calm IELTS Academic Reading test environment.
 
-The long-term content principle is:
+Learners should see a clean test list, choose a numbered test, read one continuous passage, answer questions under time pressure, submit, and review their work. Internal learning systems still exist, but visible categorization should not dominate the test experience.
 
-1. Quality benchmark first.
-2. Controlled scaling second.
-3. Validation before publishing.
+Core principles:
 
-As of the latest human QA pass, content expansion is paused until the current simulator UX remains polished and comfortable in live use.
+1. Exam realism before educational packaging.
+2. Simple user-facing test selection.
+3. One-passage, 20-question compact simulations.
+4. Hidden metadata for quality, diagnosis, and future recommendations.
+5. Original IELTS-style content only.
+6. Controlled expansion only after QA passes.
 
 ## Target Users
 
 - IELTS Academic candidates practising independently.
-- Beginner to advanced self-learners.
-- Band 7-9 learners who need realistic trap and inference practice.
-- Teachers or tutors who want free original practice materials to recommend informally.
+- Self-learners who want a realistic reading-test environment.
+- Higher-band learners who need strong evidence checking and paraphrase practice.
+- Tutors who want free original practice material to recommend informally.
 
-No account is required, and the platform does not collect personal learning data.
+No account is required, and the platform does not collect personal learner data.
 
 ## IELTS Academic-Only Scope
 
-This project focuses only on IELTS Academic Reading. Content should use academic topics, long-form adapted academic passages and standard IELTS Academic Reading question types.
+This project focuses only on IELTS Academic Reading.
 
 Do not add:
 
@@ -37,112 +40,145 @@ Do not add:
 - Workplace letters.
 - Everyday notices.
 - Social survival reading.
-- Payment, freemium locking or subscriptions.
-- Teacher dashboard, community features or live AI tutoring.
-- Official IELTS branding imitation.
+- Payment, subscriptions, freemium locks, or monetization.
+- Teacher dashboards, community features, live AI tutoring, or official IELTS branding imitation.
 
-## Key Features
+## User-Facing Test Experience
 
-- 15 human-reviewed IELTS Academic Reading mini tests.
-- 20 questions per mini test.
-- 30-minute mini-test timer.
-- Split desktop test layout with independently scrollable passage and question panels.
-- Mobile fallback tabs for Passage, Questions and Review/navigation.
-- Auto-save for answers, flags, timer deadline, notes and removable highlights.
-- Submit confirmation with unanswered and flagged counts.
-- Raw score, percentage and approximate mini-band estimate.
-- Result diagnosis by question type, reading skill and trap type.
-- Evidence-based answer review with side-by-side passage access and why-correct/why-wrong explanations.
-- Practice Hub with question-type and skill-based drills.
-- 26 drill-native practice sets from earlier phases.
-- LocalStorage-only progress and practice history.
-- Central taxonomy and metadata system.
-- Content validation pipeline for publishing gates.
+Public test selection is intentionally simple:
+
+- `Test 1`
+- `Test 2`
+- `Test 3`
+- and so on.
+
+The test library should not show topic titles, visible difficulty categories, challenge labels, target-band labels, or educational segmentation. This avoids making the simulator feel like an artificial learning catalog.
+
+Each published test should show only essential learner information:
+
+- test number
+- 20 questions
+- time limit
+- local attempt status
+- last score if available
 
 ## Test Simulator Flow
 
 1. User opens the home page.
-2. User browses the Academic Reading test library.
-3. User opens a test instruction page.
-4. Timer starts only after Start Test.
-5. User reads passages and answers questions.
-6. On desktop, the passage and question panels scroll independently so the reading text remains accessible while answering.
-7. On mobile, the user switches between Passage, Questions and Review/navigation tabs.
-8. Answers, flags, notes and highlights auto-save locally.
-9. Highlights can be removed individually or cleared for the passage.
-10. User submits manually or is submitted automatically when time expires.
-11. Result page shows score, approximate band range and diagnosis.
+2. User opens the Academic Reading simulation list.
+3. User chooses a numbered test.
+4. User reads short test instructions.
+5. Timer starts only after Start Test.
+6. User reads one long passage and answers 20 questions.
+7. Desktop layout keeps passage and questions independently scrollable.
+8. Mobile layout uses Passage, Questions, and Review/navigation tabs.
+9. Answers, flags, notes, highlights, and timer deadline auto-save locally.
+10. User submits manually or is auto-submitted when time expires.
+11. Result page shows score and diagnosis.
 12. Review page keeps the passage accessible while explanations scroll independently.
-13. User can retake the test or return to the library.
+13. User can retake the test or return to the test list.
+
+## Single-Passage Architecture
+
+The public simulator now exports each test as a single long passage. Legacy multi-passage source material is merged into one continuous passage at the data layer:
+
+- all paragraphs are relabelled sequentially
+- all questions point to the merged passage
+- paragraph references are remapped
+- matching-information answer letters are remapped
+- evidence excerpts remain actual passage text
+
+This preserves the reviewed content while presenting a cleaner IELTS-like reading experience.
+
+## Routing and Naming
+
+Public routes use simple numbered slugs:
+
+```text
+/tests/test-1/instructions
+/tests/test-1/practice
+/tests/test-1/results
+/tests/test-1/review
+```
+
+Public data values:
+
+- `testId`: `test-1`
+- `slug`: `test-1`
+- `title`: `Test 1`
+
+Older topic-based slugs and editorial IDs are retained only in `legacyIds` for minimal route and LocalStorage compatibility. They are not displayed in the interface.
 
 ## Review and Diagnosis System
 
-Each completed mini test generates:
+The review page is now cleaner and less taxonomy-heavy. It keeps:
 
-- Raw score.
-- Percentage.
-- Approximate mini-test band estimate.
-- Correct, incorrect and unanswered counts.
-- Performance by question type.
-- Performance by reading skill.
-- Trap pattern summary.
-- Mistake pattern summary.
-- Rule-based recommendations.
+- question number
+- prompt
+- user answer
+- correct answer
+- correct, incorrect, or unanswered status
+- evidence reference
+- evidence excerpt
+- explanation
+- why the correct answer works
+- why the selected answer is wrong or tempting
 
-Question review items include:
+The review page no longer foregrounds passage titles, question-type labels, skill labels, trap labels, or difficulty labels. Those remain available in metadata and diagnosis logic.
 
-- User answer.
-- Correct answer.
-- Status: Correct, Incorrect or Unanswered.
-- Passage title and evidence paragraph.
-- Exact evidence excerpt or close passage excerpt.
-- Explanation.
-- Why the correct answer works.
-- Why the user's answer is wrong or tempting.
-- Skill tag.
-- Trap type.
-- Difficulty.
-- Strategy tip.
+The result page may still show learning diagnostics after submission:
+
+- raw score
+- percentage
+- approximate practice band estimate
+- performance by question type
+- performance by reading skill
+- trap pattern summary
+- recommendations
+
+These are post-test learning aids, not visible pre-test categorization.
 
 ## Practice Mode Overview
 
-Practice mode was implemented before the current test-only expansion. It remains available but was not expanded in Batch C or Batch D.
+Practice mode was implemented before the realism-first simulator revision. It remains available as a focused learning area:
 
-Current practice features:
+- `/practice` Practice Hub
+- question-type practice
+- skill-based practice
+- drill sessions
+- drill result and review pages
+- LocalStorage-based drill history
 
-- `/practice` Practice Hub.
-- Practice by question type.
-- Practice by reading skill.
-- Drill session pages.
-- Drill result and drill review pages.
-- Drill-native passages and questions.
-- LocalStorage-based drill history.
+The current revision does not expand drills. Future work should decide whether practice mode should remain visibly educational while the test simulator stays exam-like.
 
-The drill library currently contains 26 drills. Do not add drills during test-only expansion phases unless a later phase explicitly changes scope.
+## Hidden Metadata Philosophy
 
-## Human QA Revision Notes
+Internal metadata remains important. It supports validation, scoring, diagnosis, recommendation relationships, and future adaptive systems. It should not be overexposed in the core simulator UI.
 
-The May 2026 human QA pass paused content expansion and addressed live MVP usability issues:
+Internal metadata may include:
 
-- Difficulty categories now include IELTS-oriented explanations and a short "Which level should I choose?" helper on the test library page.
-- Test cards show the difficulty meaning without claiming official IELTS scoring accuracy.
-- Reading-test pages use independent desktop scrolling: the passage stays available while the questions panel scrolls.
-- Review pages use the same side-by-side desktop pattern and a mobile Passage/Review toggle.
-- Highlights can be removed by clicking highlighted text, removed from the saved-highlight list or cleared all at once.
-- Restarting a test creates a fresh attempt with no old highlights.
-- Inactive review CTAs were removed until a real mistake notebook or similar-practice feature is ready.
-- User-facing routes now use clean slugs. Internal IDs follow `academic-reading-001` style, with legacy `realism-*` IDs retained only for route and LocalStorage compatibility.
+- difficulty calibration
+- topic and subtopic
+- passage archetype
+- question type
+- primary and secondary skills
+- trap type
+- evidence strength
+- cognitive level
+- editorial status
+- validation status
+- batch history
 
 ## Content Architecture
 
 Core data files:
 
-- `src/data/tests.ts` contains published mini tests.
-- `src/data/drills.ts` contains published drill-native practice sets.
-- `src/data/strategy-lessons.ts` contains strategy lesson metadata and text.
-- `src/data/content-library.ts` combines tests, drills and lessons.
+- `src/data/tests.ts` contains published Academic Reading simulations.
+- `src/data/drills.ts` contains focused practice sets.
+- `src/data/strategy-lessons.ts` contains practice strategy lessons.
+- `src/data/content-library.ts` combines tests, drills, and lessons.
 - `src/data/taxonomy/` contains centralized taxonomy definitions.
-- `src/data/types.ts` defines the shared content schema.
+- `src/data/types.ts` defines shared content schemas.
 
 Core logic files:
 
@@ -150,7 +186,7 @@ Core logic files:
 - `src/lib/diagnosis.ts` test diagnosis and recommendations.
 - `src/lib/drill-scoring.ts` drill scoring and feedback.
 - `src/lib/storage.ts` safe LocalStorage helpers.
-- `src/lib/test-routing.ts` clean route helpers for user-facing test slugs.
+- `src/lib/test-routing.ts` numbered-route helpers.
 - `src/lib/timer.ts` deadline-based timer helpers.
 - `src/lib/content-metadata.ts` metadata builders.
 - `src/lib/content-relationships.ts` relationship index.
@@ -215,12 +251,7 @@ Trap types include:
 - Assumption trap
 - No major trap
 
-Difficulty categories are user-facing study guides, not official IELTS score predictions:
-
-- Easy: confidence-building tests with clearer evidence, more direct paraphrasing and lighter cognitive load.
-- Medium: regular practice with moderate paraphrasing, mixed question types and realistic traps.
-- Hard: Band 7+ oriented tests with denser passages, subtler paraphrasing, stronger distractors and more inference.
-- Band 8-9 Challenge: advanced practice with dense academic passages, reduced keyword overlap, subtle inference and demanding distractors.
+Difficulty values still exist internally for calibration and QA. They should not be shown as learner-facing test categories in the simulation library.
 
 ## Metadata Standards
 
@@ -228,7 +259,7 @@ Every published test should include:
 
 - `testId`
 - `slug`
-- `legacyIds` only when preserving older routes or LocalStorage keys
+- `legacyIds` only for compatibility
 - `title`
 - `description`
 - `topic`
@@ -242,6 +273,12 @@ Every published test should include:
 - `passages`
 - `questions`
 - generated `metadata`
+
+Every public simulation must contain:
+
+- one passage
+- 20 questions
+- route slug in `test-N` format
 
 Every passage should include:
 
@@ -271,21 +308,29 @@ Every question should include:
 - `difficulty`
 - `paragraphRef` when relevant
 
-The current schema stores publishing status inside generated metadata as `status: "published"`. Draft or unvalidated content should not be included in the exported user-facing arrays.
+The current schema stores publishing status inside generated metadata as `status: "published"`. Draft or unvalidated content should not be included in exported user-facing arrays.
 
-## Test Naming and Routes
+## LocalStorage Strategy
 
-Tests use three naming layers:
+Progress is saved only on the current device and browser.
 
-- Internal ID: stable machine-safe ID such as `academic-reading-001`.
-- Public slug: readable route segment such as `urban-heat-and-public-space`.
-- Display title: learner-facing title such as `Green Roofs and Urban Heat`.
+Stored data includes:
 
-Do not expose old editorial labels such as `realism-easy-01` in the interface. Keep old IDs only in `legacyIds` when needed for backward-compatible routes and LocalStorage recovery.
+- answers
+- flagged questions
+- notes
+- highlights
+- start time
+- deadline
+- remaining time
+- submitted result
+- diagnosis data
+
+Current numbered test IDs are used for new attempts. Legacy IDs are checked only to recover older saved attempts safely.
 
 ## Editorial Status System
 
-The supported content status values are:
+Supported content status values:
 
 - `generated`
 - `realism-reviewed`
@@ -296,7 +341,7 @@ The supported content status values are:
 - `reviewed`
 - `validated`
 
-Only published, validation-passing content should appear in the public library.
+Only published, validation-passing content should appear in public libraries.
 
 Recommended editorial path:
 
@@ -311,7 +356,7 @@ Recommended editorial path:
 
 ## QA and Validation Pipeline
 
-Run before publishing:
+Run before publishing or deployment:
 
 ```bash
 npm run validate:content
@@ -322,72 +367,73 @@ npm run build
 
 The content validator checks:
 
-- Taxonomy uniqueness.
-- Metadata consistency.
-- Academic-only scope.
-- Question counts.
-- Evidence references.
-- Drill lesson links.
-- Recommendation relationships.
-- Answer-position concentration.
-- Repeated question-type sequences.
-- Repeated paragraph openings.
-- Generic or fake evidence wording.
-- Coverage reporting.
+- taxonomy uniqueness
+- metadata consistency
+- Academic-only scope
+- one-passage published simulations
+- 20-question compact simulations
+- evidence references
+- drill lesson links
+- recommendation relationships
+- answer-position concentration
+- repeated question-type sequences
+- repeated paragraph openings
+- generic or fake evidence wording
+- route slug format
 
-Errors block publication. Warnings must be reviewed and resolved unless explicitly accepted for a documented reason.
+Errors block publication. Warnings must be reviewed and resolved unless explicitly accepted.
 
 ## Human-Realism Standards
 
 Passages should feel authored, not templated. They should have:
 
-- Varied paragraph rhythm.
-- Varied sentence length.
-- Discipline-specific voice.
-- Organic conceptual development.
-- Plausible uncertainty.
-- Non-mechanical transitions.
-- Avoidance of repeated generic openings such as "In recent years".
+- varied paragraph rhythm
+- varied sentence length
+- discipline-specific voice
+- organic conceptual development
+- plausible uncertainty
+- non-mechanical transitions
+- avoidance of repeated generic openings
 
-Questions should feel fair under time pressure. They should have:
+Questions should feel fair under time pressure:
 
-- Traceable evidence.
-- Plausible traps.
-- Tempting but wrong distractors.
-- Real paraphrase.
-- No cartoonishly false options.
-- No answer-position bias.
+- traceable evidence
+- plausible traps
+- tempting but wrong distractors
+- realistic paraphrase
+- no cartoonishly false options
+- no answer-position bias
 
 Explanations should teach:
 
-- The exact evidence relationship.
-- The paraphrase or contrast.
-- Why the correct answer works.
-- Why a wrong answer is tempting.
-- A reusable reading strategy.
+- the exact evidence relationship
+- the paraphrase or contrast
+- why the correct answer works
+- why a wrong answer is tempting
+- a reusable reading habit
 
 ## Psychometric Standards
 
-The platform is not an official IELTS assessment, but practice items should still respect assessment quality:
+The platform is not an official IELTS assessment, but practice items should respect assessment quality:
 
-- Every answer must be supported by passage evidence.
-- Traps should test reading skill, not trick users unfairly.
-- Difficulty labels must reflect actual cognitive demand.
-- Band 8-9 content should require subtle inference, dense reasoning and reduced keyword overlap.
-- Question sequencing should vary across tests.
-- MCQ answer positions and matching answers should not show predictable bias.
-- Not Given items must genuinely lack enough evidence, not merely be hard to find.
+- every answer must be supported by passage evidence
+- traps should test reading skill, not trick users unfairly
+- internal difficulty must reflect actual cognitive demand
+- advanced content should require subtle inference, dense reasoning, and reduced keyword overlap
+- question sequencing should vary across tests
+- MCQ answer positions and matching answers should not show predictable bias
+- Not Given items must genuinely lack enough evidence
 
 ## Content Generation and Expansion Process
 
-Controlled content expansion follows:
+Controlled content expansion should follow:
 
-1. Choose topic and passage archetype.
-2. Draft passage with human-style rhetorical shape.
-3. Build a varied question blueprint.
+1. Choose topic and passage archetype internally.
+2. Draft one long passage with human-style rhetorical shape.
+3. Build a varied 20-question blueprint.
 4. Write questions with real evidence excerpts.
-5. Write explanations, why-correct and why-wrong notes.
-6. Assign taxonomy tags and difficulty.
+5. Write explanations, why-correct, and why-wrong notes.
+6. Assign taxonomy tags and hidden calibration metadata.
 7. Validate structure and metadata.
 8. Review realism and psychometric quality.
 9. Publish only after clean validation.
@@ -396,82 +442,66 @@ Avoid mass generation. A smaller validated batch is preferred over a large weak 
 
 ## Current Content Library Summary
 
-As of Batch C + D combined:
+Current published simulator library:
 
-- 15 published IELTS Academic Reading mini tests.
-- 300 mini-test questions.
-- 26 drill-native practice sets.
+- 15 IELTS Academic Reading simulations.
+- 1 public passage per test.
+- 20 questions per test.
+- 300 test questions.
+- 26 drill-native practice sets from earlier phases.
 - 130 drill questions.
 - 29 strategy lessons.
 
-Published mini-test difficulty mix:
+All standard IELTS Academic Reading question types are represented in the content library. Internal calibration metadata remains available but is not shown as pre-test categorization.
 
-- Easy: 2 tests.
-- Medium: 2 tests.
-- Hard: 6 tests.
-- Band 8-9 Challenge: 5 tests.
+## Batch and Product History
 
-All standard IELTS Academic Reading question types are represented in the test library.
+Step 1 stabilized the simulator, timer, answer input, scoring, review, and LocalStorage flow.
 
-## Batch Expansion History
+Phase 2A added enhanced review, evidence-based explanations, skill diagnosis, trap diagnosis, mistake summaries, and recommendations.
 
-Step 1 stabilized the simulator, timer, answer input, scoring, review and LocalStorage flow.
+Phase 2B added the Practice Hub, question-type practice, skill practice, drill scoring, and drill review.
 
-Phase 2A added enhanced review, evidence-based explanations, skill diagnosis, trap diagnosis, mistake summaries and recommendations.
+Phase 3A added taxonomy, metadata, relationships, and validation architecture.
 
-Phase 2B added the Practice Hub, question-type practice, skill practice, drill scoring and drill review.
-
-Phase 3A added taxonomy, metadata, relationships and validation architecture.
-
-Phase 3A-2 attempted large-scale content expansion, but the realism audit found repeated structure, weak distractors, fake evidence and poor psychometric realism. That generated scale was paused.
+Phase 3A-2 attempted large-scale content expansion, but the realism audit found repeated structure, weak distractors, fake evidence, and poor psychometric realism. That generated scale was paused.
 
 Phase 3A-REALISM reduced the public content to a smaller benchmark library and rebuilt validation guardrails.
 
-Phase 3A-REALISM-EXPANSION Batch A added 3 tests and 8 drills under controlled validation.
+Phase 3A-REALISM-EXPANSION rebuilt content in controlled batches.
 
-Batch B added 3 tests and 8 drills, closing drill coverage gaps for question types, skills and major traps.
+Human QA Revision changed the simulator direction:
 
-Batch C + D combined was test-only. It added 6 mini tests:
-
-Band 8-9 challenge tests:
-
-- `academic-reading-010` (`memory-reconstruction-and-evidence`) - The Memory Trace That Would Not Stay Put.
-- `academic-reading-011` (`model-uncertainty-and-public-decisions`) - When Models Become Public Instruments.
-- `academic-reading-012` (`conservation-corridors-and-risk`) - Corridors, Refuges and Conservation Risk.
-
-Weak-question-type repair tests:
-
-- `academic-reading-013` (`port-labour-and-hidden-records`) - Mapping a Port's Hidden Work.
-- `academic-reading-014` (`flood-gates-and-warning-systems`) - From Sensors to Flood Gates.
-- `academic-reading-015` (`manuscript-margins-and-language-change`) - The Manuscript's Moving Margins.
-
-No drills were added in Batch C + D.
-
-Legacy `realism-*` route parameters are still recognized for users who saved older links or local attempts, but they are no longer shown as public-facing test identifiers.
+- removed visible difficulty categories from the test library
+- hid topic-based titles from the user-facing test flow
+- converted public tests to numbered `Test N` presentation
+- simplified slugs to `test-N`
+- merged public test presentation into one continuous passage
+- preserved hidden metadata and validation systems
 
 ## Technical Stack
 
-- Next.js App Router.
-- React.
-- TypeScript.
-- Tailwind CSS.
-- lucide-react.
-- Local TypeScript content files.
-- LocalStorage for browser-only progress.
-- Vercel deployment target.
+- Next.js App Router
+- React
+- TypeScript
+- Tailwind CSS
+- lucide-react
+- Local TypeScript content files
+- LocalStorage for browser-only progress
+- Vercel deployment target
 
 ## Folder Structure
 
 ```text
 src/app/                     App Router pages
-src/components/              Simulator, result, review and shared UI components
+src/components/              Simulator, result, review, and shared UI components
 src/components/practice/     Focused-practice UI components
-src/data/tests.ts            Published Academic Reading mini tests
+src/data/tests.ts            Published Academic Reading simulations
 src/data/drills.ts           Published drill-native practice content
 src/data/strategy-lessons.ts Strategy lessons
 src/data/taxonomy/           Master taxonomy definitions
 src/data/types.ts            Shared content and app types
-src/lib/                     Scoring, diagnosis, storage, timer, metadata and validation logic
+src/lib/                     Scoring, diagnosis, storage, timer, metadata, routing, and validation logic
 scripts/validate-content.ts  Content QA command
 docs/platform-documentation.md Single consolidated documentation file
 ```
@@ -527,61 +557,64 @@ Vercel deployment:
 
 When adding tests:
 
-- Keep IELTS Academic-only scope.
-- Use original content only.
-- Do not copy official IELTS, Cambridge, British Council, IDP or commercial materials.
-- Use real evidence excerpts from the passage.
-- Avoid fake evidence summaries.
-- Vary passage archetypes and question blueprints.
-- Include plausible distractors.
-- Validate before publishing.
+- keep IELTS Academic-only scope
+- use original content only
+- do not copy official IELTS, Cambridge, British Council, IDP, or commercial materials
+- write one long passage per compact simulation
+- use real evidence excerpts from the passage
+- avoid fake evidence summaries
+- vary passage archetypes and question blueprints internally
+- include plausible distractors
+- keep public naming as `Test N`
+- validate before publishing
 
 When adding drills:
 
-- Confirm the phase allows drill expansion.
-- Use drill-native content where possible.
-- Keep strategy links valid.
-- Maintain taxonomy consistency.
+- confirm the phase allows drill expansion
+- use drill-native content where possible
+- keep strategy links valid
+- maintain taxonomy consistency
 
 When editing taxonomy:
 
-- Add labels centrally.
-- Update inference rules where needed.
-- Run validation and build.
+- add labels centrally
+- update inference rules where needed
+- run validation and build
 
 ## Copyright and Originality Policy
 
-All passages and questions must be original IELTS-style practice material. Official IELTS resources may guide format, timing and broad question taxonomy, but not wording, passages, answer keys, explanations or diagrams.
+All passages and questions must be original IELTS-style practice material. Official IELTS resources may guide format, timing, and broad question taxonomy, but not wording, passages, answer keys, explanations, or diagrams.
 
 Do not copy:
 
-- Official IELTS materials.
-- Cambridge IELTS books.
-- British Council or IDP sample passages/questions.
-- Commercial practice-book content.
-- Third-party copyrighted passages.
+- official IELTS materials
+- Cambridge IELTS books
+- British Council or IDP sample passages/questions
+- commercial practice-book content
+- third-party copyrighted passages
 
 ## Disclaimer
 
-This website provides independent IELTS Academic Reading practice materials. It is not affiliated with, endorsed by or approved by IELTS, Cambridge, British Council, IDP or the British Council. IELTS is a trademark of its respective owners.
+This website provides independent IELTS Academic Reading practice materials. It is not affiliated with, endorsed by, or approved by IELTS, Cambridge, British Council, IDP, or the British Council. IELTS is a trademark of its respective owners.
 
 ## Future Roadmap
 
 Near-term:
 
-- Continue controlled test expansion only after editorial review.
-- Add more Medium and Easy tests to rebalance the current hard-heavy library.
-- Rewrite strategy lessons in a more human, less generic style.
-- Improve visual support for Diagram Label Completion.
+- run another live-user QA pass on the simplified simulator
+- check whether public result diagnostics feel helpful or overly educational
+- continue improving one-passage content realism
+- decide how practice mode should coexist with the exam-like simulator
 
 Medium-term:
 
-- Add full 40-question, 60-minute Academic Reading simulations.
-- Add local trend dashboards and mistake notebook without login.
-- Add richer filtering by topic, difficulty and question type.
+- resume controlled test expansion only after QA
+- add full 40-question, 60-minute Academic Reading simulations
+- improve visual support for Diagram Label Completion
+- add optional local trend dashboards and mistake notebook without login
 
 Long-term:
 
-- Add adaptive recommendations if the content library remains high quality.
-- Add vocabulary and paraphrase systems.
-- Consider optional accounts only if there is a clear learner benefit, while preserving free no-login access.
+- add adaptive recommendations if the content library remains high quality
+- add vocabulary and paraphrase systems
+- consider optional accounts only if there is a clear learner benefit while preserving free no-login access

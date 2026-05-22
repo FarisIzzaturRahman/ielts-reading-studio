@@ -298,6 +298,8 @@ export function TestRunner({ test }: { test: ReadingTest }) {
             onRemoveHighlight={removeHighlight}
             onClearHighlights={clearHighlights}
             className="lg:h-full lg:min-h-0"
+            showPassageTitle={false}
+            showSourceNote={false}
           />
         </div>
         <section className="space-y-4 lg:grid lg:h-full lg:min-h-0 lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-4 lg:space-y-0 lg:overflow-hidden">

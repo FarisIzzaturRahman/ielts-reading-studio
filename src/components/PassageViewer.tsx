@@ -11,6 +11,8 @@ export function PassageViewer({
   onClearHighlights,
   readOnly = false,
   className = "",
+  showPassageTitle = true,
+  showSourceNote = true,
 }: {
   passages: Passage[];
   highlights: string[];
@@ -19,6 +21,8 @@ export function PassageViewer({
   onClearHighlights?: () => void;
   readOnly?: boolean;
   className?: string;
+  showPassageTitle?: boolean;
+  showSourceNote?: boolean;
 }) {
   const uniqueHighlights = [...new Set(highlights.map((highlight) => highlight.trim()).filter(Boolean))];
 
@@ -107,7 +111,7 @@ export function PassageViewer({
   return (
     <section className={`test-panel flex min-h-[70vh] flex-col overflow-hidden ${className}`}>
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-white px-5 py-3">
-        <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-600">Reading passages</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-600">Reading passage</h2>
         <div className="flex flex-wrap items-center gap-2">
           {readOnly ? <span className="text-sm text-slate-500">Review mode</span> : null}
           {uniqueHighlights.length > 0 && onClearHighlights ? (
@@ -134,10 +138,12 @@ export function PassageViewer({
         {passages.map((passage) => (
           <article key={passage.passageId} className="mb-10">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
-              Passage {formatPassageLabel(passage.passageId)}
+              {showPassageTitle ? `Passage ${formatPassageLabel(passage.passageId)}` : "Reading Passage"}
             </p>
-            <h3 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">{passage.title}</h3>
-            <p className="mt-1 text-xs text-slate-500">{passage.sourceNote}</p>
+            {showPassageTitle ? (
+              <h3 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">{passage.title}</h3>
+            ) : null}
+            {showSourceNote ? <p className="mt-1 text-xs text-slate-500">{passage.sourceNote}</p> : null}
             <div className="reading-prose mt-5 space-y-5 text-slate-800">
               {passage.paragraphs.map((paragraph) => (
                 <p key={paragraph.label}>

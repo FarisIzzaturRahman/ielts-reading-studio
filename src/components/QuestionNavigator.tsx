@@ -1,7 +1,6 @@
 "use client";
 
 import type { FlaggedQuestions, Question, UserAnswers } from "@/data/types";
-import { formatPassageLabel } from "@/lib/question-labels";
 
 export function QuestionNavigator({
   questions,
@@ -45,16 +44,14 @@ export function QuestionNavigator({
                   : "border-slate-300 bg-white text-slate-700"
               } ${isFlagged ? "ring-2 ring-amber-300" : ""}`}
               aria-current={isActive ? "true" : undefined}
-              aria-label={`Go to question ${question.id}, Passage ${formatPassageLabel(question.passageId)}${
-                isFlagged ? ", flagged" : ""
-              }`}
+              aria-label={`Go to question ${question.id}${isFlagged ? ", flagged" : ""}`}
             >
               {question.id}
             </a>
           );
         })}
       </div>
-      <p className="mt-3 text-xs leading-5 text-slate-500">Question labels show the linked passage.</p>
+      <p className="mt-3 text-xs leading-5 text-slate-500">Use the numbers to move through the test.</p>
       <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-600">
         <span className="inline-flex items-center gap-1">
           <span className="h-3 w-3 rounded-sm bg-emerald-700" /> Answered
