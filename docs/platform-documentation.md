@@ -16,6 +16,8 @@ The long-term content principle is:
 2. Controlled scaling second.
 3. Validation before publishing.
 
+As of the latest human QA pass, content expansion is paused until the current simulator UX remains polished and comfortable in live use.
+
 ## Target Users
 
 - IELTS Academic candidates practising independently.
@@ -41,16 +43,16 @@ Do not add:
 
 ## Key Features
 
-- 15 realism-reviewed IELTS Academic Reading mini tests.
+- 15 human-reviewed IELTS Academic Reading mini tests.
 - 20 questions per mini test.
 - 30-minute mini-test timer.
-- Split desktop test layout with passage and questions.
+- Split desktop test layout with independently scrollable passage and question panels.
 - Mobile fallback tabs for Passage, Questions and Review/navigation.
-- Auto-save for answers, flags, timer deadline, notes and highlights.
+- Auto-save for answers, flags, timer deadline, notes and removable highlights.
 - Submit confirmation with unanswered and flagged counts.
 - Raw score, percentage and approximate mini-band estimate.
 - Result diagnosis by question type, reading skill and trap type.
-- Evidence-based answer review with why-correct and why-wrong explanations.
+- Evidence-based answer review with side-by-side passage access and why-correct/why-wrong explanations.
 - Practice Hub with question-type and skill-based drills.
 - 26 drill-native practice sets from earlier phases.
 - LocalStorage-only progress and practice history.
@@ -64,11 +66,14 @@ Do not add:
 3. User opens a test instruction page.
 4. Timer starts only after Start Test.
 5. User reads passages and answers questions.
-6. Answers and flags auto-save locally.
-7. User submits manually or is submitted automatically when time expires.
-8. Result page shows score, approximate band range and diagnosis.
-9. Review page shows each question with evidence, explanation, trap and strategy tip.
-10. User can retake the test or return to the library.
+6. On desktop, the passage and question panels scroll independently so the reading text remains accessible while answering.
+7. On mobile, the user switches between Passage, Questions and Review/navigation tabs.
+8. Answers, flags, notes and highlights auto-save locally.
+9. Highlights can be removed individually or cleared for the passage.
+10. User submits manually or is submitted automatically when time expires.
+11. Result page shows score, approximate band range and diagnosis.
+12. Review page keeps the passage accessible while explanations scroll independently.
+13. User can retake the test or return to the library.
 
 ## Review and Diagnosis System
 
@@ -115,6 +120,19 @@ Current practice features:
 
 The drill library currently contains 26 drills. Do not add drills during test-only expansion phases unless a later phase explicitly changes scope.
 
+## Human QA Revision Notes
+
+The May 2026 human QA pass paused content expansion and addressed live MVP usability issues:
+
+- Difficulty categories now include IELTS-oriented explanations and a short "Which level should I choose?" helper on the test library page.
+- Test cards show the difficulty meaning without claiming official IELTS scoring accuracy.
+- Reading-test pages use independent desktop scrolling: the passage stays available while the questions panel scrolls.
+- Review pages use the same side-by-side desktop pattern and a mobile Passage/Review toggle.
+- Highlights can be removed by clicking highlighted text, removed from the saved-highlight list or cleared all at once.
+- Restarting a test creates a fresh attempt with no old highlights.
+- Inactive review CTAs were removed until a real mistake notebook or similar-practice feature is ready.
+- User-facing routes now use clean slugs. Internal IDs follow `academic-reading-001` style, with legacy `realism-*` IDs retained only for route and LocalStorage compatibility.
+
 ## Content Architecture
 
 Core data files:
@@ -132,6 +150,7 @@ Core logic files:
 - `src/lib/diagnosis.ts` test diagnosis and recommendations.
 - `src/lib/drill-scoring.ts` drill scoring and feedback.
 - `src/lib/storage.ts` safe LocalStorage helpers.
+- `src/lib/test-routing.ts` clean route helpers for user-facing test slugs.
 - `src/lib/timer.ts` deadline-based timer helpers.
 - `src/lib/content-metadata.ts` metadata builders.
 - `src/lib/content-relationships.ts` relationship index.
@@ -196,11 +215,20 @@ Trap types include:
 - Assumption trap
 - No major trap
 
+Difficulty categories are user-facing study guides, not official IELTS score predictions:
+
+- Easy: confidence-building tests with clearer evidence, more direct paraphrasing and lighter cognitive load.
+- Medium: regular practice with moderate paraphrasing, mixed question types and realistic traps.
+- Hard: Band 7+ oriented tests with denser passages, subtler paraphrasing, stronger distractors and more inference.
+- Band 8-9 Challenge: advanced practice with dense academic passages, reduced keyword overlap, subtle inference and demanding distractors.
+
 ## Metadata Standards
 
 Every published test should include:
 
 - `testId`
+- `slug`
+- `legacyIds` only when preserving older routes or LocalStorage keys
 - `title`
 - `description`
 - `topic`
@@ -244,6 +272,16 @@ Every question should include:
 - `paragraphRef` when relevant
 
 The current schema stores publishing status inside generated metadata as `status: "published"`. Draft or unvalidated content should not be included in the exported user-facing arrays.
+
+## Test Naming and Routes
+
+Tests use three naming layers:
+
+- Internal ID: stable machine-safe ID such as `academic-reading-001`.
+- Public slug: readable route segment such as `urban-heat-and-public-space`.
+- Display title: learner-facing title such as `Green Roofs and Urban Heat`.
+
+Do not expose old editorial labels such as `realism-easy-01` in the interface. Keep old IDs only in `legacyIds` when needed for backward-compatible routes and LocalStorage recovery.
 
 ## Editorial Status System
 
@@ -397,17 +435,19 @@ Batch C + D combined was test-only. It added 6 mini tests:
 
 Band 8-9 challenge tests:
 
-- `realism-band9-03` - The Memory Trace That Would Not Stay Put.
-- `realism-band9-04` - When Models Become Public Instruments.
-- `realism-band9-05` - Corridors, Refuges and Conservation Risk.
+- `academic-reading-010` (`memory-reconstruction-and-evidence`) - The Memory Trace That Would Not Stay Put.
+- `academic-reading-011` (`model-uncertainty-and-public-decisions`) - When Models Become Public Instruments.
+- `academic-reading-012` (`conservation-corridors-and-risk`) - Corridors, Refuges and Conservation Risk.
 
 Weak-question-type repair tests:
 
-- `realism-repair-01` - Mapping a Port's Hidden Work.
-- `realism-repair-02` - From Sensors to Flood Gates.
-- `realism-repair-03` - The Manuscript's Moving Margins.
+- `academic-reading-013` (`port-labour-and-hidden-records`) - Mapping a Port's Hidden Work.
+- `academic-reading-014` (`flood-gates-and-warning-systems`) - From Sensors to Flood Gates.
+- `academic-reading-015` (`manuscript-margins-and-language-change`) - The Manuscript's Moving Margins.
 
 No drills were added in Batch C + D.
+
+Legacy `realism-*` route parameters are still recognized for users who saved older links or local attempts, but they are no longer shown as public-facing test identifiers.
 
 ## Technical Stack
 

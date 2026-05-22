@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { ReadingTest } from "@/data/types";
 import { getRecommendedNextTest } from "@/data/tests";
+import { getSavedResult } from "@/lib/attempt";
 import { generateDiagnosis } from "@/lib/diagnosis";
 import { scoreTest } from "@/lib/scoring";
-import { loadJson, resultKey, type SavedResult } from "@/lib/storage";
+import type { SavedResult } from "@/lib/storage";
+import { getTestPath } from "@/lib/test-routing";
 import { MistakePatternSummary } from "./MistakePatternSummary";
 import { PerformanceBreakdown } from "./PerformanceBreakdown";
 import { Recommendations } from "./Recommendations";
@@ -21,7 +23,7 @@ export function ResultPageClient({ test }: { test: ReadingTest }) {
     let isMounted = true;
     queueMicrotask(() => {
       if (isMounted) {
-        setSavedResult(loadJson<SavedResult>(resultKey(test.testId)));
+        setSavedResult(getSavedResult(test));
         setHydrated(true);
       }
     });
@@ -29,7 +31,7 @@ export function ResultPageClient({ test }: { test: ReadingTest }) {
     return () => {
       isMounted = false;
     };
-  }, [test.testId]);
+  }, [test]);
 
   if (!hydrated) {
     return (
@@ -46,7 +48,7 @@ export function ResultPageClient({ test }: { test: ReadingTest }) {
         <h1 className="text-2xl font-semibold text-slate-950">No submitted result yet</h1>
         <p className="mt-3 text-slate-600">Start the test first, then submit it to unlock scoring and review.</p>
         <Link
-          href={`/tests/${test.testId}/instructions`}
+          href={getTestPath(test, "instructions")}
           className="mt-6 inline-flex rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
         >
           Go to instructions
@@ -67,7 +69,7 @@ export function ResultPageClient({ test }: { test: ReadingTest }) {
         score={score}
         diagnosis={diagnosis}
         elapsedSeconds={savedResult.elapsedSeconds}
-        nextTestId={nextTest?.testId}
+        nextTest={nextTest}
       />
       <div className="grid gap-6 xl:grid-cols-2">
         <PerformanceBreakdown
@@ -105,7 +107,7 @@ export function ResultPageClient({ test }: { test: ReadingTest }) {
           ))}
         </div>
         <Link
-          href={`/tests/${test.testId}/review`}
+          href={getTestPath(test, "review")}
           className="mt-5 inline-flex rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
         >
           Open full review

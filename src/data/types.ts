@@ -207,6 +207,8 @@ export type Question = {
 
 export type ReadingTest = {
   testId: string;
+  slug: string;
+  legacyIds?: string[];
   title: string;
   description: string;
   topic: string;

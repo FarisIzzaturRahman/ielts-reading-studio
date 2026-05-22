@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import type { ReadingTest } from "@/data/types";
 import { getAttemptStatus } from "@/lib/attempt";
 import { scoreTest } from "@/lib/scoring";
+import { getDifficultyById } from "@/data/taxonomy/difficulty";
+import { getTestPath } from "@/lib/test-routing";
 
 export function TestCard({ test }: { test: ReadingTest }) {
   const [attemptState, setAttemptState] = useState<ReturnType<typeof getAttemptStatus> | null>(null);
@@ -24,6 +26,7 @@ export function TestCard({ test }: { test: ReadingTest }) {
 
   const score = attemptState?.result ? scoreTest(test, attemptState.result.answers) : null;
   const status = attemptState?.status ?? "Not Started";
+  const difficulty = getDifficultyById(test.difficulty);
   const primaryLabel =
     status === "In Progress" ? "Continue or restart" : status === "Completed" ? "Review or retake" : "Open test";
 
@@ -42,6 +45,11 @@ export function TestCard({ test }: { test: ReadingTest }) {
           </span>
         </div>
         <p className="text-sm leading-6 text-slate-600">{test.description}</p>
+        {difficulty ? (
+          <p className="rounded-md bg-slate-50 px-3 py-2 text-sm leading-6 text-slate-600">
+            <strong className="text-slate-950">{difficulty.displayName}:</strong> {difficulty.description}
+          </p>
+        ) : null}
         <dl className="grid grid-cols-3 gap-3 text-sm">
           <div>
             <dt className="text-slate-500">Passages</dt>
@@ -79,7 +87,7 @@ export function TestCard({ test }: { test: ReadingTest }) {
         )}
       </div>
       <Link
-        href={`/tests/${test.testId}/instructions`}
+        href={getTestPath(test, "instructions")}
         className="mt-5 inline-flex items-center justify-center rounded-md bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
       >
         {primaryLabel}

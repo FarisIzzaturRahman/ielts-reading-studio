@@ -14,6 +14,27 @@ import {
 } from "./storage";
 import { createDeadline } from "./timer";
 
+type TestStorageRef = ReadingTest | string;
+
+function storageIdsFor(testOrId: TestStorageRef) {
+  if (typeof testOrId === "string") {
+    return [testOrId];
+  }
+
+  return [...new Set([testOrId.testId, testOrId.slug, ...(testOrId.legacyIds ?? [])])];
+}
+
+function normalizeProgress<T extends SavedProgress | SavedResult>(saved: T, testOrId: TestStorageRef): T {
+  if (typeof testOrId === "string" || saved.testId === testOrId.testId) {
+    return saved;
+  }
+
+  return {
+    ...saved,
+    testId: testOrId.testId,
+  };
+}
+
 export function createInitialProgress(test: ReadingTest): SavedProgress {
   const now = new Date().toISOString();
 
@@ -34,30 +55,51 @@ export function createInitialProgress(test: ReadingTest): SavedProgress {
 
 export function startNewAttempt(test: ReadingTest) {
   const progress = createInitialProgress(test);
-  removeSavedItem(progressKey(test.testId));
+  clearAttempt(test);
+
   return {
     progress,
     saved: saveJson(progressKey(test.testId), progress),
   };
 }
 
-export function clearAttempt(testId: string) {
-  const progressCleared = removeSavedItem(progressKey(testId));
-  const resultCleared = removeSavedItem(resultKey(testId));
-  return progressCleared && resultCleared;
+export function clearAttempt(testOrId: TestStorageRef) {
+  let cleared = true;
+
+  for (const storageId of storageIdsFor(testOrId)) {
+    cleared = removeSavedItem(progressKey(storageId)) && cleared;
+    cleared = removeSavedItem(resultKey(storageId)) && cleared;
+    cleared = removeSavedItem(diagnosisKey(storageId)) && cleared;
+  }
+
+  return cleared;
 }
 
-export function getSavedProgress(testId: string) {
-  return loadJson<SavedProgress>(progressKey(testId));
+export function getSavedProgress(testOrId: TestStorageRef) {
+  for (const storageId of storageIdsFor(testOrId)) {
+    const saved = loadJson<SavedProgress>(progressKey(storageId));
+    if (saved) {
+      return normalizeProgress(saved, testOrId);
+    }
+  }
+
+  return null;
 }
 
-export function getSavedResult(testId: string) {
-  return loadJson<SavedResult>(resultKey(testId));
+export function getSavedResult(testOrId: TestStorageRef) {
+  for (const storageId of storageIdsFor(testOrId)) {
+    const saved = loadJson<SavedResult>(resultKey(storageId));
+    if (saved) {
+      return normalizeProgress(saved, testOrId);
+    }
+  }
+
+  return null;
 }
 
 export function getAttemptStatus(test: ReadingTest) {
-  const result = getSavedResult(test.testId);
-  const progress = getSavedProgress(test.testId);
+  const result = getSavedResult(test);
+  const progress = getSavedProgress(test);
 
   if (progress?.status === "in-progress") {
     return {

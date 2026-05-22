@@ -7,6 +7,7 @@ import type { ReadingTest } from "@/data/types";
 import { getAttemptStatus, startNewAttempt } from "@/lib/attempt";
 import { scoreTest } from "@/lib/scoring";
 import { isStorageAvailable } from "@/lib/storage";
+import { getTestPath } from "@/lib/test-routing";
 
 type AttemptState = ReturnType<typeof getAttemptStatus> | null;
 
@@ -32,7 +33,7 @@ export function AttemptActions({ test }: { test: ReadingTest }) {
   function beginNewAttempt() {
     const { saved } = startNewAttempt(test);
     setStorageAvailable(saved);
-    router.push(`/tests/${test.testId}/practice`);
+    router.push(getTestPath(test, "practice"));
   }
 
   const score = attemptState?.result ? scoreTest(test, attemptState.result.answers) : null;
@@ -66,7 +67,7 @@ export function AttemptActions({ test }: { test: ReadingTest }) {
           </Link>
           {attemptState?.status === "In Progress" ? (
             <Link
-              href={`/tests/${test.testId}/practice`}
+              href={getTestPath(test, "practice")}
               className="rounded-md bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-800"
             >
               Continue test
@@ -74,7 +75,7 @@ export function AttemptActions({ test }: { test: ReadingTest }) {
           ) : null}
           {attemptState?.status === "Completed" ? (
             <Link
-              href={`/tests/${test.testId}/review`}
+              href={getTestPath(test, "review")}
               className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
             >
               Review last attempt

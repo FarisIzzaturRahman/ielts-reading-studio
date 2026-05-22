@@ -27,7 +27,8 @@ export const DIFFICULTY_LEVELS: DifficultyTaxonomyItem[] = [
     paraphraseDensity: "Low",
     distractorSubtlety: "Low",
     cognitiveDemand: "Low",
-    description: "More direct wording, shorter sentences, simpler vocabulary and clearer evidence.",
+    description:
+      "Best for learners building confidence with IELTS Academic Reading. These tests use clearer evidence, more direct paraphrasing and lighter cognitive load.",
   },
   {
     id: "Medium",
@@ -40,7 +41,8 @@ export const DIFFICULTY_LEVELS: DifficultyTaxonomyItem[] = [
     paraphraseDensity: "Moderate",
     distractorSubtlety: "Moderate",
     cognitiveDemand: "Moderate",
-    description: "Standard IELTS-style academic wording with moderate paraphrase and fair distractors.",
+    description:
+      "Best for regular IELTS practice. These tests include moderate paraphrasing, mixed question types and realistic IELTS-style traps.",
   },
   {
     id: "Hard",
@@ -53,7 +55,8 @@ export const DIFFICULTY_LEVELS: DifficultyTaxonomyItem[] = [
     paraphraseDensity: "High",
     distractorSubtlety: "High",
     cognitiveDemand: "High",
-    description: "Denser academic language, subtler paraphrases, complex sentences and less direct evidence.",
+    description:
+      "Best for learners aiming for Band 7+. These tests use denser passages, subtler paraphrasing, stronger distractors and more inference-based questions.",
   },
   {
     id: "Band 8-9 Challenge",
@@ -66,7 +69,8 @@ export const DIFFICULTY_LEVELS: DifficultyTaxonomyItem[] = [
     paraphraseDensity: "Very high",
     distractorSubtlety: "Very high",
     cognitiveDemand: "Very high",
-    description: "High lexical density, heavy paraphrasing, subtle inference and difficult distractors.",
+    description:
+      "Best for advanced learners aiming for very high scores. These tests include dense academic passages, reduced keyword overlap, subtle inference and more cognitively demanding distractors.",
   },
 ];
 

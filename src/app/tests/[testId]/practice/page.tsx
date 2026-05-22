@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { TestRunner } from "@/components/TestRunner";
-import { getTestById, readingTests } from "@/data/tests";
+import { getTestById, getTestRouteParams } from "@/data/tests";
 
 export function generateStaticParams() {
-  return readingTests.map((test) => ({ testId: test.testId }));
+  return getTestRouteParams();
 }
 
 export default async function PracticePage({

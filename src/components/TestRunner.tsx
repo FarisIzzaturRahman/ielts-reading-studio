@@ -7,6 +7,7 @@ import type { FlaggedQuestions, ReadingTest, UserAnswers } from "@/data/types";
 import { buildResult, getSavedProgress, saveDiagnosisResult, startNewAttempt } from "@/lib/attempt";
 import { scoreTest } from "@/lib/scoring";
 import { isStorageAvailable, progressKey, resultKey, saveJson, type SavedProgress } from "@/lib/storage";
+import { getTestPath } from "@/lib/test-routing";
 import { clampRemaining, createDeadline, secondsUntil } from "@/lib/timer";
 import { PassageViewer } from "./PassageViewer";
 import { QuestionNavigator } from "./QuestionNavigator";
@@ -59,7 +60,7 @@ export function TestRunner({ test }: { test: ReadingTest }) {
         setStorageWarning("Local progress could not be saved in this browser. You can still practise in this tab.");
       }
 
-      const saved = getSavedProgress(test.testId);
+      const saved = getSavedProgress(test);
       if (saved?.status === "in-progress") {
         applyProgress(saved);
       } else {
@@ -71,7 +72,7 @@ export function TestRunner({ test }: { test: ReadingTest }) {
     return () => {
       isMounted = false;
     };
-  }, [applyProgress, test.testId]);
+  }, [applyProgress, test]);
 
   useEffect(() => {
     if (!hydrated || needsStart || !deadlineAt) return;
@@ -143,7 +144,7 @@ export function TestRunner({ test }: { test: ReadingTest }) {
     saveJson(resultKey(test.testId), result);
     saveJson(progressKey(test.testId), result);
     saveDiagnosisResult(result);
-    router.push(`/tests/${test.testId}/results`);
+    router.push(getTestPath(test, "results"));
   }, [answers, deadlineAt, flagged, highlights, initialSeconds, notes, router, startedAt, test, timeRemaining]);
 
   useEffect(() => {
@@ -164,6 +165,14 @@ export function TestRunner({ test }: { test: ReadingTest }) {
 
   function addHighlight(highlight: string) {
     setHighlights((current) => (current.includes(highlight) ? current : [...current, highlight]));
+  }
+
+  function removeHighlight(highlight: string) {
+    setHighlights((current) => current.filter((item) => item !== highlight));
+  }
+
+  function clearHighlights() {
+    setHighlights([]);
   }
 
   const scorePreview = scoreTest(test, answers);
@@ -203,7 +212,7 @@ export function TestRunner({ test }: { test: ReadingTest }) {
     return (
       <div className="min-h-screen bg-stone-50 px-4 py-10">
         <div className="mx-auto max-w-2xl rounded-md border border-slate-200 bg-white p-6">
-          <Link href={`/tests/${test.testId}/instructions`} className="text-sm font-medium text-emerald-800">
+          <Link href={getTestPath(test, "instructions")} className="text-sm font-medium text-emerald-800">
             Back to instructions
           </Link>
           <h1 className="mt-3 text-2xl font-semibold text-slate-950">Start {test.title}</h1>
@@ -276,12 +285,29 @@ export function TestRunner({ test }: { test: ReadingTest }) {
           </p>
         </div>
       ) : null}
-      <main className="mx-auto grid max-w-[1440px] gap-4 px-4 py-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.8fr)] lg:px-8">
-        <div className={mobileView === "passage" ? "block" : "hidden lg:block"}>
-          <PassageViewer passages={test.passages} highlights={highlights} onAddHighlight={addHighlight} />
+      <main className="mx-auto grid max-w-[1440px] gap-4 px-4 py-4 sm:px-6 lg:h-[calc(100vh-6.75rem)] lg:min-h-[560px] lg:grid-cols-[minmax(420px,0.95fr)_minmax(560px,1fr)] lg:overflow-hidden lg:px-8">
+        <div
+          className={
+            mobileView === "passage" ? "block lg:h-full lg:min-h-0" : "hidden lg:block lg:h-full lg:min-h-0"
+          }
+        >
+          <PassageViewer
+            passages={test.passages}
+            highlights={highlights}
+            onAddHighlight={addHighlight}
+            onRemoveHighlight={removeHighlight}
+            onClearHighlights={clearHighlights}
+            className="lg:h-full lg:min-h-0"
+          />
         </div>
-        <section className="space-y-4">
-          <div className={mobileView === "navigator" ? "space-y-4" : "hidden space-y-4 lg:block"}>
+        <section className="space-y-4 lg:grid lg:h-full lg:min-h-0 lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-4 lg:space-y-0 lg:overflow-hidden">
+          <div
+            className={
+              mobileView === "navigator"
+                ? "space-y-4 lg:h-full lg:min-h-0 lg:overflow-y-auto"
+                : "hidden space-y-4 lg:block lg:h-full lg:min-h-0 lg:overflow-y-auto"
+            }
+          >
             <QuestionNavigator
               questions={test.questions}
               answers={answers}
@@ -305,7 +331,13 @@ export function TestRunner({ test }: { test: ReadingTest }) {
               />
             </div>
           </div>
-          <div className={mobileView === "questions" ? "block" : "hidden lg:block"}>
+          <div
+            className={
+              mobileView === "questions"
+                ? "block lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1"
+                : "hidden lg:block lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1"
+            }
+          >
             <QuestionRenderer
               questions={test.questions}
               answers={answers}

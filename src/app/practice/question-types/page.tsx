@@ -30,12 +30,16 @@ export default function QuestionTypePracticePage() {
                 <p className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
                   Tests: {item.tests}
                 </p>
-                <Link
-                  href={`/practice/question-types/${item.slug}`}
-                  className="mt-5 inline-flex rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                >
-                  Open practice
-                </Link>
+                {drills.length ? (
+                  <Link
+                    href={`/practice/question-types/${item.slug}`}
+                    className="mt-5 inline-flex rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                  >
+                    Open practice
+                  </Link>
+                ) : (
+                  <p className="mt-5 text-sm font-medium text-slate-500">Practice set not published yet.</p>
+                )}
               </article>
             );
           })}

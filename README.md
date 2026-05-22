@@ -6,23 +6,23 @@ Free, no-login IELTS Academic Reading practice for self-learners.
 
 IELTS Reading Studio is an independent IELTS Academic Reading simulator. Learners can open the website, choose a mini Academic Reading test, answer timed questions, submit, view an approximate score, and review explanations without creating an account.
 
-The current version is in a controlled realism-expansion phase. The app keeps the stable simulator and practice architecture, and published content is expanded only in small reviewed batches that pass evidence, taxonomy, answer-balance, repetition and realism checks. It does not include IELTS General Training, payment, subscriptions, accounts, teacher dashboards, AI tutoring, community features, or locked content.
+The current version has paused content expansion for a human QA revision pass. The app keeps the stable simulator and practice architecture, with clearer difficulty guidance, cleaner public test slugs, removable highlights and improved side-by-side test/review layouts. It does not include IELTS General Training, payment, subscriptions, accounts, teacher dashboards, AI tutoring, community features, or locked content.
 
 ## Features
 
-- 15 realism-reviewed IELTS-style Academic Reading mini tests.
+- 15 human-reviewed IELTS-style Academic Reading mini tests.
 - 2 passages and 20 questions per mini test.
 - 30-minute timer for 20-question tests.
-- Split-screen desktop test interface.
+- Split-screen desktop test interface with independently scrollable passage and question panels.
 - Mobile fallback with Passage, Questions, and Review tabs.
 - Answer inputs for common IELTS Academic Reading question types.
 - Question navigation with answered, unanswered, active, and flagged states.
-- Local auto-save for answers, flags, notes, highlights, timer deadline, and attempts.
+- Local auto-save for answers, flags, notes, removable highlights, timer deadline, and attempts.
 - Submit confirmation with answered, unanswered, and flagged counts.
 - Automatic raw score, percentage, and approximate mini-band estimate.
 - Result page with performance by skill and question type.
 - Result page with mistake pattern summary, trap type pattern, and rule-based recommendations.
-- Review page with user answer, correct answer, explanation, evidence reference, why-correct/why-wrong notes, trap type, strategy tip, skill, and difficulty.
+- Review page with side-by-side passage access, user answer, correct answer, explanation, evidence reference, why-correct/why-wrong notes, trap type, strategy tip, skill, and difficulty.
 - Practice Hub for focused IELTS Academic Reading drills.
 - Practice by question type and by reading skill.
 - 26 drill-native focused practice sets rebuilt for realism rather than recycled from mini tests.
@@ -94,6 +94,7 @@ src/lib/diagnosis.ts     Performance, mistake pattern, and recommendation logic
 src/lib/drill-scoring.ts Focused-practice scoring and feedback
 src/lib/practice-storage.ts Browser-only drill progress and result storage
 src/lib/taxonomy.ts      Compatibility re-export for taxonomy helpers
+src/lib/test-routing.ts  Clean route helpers for user-facing test slugs
 src/lib/validation/      Content QA and validation utilities
 src/lib/scoring.ts       Answer normalization and scoring
 src/lib/storage.ts       Safe LocalStorage helpers
@@ -107,6 +108,8 @@ docs/platform-documentation.md Consolidated product, technical, content and QA d
 Each test includes:
 
 - `testId`
+- `slug`
+- `legacyIds`
 - `title`
 - `description`
 - `difficulty`
@@ -117,6 +120,8 @@ Each test includes:
 - `totalQuestions`
 - `passages`
 - `questions`
+
+Use `testId` for internal storage and `slug` for public routes. `legacyIds` exist only to keep older saved attempts and old links from crashing after ID cleanup.
 
 Each question includes:
 

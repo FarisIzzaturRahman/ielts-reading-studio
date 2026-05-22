@@ -364,7 +364,11 @@ function validateTest(test: ReadingTest): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
   requireText(issues, "test", test.testId, "title", test.title);
+  requireText(issues, "test", test.testId, "slug", test.slug);
   requireText(issues, "test", test.testId, "description", test.description);
+  if (test.slug.includes("realism")) {
+    issues.push(issue("warning", "test", test.testId, "slug", "User-facing test slugs should avoid internal editorial labels."));
+  }
 
   if (test.testType !== "Academic") {
     issues.push(issue("error", "test", test.testId, "testType", "Only IELTS Academic Reading content is allowed."));
@@ -380,6 +384,21 @@ function validateTest(test: ReadingTest): ValidationIssue[] {
   issues.push(...validateMetadata(test));
   test.passages.forEach((passage) => issues.push(...validatePassage(passage, test.testId)));
   test.questions.forEach((question) => issues.push(...validateQuestion(question, test.passages, test.testId)));
+
+  return issues;
+}
+
+function validateTestRouting(tests: ReadingTest[]): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const seenSlugs = new Map<string, string>();
+
+  for (const test of tests) {
+    const existing = seenSlugs.get(test.slug);
+    if (existing) {
+      issues.push(issue("error", "test", test.testId, "slug", `Slug duplicates ${existing}.`));
+    }
+    seenSlugs.set(test.slug, test.testId);
+  }
 
   return issues;
 }
@@ -596,6 +615,7 @@ export function validateContentLibrary(library: ContentLibrary): ValidationRepor
   const lessonIds = new Set(library.lessons.map((lesson) => lesson.lessonId));
   const issues = [
     ...validateTaxonomyConsistency(),
+    ...validateTestRouting(library.tests),
     ...library.tests.flatMap(validateTest),
     ...library.drills.flatMap((drill) => validateDrill(drill, lessonIds)),
     ...library.lessons.flatMap(validateLesson),

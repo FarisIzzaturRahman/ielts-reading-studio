@@ -20,6 +20,8 @@ export const metadata: Metadata = {
     "Original mini IELTS Academic Reading simulations with timer, scoring, review and skill diagnosis.",
 };
 
+const enableVercelInsights = process.env.VERCEL === "1";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,8 +34,12 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-stone-50 text-slate-950">
         {children}
-        <Analytics />
-        <SpeedInsights />
+        {enableVercelInsights ? (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        ) : null}
       </body>
     </html>
   );

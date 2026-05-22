@@ -52,6 +52,8 @@ function makeQuestion(question: QuestionSeed, index: number, batchId: string): Q
 
 function makeTest(input: {
   testId: string;
+  slug: string;
+  legacyIds?: string[];
   title: string;
   description: string;
   topic: string;
@@ -74,6 +76,8 @@ function makeTest(input: {
   const questions = input.questions.map((question, index) => makeQuestion(question, index, batchId));
   const testWithoutMetadata: Omit<ReadingTest, "metadata"> = {
     testId: input.testId,
+    slug: input.slug,
+    legacyIds: input.legacyIds,
     title: input.title,
     description: input.description,
     topic: input.topic,
@@ -99,7 +103,9 @@ function q(input: QuestionSeed): QuestionSeed {
 }
 
 const urbanHeatTest = makeTest({
-  testId: "realism-easy-01",
+  testId: "academic-reading-001",
+  slug: "urban-heat-and-public-space",
+  legacyIds: ["realism-easy-01"],
   title: "Green Roofs and Urban Heat",
   description:
     "A human-edited IELTS Academic Reading mini test on urban heat, public buildings and heat-map interpretation.",
@@ -678,7 +684,9 @@ const urbanHeatTest = makeTest({
 });
 
 const pigmentTest = makeTest({
-  testId: "realism-hard-01",
+  testId: "academic-reading-002",
+  slug: "historical-textiles-and-trade-evidence",
+  legacyIds: ["realism-hard-01"],
   title: "Traces of Colour in Historical Textiles",
   description:
     "A human-edited IELTS Academic Reading mini test on textile conservation, trade evidence and historical interpretation.",
@@ -1256,7 +1264,9 @@ const pigmentTest = makeTest({
 });
 
 const algorithmsTest = makeTest({
-  testId: "realism-band9-01",
+  testId: "academic-reading-003",
+  slug: "algorithms-as-scientific-instruments",
+  legacyIds: ["realism-band9-01"],
   title: "When Algorithms Become Instruments",
   description:
     "A human-edited Band 8-9 IELTS Academic Reading mini test on scientific judgement, model explanations and accountability.",
@@ -1844,10 +1854,12 @@ const algorithmsTest = makeTest({
 });
 
 const reefSoundTest = makeTest({
-  testId: "realism-medium-02",
+  testId: "academic-reading-004",
+  slug: "coral-reef-soundscapes",
+  legacyIds: ["realism-medium-02"],
   title: "Listening to Coral Reefs",
   description:
-    "A realism-reviewed IELTS Academic Reading mini test on reef soundscapes, restoration monitoring and ecological evidence.",
+    "A human-reviewed IELTS Academic Reading mini test on reef soundscapes, restoration monitoring and ecological evidence.",
   topic: "Marine Biology",
   difficulty: "Medium",
   targetBand: "Band 6.5-7.5",
@@ -2423,10 +2435,12 @@ const reefSoundTest = makeTest({
 });
 
 const defaultsTest = makeTest({
-  testId: "realism-hard-02",
+  testId: "academic-reading-005",
+  slug: "defaults-choice-and-public-forms",
+  legacyIds: ["realism-hard-02"],
   title: "Defaults, Choice and Public Forms",
   description:
-    "A realism-reviewed IELTS Academic Reading mini test on behavioural economics, public administration and evidence from form design.",
+    "A human-reviewed IELTS Academic Reading mini test on behavioural economics, public administration and evidence from form design.",
   topic: "Behavioural Economics",
   difficulty: "Hard",
   targetBand: "Band 7.0-8.0",
@@ -3007,7 +3021,9 @@ const defaultsTest = makeTest({
 });
 
 const caveMineralsTest = makeTest({
-  testId: "realism-band9-02",
+  testId: "academic-reading-006",
+  slug: "cave-minerals-and-climate-clues",
+  legacyIds: ["realism-band9-02"],
   title: "Climate Clues in Cave Minerals",
   description:
     "A Band 8-9 IELTS Academic Reading mini test on proxy evidence, climate interpretation and scientific uncertainty.",
@@ -3595,7 +3611,9 @@ const caveMineralsTest = makeTest({
 });
 
 const museumSeedsTest = makeTest({
-  testId: "realism-easy-02",
+  testId: "academic-reading-007",
+  slug: "museum-seeds-and-catalogue-evidence",
+  legacyIds: ["realism-easy-02"],
   title: "Seeds in Museum Drawers",
   description:
     "A controlled IELTS Academic Reading mini test on archaeological seed collections, museum labels and cautious interpretation.",
@@ -4169,10 +4187,12 @@ const museumSeedsTest = makeTest({
 });
 
 const schoolTimetableTest = makeTest({
-  testId: "realism-medium-03",
+  testId: "academic-reading-008",
+  slug: "school-start-times-and-sleep-evidence",
+  legacyIds: ["realism-medium-03"],
   title: "Later Bells and Sleep Evidence",
   description:
-    "A realism-reviewed IELTS Academic Reading mini test on school start times, transport constraints and interpretation of student data.",
+    "A human-reviewed IELTS Academic Reading mini test on school start times, transport constraints and interpretation of student data.",
   topic: "Education",
   difficulty: "Medium",
   targetBand: "Band 6.5-7.5",
@@ -4743,7 +4763,9 @@ const schoolTimetableTest = makeTest({
 });
 
 const gestureGrammarTest = makeTest({
-  testId: "realism-hard-03",
+  testId: "academic-reading-009",
+  slug: "gesture-grammar-and-shared-attention",
+  legacyIds: ["realism-hard-03"],
   title: "Gesture, Grammar and Shared Attention",
   description:
     "A harder IELTS Academic Reading mini test on gesture research, linguistic interpretation and field observation.",
@@ -5321,7 +5343,9 @@ const gestureGrammarTest = makeTest({
 });
 
 const memoryReconstructionTest = makeTest({
-  testId: "realism-band9-03",
+  testId: "academic-reading-010",
+  slug: "memory-reconstruction-and-evidence",
+  legacyIds: ["realism-band9-03"],
   title: "The Memory Trace That Would Not Stay Put",
   description:
     "A Band 8-9 IELTS Academic Reading mini test on memory reconstruction, reconsolidation and courtroom interpretation.",
@@ -5897,7 +5921,9 @@ const memoryReconstructionTest = makeTest({
 });
 
 const modelUncertaintyTest = makeTest({
-  testId: "realism-band9-04",
+  testId: "academic-reading-011",
+  slug: "model-uncertainty-and-public-decisions",
+  legacyIds: ["realism-band9-04"],
   title: "When Models Become Public Instruments",
   description:
     "A Band 8-9 IELTS Academic Reading mini test on model uncertainty, public decisions and philosophy of science.",
@@ -6472,7 +6498,9 @@ const modelUncertaintyTest = makeTest({
 });
 
 const conservationTradeoffsTest = makeTest({
-  testId: "realism-band9-05",
+  testId: "academic-reading-012",
+  slug: "conservation-corridors-and-risk",
+  legacyIds: ["realism-band9-05"],
   title: "Corridors, Refuges and Conservation Risk",
   description:
     "A Band 8-9 IELTS Academic Reading mini test on ecological connectivity, managed relocation and conservation trade-offs.",
@@ -7048,7 +7076,9 @@ const conservationTradeoffsTest = makeTest({
 });
 
 const portArchiveRepairTest = makeTest({
-  testId: "realism-repair-01",
+  testId: "academic-reading-013",
+  slug: "port-labour-and-hidden-records",
+  legacyIds: ["realism-repair-01"],
   title: "Mapping a Port's Hidden Work",
   description:
     "A weak-question-type repair mini test focused on Matching Headings, Matching Information and Matching Features inside a full Academic Reading test.",
@@ -7293,7 +7323,9 @@ const portArchiveRepairTest = makeTest({
 });
 
 const floodGateRepairTest = makeTest({
-  testId: "realism-repair-02",
+  testId: "academic-reading-014",
+  slug: "flood-gates-and-warning-systems",
+  legacyIds: ["realism-repair-02"],
   title: "From Sensors to Flood Gates",
   description:
     "A weak-question-type repair mini test focused on Flow-chart Completion, Diagram Label Completion and plausible MCQ distractors.",
@@ -7509,7 +7541,9 @@ const floodGateRepairTest = makeTest({
 });
 
 const manuscriptMarginsRepairTest = makeTest({
-  testId: "realism-repair-03",
+  testId: "academic-reading-015",
+  slug: "manuscript-margins-and-language-change",
+  legacyIds: ["realism-repair-03"],
   title: "The Manuscript's Moving Margins",
   description:
     "A weak-question-type repair mini test using strong Matching Headings, Matching Features, Matching Information and plausible MCQ options.",
@@ -7773,12 +7807,27 @@ export const readingTests: ReadingTest[] = [
   manuscriptMarginsRepairTest,
 ];
 
+export function getTestRouteParams() {
+  const params = new Set<string>();
+
+  for (const test of readingTests) {
+    params.add(test.slug);
+    params.add(test.testId);
+    test.legacyIds?.forEach((legacyId) => params.add(legacyId));
+  }
+
+  return [...params].map((testId) => ({ testId }));
+}
+
 export function getTestById(testId: string): ReadingTest | undefined {
-  return readingTests.find((test) => test.testId === testId);
+  return readingTests.find(
+    (test) => test.testId === testId || test.slug === testId || test.legacyIds?.includes(testId),
+  );
 }
 
 export function getRecommendedNextTest(currentTestId: string, score: number) {
-  const currentIndex = readingTests.findIndex((test) => test.testId === currentTestId);
+  const currentTest = getTestById(currentTestId);
+  const currentIndex = readingTests.findIndex((test) => test.testId === currentTest?.testId);
   const safeIndex = currentIndex >= 0 ? currentIndex : 0;
 
   if (score >= 16) {

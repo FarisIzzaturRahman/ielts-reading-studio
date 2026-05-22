@@ -7,25 +7,26 @@ import { startNewAttempt } from "@/lib/attempt";
 import type { DiagnosisResult } from "@/lib/diagnosis";
 import type { ScoreResult } from "@/lib/scoring";
 import { formatDuration } from "@/lib/scoring";
+import { getTestPath } from "@/lib/test-routing";
 
 export function ResultSummary({
   test,
   score,
   diagnosis,
   elapsedSeconds,
-  nextTestId,
+  nextTest,
 }: {
   test: ReadingTest;
   score: ScoreResult;
   diagnosis: DiagnosisResult;
   elapsedSeconds: number;
-  nextTestId?: string;
+  nextTest?: ReadingTest;
 }) {
   const router = useRouter();
 
   function retakeTest() {
     startNewAttempt(test);
-    router.push(`/tests/${test.testId}/practice`);
+    router.push(getTestPath(test, "practice"));
   }
 
   return (
@@ -85,7 +86,7 @@ export function ResultSummary({
       </div>
       <div className="mt-6 flex flex-wrap gap-3">
         <Link
-          href={`/tests/${test.testId}/review`}
+          href={getTestPath(test, "review")}
           className="rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
         >
           Review answers
@@ -103,9 +104,9 @@ export function ResultSummary({
         >
           Back to test library
         </Link>
-        {nextTestId ? (
+        {nextTest ? (
           <Link
-            href={`/tests/${nextTestId}/instructions`}
+            href={getTestPath(nextTest, "instructions")}
             className="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
           >
             Recommended next practice

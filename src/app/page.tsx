@@ -15,7 +15,7 @@ export default function Home() {
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
               Free, no-login IELTS Academic Reading practice for self-learners at every level. Start with{" "}
-              {readingTests.length} realism-reviewed mini simulations: two passages, twenty questions, timed
+              {readingTests.length} human-reviewed mini simulations: two passages, twenty questions, timed
               practice, scoring and review.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -82,7 +82,7 @@ export default function Home() {
             <div>
               <h2 className="text-2xl font-semibold tracking-tight text-slate-950">Test list preview</h2>
               <p className="mt-2 max-w-2xl text-slate-600">
-                Start with the realism-reviewed library as controlled batches add more Academic Reading content.
+                Start with the human-reviewed library as controlled batches add more Academic Reading content.
               </p>
             </div>
             <Link href="/tests" className="text-sm font-semibold text-emerald-800 hover:text-emerald-700">
