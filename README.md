@@ -10,7 +10,7 @@ The current version is in a controlled realism-expansion phase. The app keeps th
 
 ## Features
 
-- 9 realism-reviewed IELTS-style Academic Reading mini tests.
+- 15 realism-reviewed IELTS-style Academic Reading mini tests.
 - 2 passages and 20 questions per mini test.
 - 30-minute timer for 20-question tests.
 - Split-screen desktop test interface.
@@ -99,14 +99,7 @@ src/lib/scoring.ts       Answer normalization and scoring
 src/lib/storage.ts       Safe LocalStorage helpers
 src/lib/timer.ts         Deadline-based timer helpers
 scripts/validate-content.ts Content validation script
-docs/product-plan.md     Product strategy and architecture
-docs/stabilization-step-1.md  Step 1 audit, gaps, and QA checklist
-docs/phase-2a-diagnosis.md    Phase 2A diagnosis plan and QA checklist
-docs/phase-2b-practice-mode.md Phase 2B practice mode plan and QA checklist
-docs/phase-3a-content-system.md Phase 3A taxonomy, metadata and QA pipeline
-docs/phase-3a2-large-scale-content.md Phase 3A-2 large-scale content expansion
-docs/phase-3a-realism-overhaul.md Phase 3A-REALISM editorial and psychometric overhaul
-docs/phase-3a-realism-expansion.md Phase 3A-REALISM-EXPANSION controlled content scaling
+docs/platform-documentation.md Consolidated product, technical, content and QA documentation
 ```
 
 ## Content Format
@@ -202,7 +195,7 @@ Do not copy official IELTS, Cambridge, British Council, IDP, or commercial test-
 - Phase 3A: Content taxonomy, metadata standards, relationship index and validation pipeline.
 - Phase 3A-2: Large-scale content expansion architecture. Paused after the realism audit.
 - Phase 3A-REALISM: Rebuild flagship tests, drill-native practice, real evidence, distractors, difficulty calibration and validation guardrails.
-- Phase 3A-REALISM-EXPANSION: Controlled Batches A and B expand the reviewed library to 9 mini tests and 26 drill-native practice sets.
+- Phase 3A-REALISM-EXPANSION: Controlled Batches A-D expand the reviewed library to 15 mini tests and 26 drill-native practice sets.
 - Phase 3B: Resume broader product expansion only after controlled content batches continue passing QA.
 - Phase 4: Add optional local trend dashboards and mistake notebook without requiring login.
 - Step 4: Add full 40-question Academic Reading simulations.

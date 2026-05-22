@@ -86,6 +86,7 @@ const keywordTopicMap: Array<[RegExp, string]> = [
   [/agriculture|crop|food/i, "agriculture"],
   [/environment|ecology|species/i, "environmental-science"],
   [/economics|nudge|default/i, "behavioural-economics"],
+  [/sociology|social|labour|labor|institution/i, "sociology"],
   [/space|planet|lunar|martian|mission/i, "space-exploration"],
   [/technology|digital/i, "technology-and-society"],
   [/history|science/i, "history-of-science"],

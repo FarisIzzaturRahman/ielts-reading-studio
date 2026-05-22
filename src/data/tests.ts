@@ -5320,6 +5320,2441 @@ const gestureGrammarTest = makeTest({
   ],
 });
 
+const memoryReconstructionTest = makeTest({
+  testId: "realism-band9-03",
+  title: "The Memory Trace That Would Not Stay Put",
+  description:
+    "A Band 8-9 IELTS Academic Reading mini test on memory reconstruction, reconsolidation and courtroom interpretation.",
+  topic: "Neuroscience",
+  difficulty: "Band 8-9 Challenge",
+  targetBand: "Band 8.0-9.0",
+  timeLimitMinutes: 30,
+  subtopic: "Memory reconstruction and evidence",
+  passages: [
+    {
+      passageId: "p1",
+      title: "After the Trace Is Opened",
+      topic: "Neuroscience",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        {
+          label: "A",
+          text:
+            "For much of the twentieth century, memory was often described as if an experience left a stable trace that later recall merely retrieved. The image was convenient, especially for laboratory tasks in which participants learned lists of syllables. Yet autobiographical memory never sat comfortably inside that picture. A remembered event returns with fragments of setting, emotion, inference and later knowledge already mixed together.",
+        },
+        {
+          label: "B",
+          text:
+            "Research on reconsolidation made the old storage metaphor even harder to defend. In several experiments, a memory that had been reactivated became temporarily more open to alteration before it settled again. The point was not that every recollection becomes fiction. Rather, recall can be a moment of renewed construction, especially when new information is introduced while the memory is active.",
+        },
+        {
+          label: "C",
+          text:
+            "One influential study asked volunteers to learn a set of object locations, then reminded them of the learning context before presenting a second, overlapping set. Some volunteers later blended locations from the two sets, but the effect appeared mainly when the reminder was close enough to reopen the first memory without making the two tasks look obviously separate.",
+        },
+        {
+          label: "D",
+          text:
+            "The finding created a methodological discomfort. If reactivation can change later recall, then the very tests used to measure memory may also modify it. Researchers therefore began spacing recall tests more carefully and recording the prompts that preceded them. What looked like a neutral measurement had become part of the phenomenon being measured.",
+        },
+        {
+          label: "E",
+          text:
+            "A cautious interpretation is now common. Memories are neither fixed recordings nor inventions produced afresh each time. They are durable enough to guide action, but flexible enough to absorb context. The difficulty for science is to specify the conditions under which flexibility becomes distortion rather than useful updating.",
+        },
+      ],
+    },
+    {
+      passageId: "p2",
+      title: "Remembering Under Question",
+      topic: "Psychology",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        {
+          label: "A",
+          text:
+            "Courtroom discussions of memory often borrow scientific language without carrying over its qualifications. A witness may be described as confident, consistent or contaminated, as if those labels map neatly onto truth and error. The psychology of remembering is less cooperative. Confidence can rise after repeated questioning, and consistency may reflect rehearsal as much as accuracy.",
+        },
+        {
+          label: "B",
+          text:
+            "Some legal training now asks investigators to separate open prompts from confirmatory ones. An open prompt invites a witness to describe what happened in their own sequence. A confirmatory prompt suggests a detail and asks whether it belongs. The difference is subtle in conversation, but it matters because suggested details can become attached to a memory without feeling externally supplied.",
+        },
+        {
+          label: "C",
+          text:
+            "The problem is not solved by banning all follow-up questions. Witnesses often need help returning to a time, place or sensory context. The danger lies in questions that import content: a colour, an object, a direction of movement. Once imported, the detail may later be recalled with the same subjective vividness as information actually perceived.",
+        },
+        {
+          label: "D",
+          text:
+            "Expert witnesses therefore face a narrow task. They should not tell juries whether a particular witness is truthful. Instead, they can explain the conditions under which memory is likely to be strengthened, distorted or made overconfident. Their value is in clarifying risk, not replacing judgement.",
+        },
+        {
+          label: "E",
+          text:
+            "This position frustrates both prosecutors and defence lawyers because it rarely gives either side a clean answer. It does, however, match the science more closely than the older contrast between faithful memory and false memory. The most difficult cases are usually those in which memory contains both genuine perception and later reconstruction.",
+        },
+      ],
+    },
+  ],
+  questions: [
+    q({
+      passageId: "p1",
+      type: "yes-no-not-given",
+      prompt: "The writer suggests that the stable-trace model was easier to apply to laboratory tasks than to autobiographical memory.",
+      options: ["Yes", "No", "Not Given"],
+      answer: "Yes",
+      explanation:
+        "Paragraph A says the stable-trace image was convenient for laboratory syllable tasks, but autobiographical memory did not fit it comfortably.",
+      evidenceParagraph: "Paragraph A",
+      evidenceText:
+        "The image was convenient, especially for laboratory tasks... Yet autobiographical memory never sat comfortably inside that picture.",
+      whyCorrect:
+        "The statement preserves the contrast between controlled laboratory tasks and richer personal memory.",
+      whyWrong:
+        "A wrong answer may ignore the concessive movement from convenient to uncomfortable.",
+      skill: "Identifying writer's opinion",
+      secondarySkills: ["Recognising contrast"],
+      trapType: "Writer opinion confusion",
+      strategyTip:
+        "In advanced passages, writer stance often appears through contrast markers such as yet and rather.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "A",
+    }),
+    q({
+      passageId: "p1",
+      type: "multiple-choice",
+      prompt: "What did reconsolidation research mainly challenge?",
+      options: [
+        "The idea that recall is only retrieval from an unchanged store",
+        "The possibility that any memory can guide future behaviour",
+        "The value of studying memory with experimental reminders",
+        "The claim that new information can affect active memories",
+      ],
+      answer: "The idea that recall is only retrieval from an unchanged store",
+      explanation:
+        "Paragraph B says reactivated memories can become open to alteration, making the storage metaphor harder to defend.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "A memory that had been reactivated became temporarily more open to alteration before it settled again.",
+      whyCorrect:
+        "The answer captures the conceptual shift from passive retrieval to renewed construction.",
+      whyWrong:
+        "The distractors either deny the passage's balanced view or reverse the very claim reconsolidation supports.",
+      skill: "Making inference",
+      secondarySkills: ["Recognising paraphrase"],
+      trapType: "Opposite meaning trap",
+      strategyTip:
+        "For conceptual MCQs, identify which older assumption the evidence weakens.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p1",
+      type: "matching-headings",
+      groupTitle: "Choose the best heading for Paragraph C.",
+      prompt: "Paragraph C",
+      options: [
+        "An experiment showing when overlap can reshape recall",
+        "A legal test for judging witness confidence",
+        "A theory that all remembered locations are fictional",
+        "A method for removing reminders from memory research",
+      ],
+      answer: "An experiment showing when overlap can reshape recall",
+      explanation:
+        "Paragraph C describes an object-location experiment where a reminder and overlapping second set led some volunteers to blend locations.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "Some volunteers later blended locations from the two sets, but the effect appeared mainly when the reminder was close enough to reopen the first memory.",
+      whyCorrect:
+        "The heading captures the paragraph's experimental function and the condition on the effect.",
+      whyWrong:
+        "The wrong headings either belong to Passage 2 or exaggerate the finding into universal fiction.",
+      skill: "Understanding main idea",
+      secondarySkills: ["Identifying paragraph function"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "Matching Headings answers should match the whole paragraph's purpose, not just one familiar term.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p1",
+      type: "sentence-completion",
+      prompt: "The memory effect appeared mainly when the reminder could reopen the first memory without making the two tasks look ______.",
+      answer: "obviously separate",
+      acceptedAnswers: ["obviously separate", "separate"],
+      explanation:
+        "Paragraph C says the effect appeared when the reminder reopened the first memory without making the tasks look obviously separate.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "Without making the two tasks look obviously separate.",
+      whyCorrect:
+        "The phrase completes the methodological condition.",
+      whyWrong:
+        "A wrong answer such as active names the memory state, not the contrast between tasks.",
+      skill: "Understanding detail",
+      secondarySkills: ["Recognising contrast"],
+      trapType: "Grammar form trap",
+      strategyTip:
+        "In sentence completion, preserve the grammatical role of the phrase after look.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p1",
+      type: "true-false-not-given",
+      prompt: "The passage claims that every act of recall turns a memory into fiction.",
+      options: ["True", "False", "Not Given"],
+      answer: "False",
+      explanation:
+        "Paragraph B explicitly says the point is not that every recollection becomes fiction.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "The point was not that every recollection becomes fiction.",
+      whyCorrect:
+        "The statement turns a limited claim about flexibility into an extreme claim.",
+      whyWrong:
+        "The phrase open to alteration may tempt overgeneralisation, but the passage rejects the extreme version.",
+      skill: "Avoiding overgeneralisation",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Extreme wording trap",
+      strategyTip:
+        "Extreme words such as every usually need exact support.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p1",
+      type: "matching-information",
+      groupTitle: "Match the information to the paragraph.",
+      prompt: "A warning that a measurement can become part of what it measures",
+      options: ["A", "B", "C", "D", "E"],
+      answer: "D",
+      explanation:
+        "Paragraph D says recall tests used to measure memory may also modify it.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "The very tests used to measure memory may also modify it.",
+      whyCorrect:
+        "The paragraph identifies the methodological discomfort caused by reactivation.",
+      whyWrong:
+        "Paragraph B introduces alteration, but Paragraph D names the measurement problem.",
+      skill: "Time-efficient scanning",
+      secondarySkills: ["Recognising paraphrase"],
+      trapType: "Wrong paragraph trap",
+      strategyTip:
+        "For Matching Information, confirm the exact information item, not only the general topic.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p1",
+      type: "summary-completion",
+      prompt:
+        "A cautious view treats memories as durable enough to guide action but flexible enough to absorb ______.",
+      answer: "context",
+      acceptedAnswers: ["context"],
+      explanation:
+        "Paragraph E says memories are flexible enough to absorb context.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "They are durable enough to guide action, but flexible enough to absorb context.",
+      whyCorrect:
+        "The answer preserves the balanced durability-flexibility contrast.",
+      whyWrong:
+        "A wrong answer such as distortion names a possible outcome, not what memories absorb.",
+      skill: "Recognising paraphrase",
+      secondarySkills: ["Understanding main idea"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "When a summary compresses a balanced sentence, keep both sides of the balance intact.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "E",
+    }),
+    q({
+      passageId: "p1",
+      type: "flow-chart-completion",
+      prompt: "Memory reactivated -> new information introduced -> later recall may show ______.",
+      answer: "alteration",
+      acceptedAnswers: ["alteration", "renewed construction", "distortion"],
+      explanation:
+        "Paragraph B says reactivated memory can become open to alteration when new information is introduced while it is active.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "Recall can be a moment of renewed construction, especially when new information is introduced while the memory is active.",
+      whyCorrect:
+        "The answer completes the process by naming the possible change in later recall.",
+      whyWrong:
+        "A wrong answer such as stable trace would reverse the process described.",
+      skill: "Recognising cause and effect",
+      secondarySkills: ["Making inference"],
+      trapType: "Cause-effect confusion",
+      strategyTip:
+        "For flow charts, follow the mechanism from activation to possible consequence.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p1",
+      type: "matching-sentence-endings",
+      groupTitle: "Choose the correct ending.",
+      prompt: "Researchers began recording prompts before recall tests because",
+      options: [
+        "prompts could influence the memory being measured.",
+        "participants could no longer learn object locations.",
+        "autobiographical memory had become irrelevant to the field.",
+        "all laboratory memories were assumed to be invented.",
+      ],
+      answer: "prompts could influence the memory being measured.",
+      explanation:
+        "Paragraph D says researchers recorded prompts because recall tests may modify memory.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "Researchers therefore began spacing recall tests more carefully and recording the prompts that preceded them.",
+      whyCorrect:
+        "The ending connects the methodological response to the concern that testing can alter memory.",
+      whyWrong:
+        "The other endings overstate or invent consequences not found in the passage.",
+      skill: "Recognising cause and effect",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Assumption trap",
+      strategyTip:
+        "When a sentence uses therefore, read the previous sentence to find the reason.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p1",
+      type: "short-answer",
+      prompt: "What older metaphor became harder to defend after reconsolidation research?",
+      answer: "storage metaphor",
+      acceptedAnswers: ["storage metaphor", "the storage metaphor"],
+      explanation:
+        "Paragraph B states that reconsolidation made the old storage metaphor harder to defend.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "Research on reconsolidation made the old storage metaphor even harder to defend.",
+      whyCorrect:
+        "The answer names the metaphor directly challenged by the research.",
+      whyWrong:
+        "Stable trace is related, but the paragraph specifically names the storage metaphor.",
+      skill: "Locating explicit information",
+      secondarySkills: ["Understanding vocabulary in context"],
+      trapType: "Similar keyword trap",
+      strategyTip:
+        "Copy the named concept when a short-answer question asks which metaphor or model.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p2",
+      type: "multiple-choice",
+      prompt: "What problem does the writer identify with labels such as confident and consistent?",
+      options: [
+        "They can be treated as if they map neatly onto truth and error.",
+        "They are never used in courtroom discussions of memory.",
+        "They prove that repeated questioning improves accuracy.",
+        "They prevent witnesses from rehearsing their accounts.",
+      ],
+      answer:
+        "They can be treated as if they map neatly onto truth and error.",
+      explanation:
+        "Paragraph A warns that courtroom labels may be treated as if they correspond neatly to truth and error.",
+      evidenceParagraph: "Paragraph A",
+      evidenceText:
+        "A witness may be described as confident, consistent or contaminated, as if those labels map neatly onto truth and error.",
+      whyCorrect:
+        "The answer captures the writer's concern about oversimplified interpretation.",
+      whyWrong:
+        "The distractors either contradict the paragraph or convert possible rehearsal into improved accuracy.",
+      skill: "Identifying writer's opinion",
+      secondarySkills: ["Distinguishing fact from claim"],
+      trapType: "Writer opinion confusion",
+      strategyTip:
+        "Treat phrases like 'as if' as signals that the writer is questioning an assumption.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "A",
+    }),
+    q({
+      passageId: "p2",
+      type: "matching-features",
+      groupTitle: "Match the prompt type with its description.",
+      prompt: "Suggests a detail and asks whether it belongs",
+      options: ["open prompt", "confirmatory prompt", "expert testimony", "rehearsal"],
+      answer: "confirmatory prompt",
+      explanation:
+        "Paragraph B defines a confirmatory prompt as one that suggests a detail and asks whether it belongs.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "A confirmatory prompt suggests a detail and asks whether it belongs.",
+      whyCorrect:
+        "The feature is explicitly attached to confirmatory prompts.",
+      whyWrong:
+        "An open prompt lets the witness describe events in their own sequence, which is the opposite interactional shape.",
+      skill: "Locating explicit information",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Opposite meaning trap",
+      strategyTip:
+        "For Matching Features, tie each definition to the exact named category.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p2",
+      type: "true-false-not-given",
+      prompt: "The passage argues that all follow-up questions should be banned.",
+      options: ["True", "False", "Not Given"],
+      answer: "False",
+      explanation:
+        "Paragraph C says the problem is not solved by banning all follow-up questions.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "The problem is not solved by banning all follow-up questions.",
+      whyCorrect:
+        "The statement contradicts the passage's explicit rejection of a total ban.",
+      whyWrong:
+        "The passage criticises content-importing questions, but that is not the same as banning all follow-up.",
+      skill: "Avoiding overgeneralisation",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Extreme wording trap",
+      strategyTip:
+        "Do not turn a targeted caution into an absolute rule.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p2",
+      type: "note-completion",
+      prompt: "Dangerous imported content can include a colour, an object or a direction of ______.",
+      answer: "movement",
+      acceptedAnswers: ["movement"],
+      explanation:
+        "Paragraph C lists colour, object and direction of movement as imported content.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "Questions that import content: a colour, an object, a direction of movement.",
+      whyCorrect:
+        "The answer completes the final item in the list.",
+      whyWrong:
+        "A wrong answer such as context names what witnesses may need help returning to, not an imported detail.",
+      skill: "Understanding detail",
+      secondarySkills: ["Locating explicit information"],
+      trapType: "Grammar form trap",
+      strategyTip:
+        "Use list structure to identify the exact noun after a preposition.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p2",
+      type: "matching-information",
+      groupTitle: "Match the information to the paragraph.",
+      prompt: "A limit on what expert witnesses should tell juries",
+      options: ["A", "B", "C", "D", "E"],
+      answer: "D",
+      explanation:
+        "Paragraph D says expert witnesses should not tell juries whether a particular witness is truthful.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "They should not tell juries whether a particular witness is truthful.",
+      whyCorrect:
+        "The paragraph defines the expert's narrow role.",
+      whyWrong:
+        "Other paragraphs discuss prompts and imported details, not the role of expert witnesses.",
+      skill: "Time-efficient scanning",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Wrong paragraph trap",
+      strategyTip:
+        "Scan for the actor named in the question, here expert witnesses.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p2",
+      type: "yes-no-not-given",
+      prompt: "The writer thinks expert witnesses are most useful when they replace jury judgement.",
+      options: ["Yes", "No", "Not Given"],
+      answer: "No",
+      explanation:
+        "Paragraph D says experts clarify risk, not replace judgement.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "Their value is in clarifying risk, not replacing judgement.",
+      whyCorrect:
+        "The statement reverses the writer's view of expert value.",
+      whyWrong:
+        "A reader may see that experts are useful and overextend that usefulness into decision replacement.",
+      skill: "Identifying writer's opinion",
+      secondarySkills: ["Recognising contrast"],
+      trapType: "Writer opinion confusion",
+      strategyTip:
+        "When the writer uses 'not', keep the rejected role separate from the approved role.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p2",
+      type: "diagram-label-completion",
+      groupTitle: "Text schematic: Prompt risk pathway",
+      prompt: "Confirmatory prompt -> suggested detail -> later recall with subjective ______",
+      answer: "vividness",
+      acceptedAnswers: ["vividness", "subjective vividness"],
+      explanation:
+        "Paragraph C says imported details may later be recalled with the same subjective vividness as perceived information.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "The detail may later be recalled with the same subjective vividness as information actually perceived.",
+      whyCorrect:
+        "The label completes the risk pathway from suggestion to later recall.",
+      whyWrong:
+        "A wrong answer such as confidence is related to Paragraph A but not the final word in this pathway.",
+      skill: "Making inference",
+      secondarySkills: ["Following reference words"],
+      trapType: "Similar keyword trap",
+      strategyTip:
+        "For schematic labels, follow the chain of process words rather than choosing a general topic word.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p2",
+      type: "summary-completion",
+      prompt:
+        "The science fits a view in which difficult cases contain genuine perception and later ______.",
+      answer: "reconstruction",
+      acceptedAnswers: ["reconstruction", "later reconstruction"],
+      explanation:
+        "Paragraph E says the most difficult cases contain both genuine perception and later reconstruction.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "The most difficult cases are usually those in which memory contains both genuine perception and later reconstruction.",
+      whyCorrect:
+        "The answer completes the passage's final balanced account of memory.",
+      whyWrong:
+        "A wrong answer such as false memory would restore the older binary the writer rejects.",
+      skill: "Recognising paraphrase",
+      secondarySkills: ["Understanding main idea"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "Look for paired concepts when a summary says both X and Y.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "E",
+    }),
+    q({
+      passageId: "p2",
+      type: "short-answer",
+      prompt: "What can repeated questioning increase, according to Paragraph A?",
+      answer: "confidence",
+      acceptedAnswers: ["confidence"],
+      explanation:
+        "Paragraph A says confidence can rise after repeated questioning.",
+      evidenceParagraph: "Paragraph A",
+      evidenceText:
+        "Confidence can rise after repeated questioning.",
+      whyCorrect:
+        "The answer names the psychological state that may increase.",
+      whyWrong:
+        "Consistency is also discussed, but the sentence links repeated questioning to confidence.",
+      skill: "Locating explicit information",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Similar keyword trap",
+      strategyTip:
+        "When two labels appear together, check which one is attached to the action in the question.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "A",
+    }),
+    q({
+      passageId: "p2",
+      type: "multiple-choice",
+      prompt: "What is the central claim of Passage 2?",
+      options: [
+        "Memory evidence should be interpreted through risk conditions rather than simple truth labels.",
+        "Witness confidence is always a reliable indicator of accurate perception.",
+        "Scientific experts should decide whether each witness is truthful.",
+        "Legal systems should reject all witness memory as later reconstruction.",
+      ],
+      answer:
+        "Memory evidence should be interpreted through risk conditions rather than simple truth labels.",
+      explanation:
+        "The passage argues that courtroom memory should be explained through conditions that strengthen, distort or overinflate memory, not through neat labels.",
+      evidenceParagraph: "Passage-wide evidence",
+      evidenceText:
+        "Their value is in clarifying risk, not replacing judgement... The most difficult cases are usually those in which memory contains both genuine perception and later reconstruction.",
+      whyCorrect:
+        "The answer captures the nuanced passage-wide argument.",
+      whyWrong:
+        "The distractors choose one extreme: confidence as truth, expert replacement or total rejection of memory.",
+      skill: "Understanding main idea",
+      secondarySkills: ["Making inference"],
+      trapType: "Overgeneralisation trap",
+      strategyTip:
+        "For Band 8-9 central claims, choose the option that preserves nuance rather than the cleanest extreme.",
+      difficulty: "Band 8-9 Challenge",
+    }),
+  ],
+});
+
+const modelUncertaintyTest = makeTest({
+  testId: "realism-band9-04",
+  title: "When Models Become Public Instruments",
+  description:
+    "A Band 8-9 IELTS Academic Reading mini test on model uncertainty, public decisions and philosophy of science.",
+  topic: "History of Science",
+  difficulty: "Band 8-9 Challenge",
+  targetBand: "Band 8.0-9.0",
+  timeLimitMinutes: 30,
+  subtopic: "Model uncertainty and public reasoning",
+  passages: [
+    {
+      passageId: "p1",
+      title: "A Forecast Is Not a Photograph",
+      topic: "History of Science",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        {
+          label: "A",
+          text:
+            "When a scientific model enters public debate, it often loses the modesty with which it was built. A projection that began as one conditional exploration may be quoted as if it were a photograph of the future. The error is not simply made by journalists; technical teams sometimes encourage it by presenting a single polished curve after many less tidy runs have been discarded.",
+        },
+        {
+          label: "B",
+          text:
+            "Philosophers of science distinguish uncertainty inside a model from uncertainty about the model's framing. The first may be expressed as a range around a line. The second is harder to display, because it concerns which variables were excluded, which social behaviour was assumed and which boundary of the system was treated as fixed.",
+        },
+        {
+          label: "C",
+          text:
+            "In flood planning, for example, a model may estimate river height under different rainfall scenarios while holding land-use patterns constant. That choice is defensible if the question is about emergency barriers next winter. It is less defensible if the same model is used to justify thirty years of housing policy on the floodplain.",
+        },
+        {
+          label: "D",
+          text:
+            "Some agencies now publish model ensembles rather than one preferred run. Ensembles can reveal how assumptions move the answer, but they can also give a false sense of completeness. A dozen curves may still share the same blind spot if they were generated from the same institutional imagination.",
+        },
+        {
+          label: "E",
+          text:
+            "A mature public use of models therefore requires two kinds of literacy. Citizens need to understand uncertainty bands, but officials also need to explain why the model was framed in one way rather than another. The second task is less graphic and more political, which is why it is often avoided.",
+        },
+      ],
+    },
+    {
+      passageId: "p2",
+      title: "The Budget Office and the Hidden Assumption",
+      topic: "Behavioural Economics",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        {
+          label: "A",
+          text:
+            "A national budget office once released a model of household energy subsidies that appeared reassuringly precise. The headline figure predicted a small fall in winter fuel poverty. Buried in the appendix was an assumption that landlords would pass most efficiency savings to tenants rather than retaining them through higher rents.",
+        },
+        {
+          label: "B",
+          text:
+            "Economists inside the office knew the assumption was uncertain. They had used it because national rent data were too slow to capture recent regional pressure. In internal notes, they called it a placeholder, not a finding. In the public summary, however, the assumption became almost invisible.",
+        },
+        {
+          label: "C",
+          text:
+            "Critics accused the office of manipulating the result. That accusation missed the more interesting failure. The numbers had not been invented, and the sensitivity tests were competently run. What failed was the communication of dependency: readers were not shown which conclusion would weaken if the landlord assumption changed.",
+        },
+        {
+          label: "D",
+          text:
+            "A later version of the report used a dependency table. Instead of listing every technical parameter, the table named five assumptions that mattered most to the policy conclusion. Next to each, it showed the direction in which the headline estimate would move if the assumption proved too optimistic.",
+        },
+        {
+          label: "E",
+          text:
+            "The table did not remove disagreement, but it changed its location. Debate shifted from whether the model was trustworthy in general to whether particular assumptions deserved confidence. That shift is small but important: it turns model criticism from suspicion into an argument about evidence.",
+        },
+      ],
+    },
+  ],
+  questions: [
+    q({
+      passageId: "p1",
+      type: "matching-headings",
+      groupTitle: "Choose the best heading for Paragraph B.",
+      prompt: "Paragraph B",
+      options: [
+        "Two forms of uncertainty with different visibility",
+        "A defence of polished curves in public summaries",
+        "A method for photographing future events",
+        "A rejection of social behaviour in scientific models",
+      ],
+      answer: "Two forms of uncertainty with different visibility",
+      explanation:
+        "Paragraph B contrasts uncertainty inside a model with uncertainty about model framing, noting that the second is harder to display.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "The first may be expressed as a range around a line. The second is harder to display.",
+      whyCorrect:
+        "The heading captures the paragraph's contrast between visible and less visible uncertainty.",
+      whyWrong:
+        "The distractors focus on details or distort the paragraph's philosophical distinction.",
+      skill: "Understanding main idea",
+      secondarySkills: ["Identifying paragraph function"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "In Matching Headings, prefer a heading that captures the contrast governing the whole paragraph.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p1",
+      type: "multiple-choice",
+      prompt: "Why can a single polished curve be misleading in public debate?",
+      options: [
+        "It can hide the discarded, less tidy model runs behind it.",
+        "It always proves that journalists have changed the data.",
+        "It prevents technical teams from using conditional exploration.",
+        "It displays framing uncertainty more clearly than ensembles.",
+      ],
+      answer: "It can hide the discarded, less tidy model runs behind it.",
+      explanation:
+        "Paragraph A says teams may present a polished curve after many less tidy runs have been discarded.",
+      evidenceParagraph: "Paragraph A",
+      evidenceText:
+        "Presenting a single polished curve after many less tidy runs have been discarded.",
+      whyCorrect:
+        "The option identifies the representational narrowing that makes the curve look more certain.",
+      whyWrong:
+        "The wrong options either overblame journalists or reverse the passage's argument about uncertainty.",
+      skill: "Making inference",
+      secondarySkills: ["Recognising paraphrase"],
+      trapType: "Overgeneralisation trap",
+      strategyTip:
+        "Ask what has been hidden or simplified when a visual appears unusually clean.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "A",
+    }),
+    q({
+      passageId: "p1",
+      type: "yes-no-not-given",
+      prompt: "The writer thinks an emergency-barrier model can become less defensible when used for long-term housing policy.",
+      options: ["Yes", "No", "Not Given"],
+      answer: "Yes",
+      explanation:
+        "Paragraph C says holding land use constant is defensible for next-winter barriers but less defensible for thirty years of floodplain housing policy.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "That choice is defensible if the question is about emergency barriers next winter. It is less defensible if the same model is used to justify thirty years of housing policy.",
+      whyCorrect:
+        "The statement preserves the writer's conditional evaluation.",
+      whyWrong:
+        "A wrong answer may treat the model as either valid or invalid in all contexts.",
+      skill: "Identifying writer's opinion",
+      secondarySkills: ["Understanding comparison"],
+      trapType: "Comparison confusion",
+      strategyTip:
+        "Track whether the writer's judgement changes with the intended use of the model.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p1",
+      type: "sentence-completion",
+      prompt: "Framing uncertainty includes decisions about excluded variables, assumed social behaviour and fixed system ______.",
+      answer: "boundary",
+      acceptedAnswers: ["boundary", "boundaries"],
+      explanation:
+        "Paragraph B says framing uncertainty concerns which boundary of the system was treated as fixed.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "Which boundary of the system was treated as fixed.",
+      whyCorrect:
+        "The answer completes the third element of the framing-uncertainty list.",
+      whyWrong:
+        "A wrong answer such as range belongs to uncertainty inside a model, not framing uncertainty.",
+      skill: "Understanding detail",
+      secondarySkills: ["Following reference words"],
+      trapType: "Similar keyword trap",
+      strategyTip:
+        "Use list structure to avoid mixing the two categories of uncertainty.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p1",
+      type: "matching-information",
+      groupTitle: "Match the information to the paragraph.",
+      prompt: "A warning that several model runs may still share one blind spot",
+      options: ["A", "B", "C", "D", "E"],
+      answer: "D",
+      explanation:
+        "Paragraph D says a dozen curves may share the same blind spot if they come from the same institutional imagination.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "A dozen curves may still share the same blind spot if they were generated from the same institutional imagination.",
+      whyCorrect:
+        "This paragraph discusses ensembles and their limits.",
+      whyWrong:
+        "Paragraph A discusses one curve; Paragraph D is the one about multiple curves sharing assumptions.",
+      skill: "Time-efficient scanning",
+      secondarySkills: ["Recognising paraphrase"],
+      trapType: "Wrong paragraph trap",
+      strategyTip:
+        "For Matching Information, scan for the distinctive idea, here several outputs with a common blind spot.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p1",
+      type: "true-false-not-given",
+      prompt: "The passage says ensembles always remove the risk of incomplete modelling.",
+      options: ["True", "False", "Not Given"],
+      answer: "False",
+      explanation:
+        "Paragraph D says ensembles can reveal assumption effects but can also give a false sense of completeness.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "Ensembles can reveal how assumptions move the answer, but they can also give a false sense of completeness.",
+      whyCorrect:
+        "The statement exaggerates the value of ensembles beyond the passage's qualified claim.",
+      whyWrong:
+        "The positive phrase can reveal may tempt a True answer, but the sentence immediately limits it.",
+      skill: "Avoiding overgeneralisation",
+      secondarySkills: ["Recognising contrast"],
+      trapType: "Extreme wording trap",
+      strategyTip:
+        "Words like always usually fail when the passage contains a but-clause.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p1",
+      type: "summary-completion",
+      prompt:
+        "A mature public use of models requires literacy about uncertainty bands and explanation of model ______.",
+      answer: "framing",
+      acceptedAnswers: ["framing", "model framing"],
+      explanation:
+        "Paragraph E says officials need to explain why the model was framed in one way rather than another.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "Officials also need to explain why the model was framed in one way rather than another.",
+      whyCorrect:
+        "The answer names the second, less graphic task of public model literacy.",
+      whyWrong:
+        "Uncertainty bands are the first kind of literacy, not the missing second one.",
+      skill: "Understanding main idea",
+      secondarySkills: ["Recognising paraphrase"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "When a summary says and, check that the missing item is the second part of the pair.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "E",
+    }),
+    q({
+      passageId: "p1",
+      type: "flow-chart-completion",
+      prompt: "Model built conditionally -> single curve publicised -> projection treated as a ______ of the future.",
+      answer: "photograph",
+      acceptedAnswers: ["photograph", "photograph of the future"],
+      explanation:
+        "Paragraph A says a projection may be quoted as if it were a photograph of the future.",
+      evidenceParagraph: "Paragraph A",
+      evidenceText:
+        "A projection that began as one conditional exploration may be quoted as if it were a photograph of the future.",
+      whyCorrect:
+        "The answer completes the process by naming the misleading public interpretation.",
+      whyWrong:
+        "A wrong answer such as model repeats the starting point, not the distorted public reading.",
+      skill: "Recognising cause and effect",
+      secondarySkills: ["Understanding vocabulary in context"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "When a metaphor appears in a title and paragraph, ask what comparison it is criticising.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "A",
+    }),
+    q({
+      passageId: "p1",
+      type: "short-answer",
+      prompt: "What task is described as less graphic and more political?",
+      answer: "explaining model framing",
+      acceptedAnswers: ["explaining model framing", "explain why the model was framed", "explaining why the model was framed"],
+      explanation:
+        "Paragraph E says explaining why the model was framed one way rather than another is less graphic and more political.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "Officials also need to explain why the model was framed in one way rather than another. The second task is less graphic and more political.",
+      whyCorrect:
+        "The answer identifies the second task referenced by the sentence.",
+      whyWrong:
+        "Understanding uncertainty bands is the first task, not the less graphic second task.",
+      skill: "Following reference words",
+      secondarySkills: ["Understanding main idea"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "Resolve reference phrases such as the second task before answering.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "E",
+    }),
+    q({
+      passageId: "p1",
+      type: "matching-sentence-endings",
+      groupTitle: "Choose the correct ending.",
+      prompt: "Holding land-use patterns constant may be reasonable when the model is used for",
+      options: [
+        "a short-term question about emergency barriers.",
+        "all housing decisions on a floodplain for thirty years.",
+        "removing social behaviour from public debate.",
+        "making uncertainty bands unnecessary.",
+      ],
+      answer: "a short-term question about emergency barriers.",
+      explanation:
+        "Paragraph C says the choice is defensible if the question concerns emergency barriers next winter.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "That choice is defensible if the question is about emergency barriers next winter.",
+      whyCorrect:
+        "The ending preserves the narrow context in which the modelling choice is acceptable.",
+      whyWrong:
+        "The long-term housing option is the use that the writer calls less defensible.",
+      skill: "Understanding comparison",
+      secondarySkills: ["Making inference"],
+      trapType: "Comparison confusion",
+      strategyTip:
+        "When a passage compares two uses, attach the judgement to the correct use.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p2",
+      type: "multiple-choice",
+      prompt: "What was hidden in the budget model's appendix?",
+      options: [
+        "An assumption about landlords passing savings to tenants",
+        "A proof that winter fuel poverty would disappear",
+        "A ban on using regional rent data",
+        "A table showing no assumptions mattered to the conclusion",
+      ],
+      answer: "An assumption about landlords passing savings to tenants",
+      explanation:
+        "Paragraph A says the appendix contained an assumption that landlords would pass most efficiency savings to tenants.",
+      evidenceParagraph: "Paragraph A",
+      evidenceText:
+        "Buried in the appendix was an assumption that landlords would pass most efficiency savings to tenants.",
+      whyCorrect:
+        "The answer identifies the dependency concealed behind the precise headline.",
+      whyWrong:
+        "The distractors exaggerate the policy result or invent positions not in the passage.",
+      skill: "Locating explicit information",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Distractor detail trap",
+      strategyTip:
+        "When a passage says buried, look for the assumption or qualification that was not visible in the headline.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "A",
+    }),
+    q({
+      passageId: "p2",
+      type: "yes-no-not-given",
+      prompt: "The writer thinks the budget office invented its numbers.",
+      options: ["Yes", "No", "Not Given"],
+      answer: "No",
+      explanation:
+        "Paragraph C says the numbers had not been invented and the sensitivity tests were competently run.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "The numbers had not been invented, and the sensitivity tests were competently run.",
+      whyCorrect:
+        "The writer rejects the accusation of manipulation and identifies a different failure.",
+      whyWrong:
+        "A reader may assume hidden assumptions mean invented results, but the passage distinguishes those issues.",
+      skill: "Identifying writer's opinion",
+      secondarySkills: ["Distinguishing fact from claim"],
+      trapType: "Assumption trap",
+      strategyTip:
+        "Separate a communication failure from data fabrication unless the passage links them.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p2",
+      type: "matching-features",
+      groupTitle: "Match each item with its role.",
+      prompt: "Described internally as a placeholder, not a finding",
+      options: ["landlord assumption", "dependency table", "headline estimate", "sensitivity test"],
+      answer: "landlord assumption",
+      explanation:
+        "Paragraph B says economists called the landlord assumption a placeholder, not a finding.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "In internal notes, they called it a placeholder, not a finding.",
+      whyCorrect:
+        "The role belongs to the assumption about savings being passed to tenants.",
+      whyWrong:
+        "The dependency table appears later as a communication tool, not the placeholder.",
+      skill: "Locating explicit information",
+      secondarySkills: ["Following reference words"],
+      trapType: "Similar keyword trap",
+      strategyTip:
+        "Resolve pronouns such as it by reading the preceding sentence.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p2",
+      type: "matching-information",
+      groupTitle: "Match the information to the paragraph.",
+      prompt: "A claim that the real failure was not fabrication but hidden dependency",
+      options: ["A", "B", "C", "D", "E"],
+      answer: "C",
+      explanation:
+        "Paragraph C says the accusation of manipulation missed the more interesting failure: communication of dependency.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "That accusation missed the more interesting failure... What failed was the communication of dependency.",
+      whyCorrect:
+        "The paragraph reframes the criticism from manipulation to dependency communication.",
+      whyWrong:
+        "Paragraph A contains the hidden assumption, but Paragraph C explains the nature of the failure.",
+      skill: "Time-efficient scanning",
+      secondarySkills: ["Recognising paraphrase"],
+      trapType: "Wrong paragraph trap",
+      strategyTip:
+        "When locating an evaluation, scan for judgement words such as failure or missed.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p2",
+      type: "summary-completion",
+      prompt:
+        "The later report named five assumptions that mattered most to the policy ______.",
+      answer: "conclusion",
+      acceptedAnswers: ["conclusion"],
+      explanation:
+        "Paragraph D says the table named five assumptions that mattered most to the policy conclusion.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "The table named five assumptions that mattered most to the policy conclusion.",
+      whyCorrect:
+        "The answer completes the phrase describing why those assumptions were selected.",
+      whyWrong:
+        "Estimate is nearby but refers to the headline number, not the policy conclusion.",
+      skill: "Understanding detail",
+      secondarySkills: ["Locating explicit information"],
+      trapType: "Similar keyword trap",
+      strategyTip:
+        "Use the noun phrase after the adjective policy to avoid copying a nearby technical noun.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p2",
+      type: "flow-chart-completion",
+      prompt: "Assumption proves too optimistic -> dependency table shows direction of movement in the headline ______.",
+      answer: "estimate",
+      acceptedAnswers: ["estimate", "headline estimate"],
+      explanation:
+        "Paragraph D says the table showed the direction in which the headline estimate would move.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "It showed the direction in which the headline estimate would move if the assumption proved too optimistic.",
+      whyCorrect:
+        "The answer names the result affected by the assumption.",
+      whyWrong:
+        "A wrong answer such as appendix names the old location of the hidden assumption, not the moving result.",
+      skill: "Recognising cause and effect",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Cause-effect confusion",
+      strategyTip:
+        "In flow charts, identify what changes as a consequence of the condition.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p2",
+      type: "true-false-not-given",
+      prompt: "The dependency table ended disagreement about the model.",
+      options: ["True", "False", "Not Given"],
+      answer: "False",
+      explanation:
+        "Paragraph E says the table did not remove disagreement; it changed its location.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "The table did not remove disagreement, but it changed its location.",
+      whyCorrect:
+        "The statement contradicts the passage by saying disagreement ended.",
+      whyWrong:
+        "A reader may confuse changing the form of debate with eliminating debate.",
+      skill: "Understanding detail",
+      secondarySkills: ["Recognising contrast"],
+      trapType: "Opposite meaning trap",
+      strategyTip:
+        "When a sentence says did not remove, avoid answers that claim elimination.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "E",
+    }),
+    q({
+      passageId: "p2",
+      type: "note-completion",
+      prompt: "Public summary problem: the assumption became almost ______.",
+      answer: "invisible",
+      acceptedAnswers: ["invisible"],
+      explanation:
+        "Paragraph B says the assumption became almost invisible in the public summary.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "In the public summary, however, the assumption became almost invisible.",
+      whyCorrect:
+        "The answer describes how the assumption appeared to readers.",
+      whyWrong:
+        "A wrong answer such as uncertain describes the economists' private view, not its public visibility.",
+      skill: "Understanding vocabulary in context",
+      secondarySkills: ["Recognising contrast"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "Track contrast between internal notes and public summaries.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p2",
+      type: "short-answer",
+      prompt: "What kind of table did the later report use?",
+      answer: "dependency table",
+      acceptedAnswers: ["dependency table", "a dependency table"],
+      explanation:
+        "Paragraph D says a later version of the report used a dependency table.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "A later version of the report used a dependency table.",
+      whyCorrect:
+        "The answer names the report feature introduced to improve communication.",
+      whyWrong:
+        "Sensitivity tests were already run; the new public tool was the dependency table.",
+      skill: "Locating explicit information",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Chronology trap",
+      strategyTip:
+        "Check whether the question asks about the original model or the later report.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p2",
+      type: "multiple-choice",
+      prompt: "What change did the dependency table produce in public debate?",
+      options: [
+        "It shifted debate toward the credibility of particular assumptions.",
+        "It persuaded critics to accept the model without further discussion.",
+        "It proved that regional rent data were no longer necessary.",
+        "It made the headline figure independent of landlord behaviour.",
+      ],
+      answer:
+        "It shifted debate toward the credibility of particular assumptions.",
+      explanation:
+        "Paragraph E says debate shifted from general trustworthiness to whether particular assumptions deserved confidence.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "Debate shifted from whether the model was trustworthy in general to whether particular assumptions deserved confidence.",
+      whyCorrect:
+        "The option preserves the more precise location of disagreement.",
+      whyWrong:
+        "The distractors either eliminate disagreement or make unsupported claims about data and independence.",
+      skill: "Making inference",
+      secondarySkills: ["Understanding main idea"],
+      trapType: "Overgeneralisation trap",
+      strategyTip:
+        "Look for what changed in the discussion, not whether the model became universally accepted.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "E",
+    }),
+  ],
+});
+
+const conservationTradeoffsTest = makeTest({
+  testId: "realism-band9-05",
+  title: "Corridors, Refuges and Conservation Risk",
+  description:
+    "A Band 8-9 IELTS Academic Reading mini test on ecological connectivity, managed relocation and conservation trade-offs.",
+  topic: "Ecology",
+  difficulty: "Band 8-9 Challenge",
+  targetBand: "Band 8.0-9.0",
+  timeLimitMinutes: 30,
+  subtopic: "Ecological complexity and conservation decisions",
+  passages: [
+    {
+      passageId: "p1",
+      title: "Corridors That Also Carry Risk",
+      topic: "Ecology",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        {
+          label: "A",
+          text:
+            "Habitat corridors are often described as ecological bridges, a metaphor that hides as much as it reveals. A bridge has a clear direction and a predictable user. A corridor through a fragmented forest may be used by seed-dispersing birds, invasive shrubs, fire, predators and illegal hunters, sometimes in the same season.",
+        },
+        {
+          label: "B",
+          text:
+            "In the Valea reserve, a narrow strip of restored woodland joined two older forest patches. Camera traps showed that pine marten crossings increased within a year. So did the movement of feral cats from nearby farms. The corridor had improved connectivity, but connectivity was not automatically conservation success.",
+        },
+        {
+          label: "C",
+          text:
+            "The research team resisted a simple before-and-after comparison. The corridor coincided with a wet spring, a fall in sheep grazing and a new ban on night driving. Any one of these could have affected animal movement. Rather than claiming a single cause, the team treated the corridor as one intervention inside a changing landscape.",
+        },
+        {
+          label: "D",
+          text:
+            "Local managers still valued the corridor because it changed where monitoring could occur. Tracks and droppings concentrated along the restored strip, making some species easier to detect. Yet this also distorted perception: animals that avoided the corridor became less visible to managers, not necessarily less present in the reserve.",
+        },
+        {
+          label: "E",
+          text:
+            "The Valea study suggests that conservation connectivity should be judged by consequences, not by movement alone. A corridor that moves genes, disease and disturbance is not simply good or bad. It is an ecological bargain whose value depends on which movements matter most for the threatened species in question.",
+        },
+      ],
+    },
+    {
+      passageId: "p2",
+      title: "When a Refuge Is Moved",
+      topic: "Conservation",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        {
+          label: "A",
+          text:
+            "As mountain temperatures rise, some conservation plans propose moving small populations uphill before the original habitat becomes unsuitable. The proposal is sometimes called assisted migration, though critics prefer the less comforting phrase managed displacement. Both terms describe the same action; neither settles whether it is wise.",
+        },
+        {
+          label: "B",
+          text:
+            "A trial involving the silver-edged alpine snail illustrates the difficulty. Biologists moved two hundred individuals to a cooler slope where the host moss already grew. Survival after the first winter was high, but reproduction was low because the moss dried earlier on the new slope than temperature records had predicted.",
+        },
+        {
+          label: "C",
+          text:
+            "Opponents of relocation argued that the trial showed the danger of acting on climate averages while neglecting microhabitat timing. Supporters replied that doing nothing was also an intervention, since the original slope was warming and grazing pressure had increased after a nearby pasture fence was removed.",
+        },
+        {
+          label: "D",
+          text:
+            "The monitoring report avoided declaring the trial a success or failure. It recommended a second release only if moss moisture, not just air temperature, could be tracked through the breeding period. The report also proposed leaving a marked group on the original slope, so decline there would not be hidden by attention to the new site.",
+        },
+        {
+          label: "E",
+          text:
+            "The ethical issue is therefore practical rather than abstract. Conservationists are not choosing between intervention and non-intervention, but between different ways of accepting responsibility for change. The hardest question is how much uncertainty is tolerable when delay has its own ecological cost.",
+        },
+      ],
+    },
+  ],
+  questions: [
+    q({
+      passageId: "p1",
+      type: "matching-headings",
+      groupTitle: "Choose the best heading for Paragraph A.",
+      prompt: "Paragraph A",
+      options: [
+        "A metaphor that oversimplifies ecological movement",
+        "A bridge designed for illegal hunting",
+        "A predictable route used by one forest species",
+        "A method for stopping invasive shrubs",
+      ],
+      answer: "A metaphor that oversimplifies ecological movement",
+      explanation:
+        "Paragraph A argues that the bridge metaphor hides the many different things that can move through a corridor.",
+      evidenceParagraph: "Paragraph A",
+      evidenceText:
+        "Habitat corridors are often described as ecological bridges, a metaphor that hides as much as it reveals.",
+      whyCorrect:
+        "The heading captures the paragraph's main critique of the metaphor.",
+      whyWrong:
+        "The wrong headings pick isolated details from the list or invent a single predictable user.",
+      skill: "Understanding main idea",
+      secondarySkills: ["Identifying paragraph function"],
+      trapType: "Distractor detail trap",
+      strategyTip:
+        "In Matching Headings, ask what the paragraph is doing with its examples.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "A",
+    }),
+    q({
+      passageId: "p1",
+      type: "multiple-choice",
+      prompt: "What did the Valea camera traps show?",
+      options: [
+        "Both pine marten crossings and feral cat movement increased.",
+        "Only threatened species used the restored corridor.",
+        "The corridor reduced all farm-related animal movement.",
+        "Connectivity had no measurable effect on monitoring.",
+      ],
+      answer: "Both pine marten crossings and feral cat movement increased.",
+      explanation:
+        "Paragraph B says pine marten crossings increased and so did feral cat movement.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "Pine marten crossings increased within a year. So did the movement of feral cats from nearby farms.",
+      whyCorrect:
+        "The answer preserves the mixed result: desired and undesired movement both rose.",
+      whyWrong:
+        "The distractors convert a mixed outcome into a purely positive, negative or irrelevant one.",
+      skill: "Understanding detail",
+      secondarySkills: ["Recognising contrast"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "When an IELTS option sounds neat, check whether the passage actually gives a mixed result.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p1",
+      type: "yes-no-not-given",
+      prompt: "The writer agrees that improved connectivity is automatically equivalent to conservation success.",
+      options: ["Yes", "No", "Not Given"],
+      answer: "No",
+      explanation:
+        "Paragraph B explicitly says connectivity was not automatically conservation success.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "The corridor had improved connectivity, but connectivity was not automatically conservation success.",
+      whyCorrect:
+        "The statement contradicts the writer's caution.",
+      whyWrong:
+        "A reader may equate connectivity with benefit, but the passage refuses that shortcut.",
+      skill: "Identifying writer's opinion",
+      secondarySkills: ["Avoiding overgeneralisation"],
+      trapType: "Overgeneralisation trap",
+      strategyTip:
+        "Watch for automatically; it often turns a conditional idea into an overclaim.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p1",
+      type: "sentence-completion",
+      prompt: "The research team treated the corridor as one intervention inside a changing ______.",
+      answer: "landscape",
+      acceptedAnswers: ["landscape"],
+      explanation:
+        "Paragraph C says the team treated the corridor as one intervention inside a changing landscape.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "The team treated the corridor as one intervention inside a changing landscape.",
+      whyCorrect:
+        "The answer completes the methodological caution.",
+      whyWrong:
+        "A wrong answer such as corridor repeats the intervention, not the wider setting.",
+      skill: "Recognising paraphrase",
+      secondarySkills: ["Understanding main idea"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "In completion tasks, check whether the missing word names the intervention or its context.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p1",
+      type: "matching-information",
+      groupTitle: "Match the information to the paragraph.",
+      prompt: "A monitoring advantage that also created a perception problem",
+      options: ["A", "B", "C", "D", "E"],
+      answer: "D",
+      explanation:
+        "Paragraph D says the corridor made some species easier to detect but made animals avoiding the corridor less visible.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "Tracks and droppings concentrated along the restored strip... animals that avoided the corridor became less visible to managers.",
+      whyCorrect:
+        "The paragraph contains both the monitoring benefit and the distortion.",
+      whyWrong:
+        "Paragraph B discusses movement outcomes, but not the monitoring-perception trade-off.",
+      skill: "Time-efficient scanning",
+      secondarySkills: ["Recognising contrast"],
+      trapType: "Wrong paragraph trap",
+      strategyTip:
+        "For Matching Information, find the paragraph that contains both halves of the information item.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p1",
+      type: "true-false-not-given",
+      prompt: "The research team claimed that the corridor alone caused the change in animal movement.",
+      options: ["True", "False", "Not Given"],
+      answer: "False",
+      explanation:
+        "Paragraph C says the team resisted a simple before-and-after comparison and did not claim a single cause.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "Rather than claiming a single cause, the team treated the corridor as one intervention inside a changing landscape.",
+      whyCorrect:
+        "The statement contradicts the team's cautious interpretation.",
+      whyWrong:
+        "The corridor was important, but the passage lists other simultaneous changes.",
+      skill: "Distinguishing fact from claim",
+      secondarySkills: ["Recognising cause and effect"],
+      trapType: "Cause-effect confusion",
+      strategyTip:
+        "Do not turn one intervention into the sole cause when several conditions changed.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p1",
+      type: "summary-completion",
+      prompt:
+        "The Valea study suggests that corridors should be evaluated by consequences rather than movement ______.",
+      answer: "alone",
+      acceptedAnswers: ["alone"],
+      explanation:
+        "Paragraph E says connectivity should be judged by consequences, not by movement alone.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "Conservation connectivity should be judged by consequences, not by movement alone.",
+      whyCorrect:
+        "The answer completes the contrast between movement and its consequences.",
+      whyWrong:
+        "A wrong answer such as genes names one movement, not the limiting word in the contrast.",
+      skill: "Understanding main idea",
+      secondarySkills: ["Recognising contrast"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "When a summary uses rather than, identify the rejected standard of judgement.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "E",
+    }),
+    q({
+      passageId: "p1",
+      type: "flow-chart-completion",
+      prompt: "Restored strip concentrates tracks -> managers detect some species more easily -> animals avoiding corridor become less ______.",
+      answer: "visible",
+      acceptedAnswers: ["visible"],
+      explanation:
+        "Paragraph D says animals that avoided the corridor became less visible to managers.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "Animals that avoided the corridor became less visible to managers.",
+      whyCorrect:
+        "The flow chart follows the monitoring effect from concentration of signs to reduced visibility of avoiders.",
+      whyWrong:
+        "A wrong answer such as present would misread visibility as actual abundance.",
+      skill: "Recognising cause and effect",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Assumption trap",
+      strategyTip:
+        "Distinguish detectability from actual presence.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p1",
+      type: "matching-sentence-endings",
+      groupTitle: "Choose the correct ending.",
+      prompt: "A corridor is described as an ecological bargain because",
+      options: [
+        "its value depends on which movements matter most.",
+        "it always benefits every threatened species equally.",
+        "it prevents disease and disturbance from moving.",
+        "it removes the need for species-specific evidence.",
+      ],
+      answer: "its value depends on which movements matter most.",
+      explanation:
+        "Paragraph E says a corridor's value depends on which movements matter most for the threatened species.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "Its value depends on which movements matter most for the threatened species in question.",
+      whyCorrect:
+        "The ending preserves the conditional and species-specific judgement.",
+      whyWrong:
+        "The wrong endings turn a bargain into an automatic benefit or deny the listed risks.",
+      skill: "Making inference",
+      secondarySkills: ["Understanding main idea"],
+      trapType: "Overgeneralisation trap",
+      strategyTip:
+        "For advanced sentence endings, preserve conditional language such as depends on.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "E",
+    }),
+    q({
+      passageId: "p1",
+      type: "short-answer",
+      prompt: "Which farm animal's grazing fell during the corridor study?",
+      answer: "sheep",
+      acceptedAnswers: ["sheep"],
+      explanation:
+        "Paragraph C lists a fall in sheep grazing among the simultaneous changes.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "The corridor coincided with a wet spring, a fall in sheep grazing and a new ban on night driving.",
+      whyCorrect:
+        "The answer names the grazing animal.",
+      whyWrong:
+        "Pine martens and feral cats are movement outcomes, not grazing animals.",
+      skill: "Locating explicit information",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Similar keyword trap",
+      strategyTip:
+        "For short answers, copy the exact noun linked to the question's verb.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p2",
+      type: "multiple-choice",
+      prompt: "Why does the writer mention two names for moving populations uphill?",
+      options: [
+        "To show that terminology can frame the same action differently",
+        "To prove that critics and supporters studied different species",
+        "To argue that assisted migration has already become universally accepted",
+        "To distinguish relocation from any form of managed conservation",
+      ],
+      answer: "To show that terminology can frame the same action differently",
+      explanation:
+        "Paragraph A says assisted migration and managed displacement describe the same action, but neither settles whether it is wise.",
+      evidenceParagraph: "Paragraph A",
+      evidenceText:
+        "Both terms describe the same action; neither settles whether it is wise.",
+      whyCorrect:
+        "The names reveal framing without resolving the judgement.",
+      whyWrong:
+        "The distractors invent different species, universal acceptance or a false distinction.",
+      skill: "Understanding vocabulary in context",
+      secondarySkills: ["Identifying writer's opinion"],
+      trapType: "Writer opinion confusion",
+      strategyTip:
+        "Notice when the writer compares labels to expose framing rather than define separate actions.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "A",
+    }),
+    q({
+      passageId: "p2",
+      type: "matching-features",
+      groupTitle: "Match each view with the group.",
+      prompt: "The trial shows the risk of relying on climate averages while missing microhabitat timing",
+      options: ["opponents of relocation", "supporters of relocation", "monitoring report", "local managers"],
+      answer: "opponents of relocation",
+      explanation:
+        "Paragraph C says opponents argued that the trial showed the danger of acting on climate averages while neglecting microhabitat timing.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "Opponents of relocation argued that the trial showed the danger of acting on climate averages while neglecting microhabitat timing.",
+      whyCorrect:
+        "The view is explicitly attributed to opponents.",
+      whyWrong:
+        "Supporters replied with a different argument about doing nothing also being an intervention.",
+      skill: "Locating explicit information",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Similar keyword trap",
+      strategyTip:
+        "For Matching Features, keep the argument attached to the group that makes it.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p2",
+      type: "yes-no-not-given",
+      prompt: "The writer suggests that doing nothing can itself be understood as an intervention.",
+      options: ["Yes", "No", "Not Given"],
+      answer: "Yes",
+      explanation:
+        "Paragraph C reports supporters saying doing nothing was also an intervention, and Paragraph E frames choices as different responsibilities for change.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "Supporters replied that doing nothing was also an intervention.",
+      whyCorrect:
+        "The statement agrees with a view the passage takes seriously in its ethical framing.",
+      whyWrong:
+        "A wrong answer may assume intervention only means physical relocation.",
+      skill: "Making inference",
+      secondarySkills: ["Identifying writer's opinion"],
+      trapType: "Assumption trap",
+      strategyTip:
+        "Advanced YNNG questions may require connecting a reported view with the writer's later framing.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p2",
+      type: "true-false-not-given",
+      prompt: "The snail trial showed high first-winter survival but low reproduction.",
+      options: ["True", "False", "Not Given"],
+      answer: "True",
+      explanation:
+        "Paragraph B says survival after the first winter was high, but reproduction was low.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "Survival after the first winter was high, but reproduction was low.",
+      whyCorrect:
+        "The statement matches the mixed outcome in the passage.",
+      whyWrong:
+        "A wrong answer may expect high survival to imply high reproduction, but the passage separates them.",
+      skill: "Understanding comparison",
+      secondarySkills: ["Recognising contrast"],
+      trapType: "Comparison confusion",
+      strategyTip:
+        "Keep two outcome measures separate, especially when joined by but.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p2",
+      type: "note-completion",
+      prompt: "Relocated species: silver-edged alpine ______.",
+      answer: "snail",
+      acceptedAnswers: ["snail"],
+      explanation:
+        "Paragraph B identifies the species as the silver-edged alpine snail.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "A trial involving the silver-edged alpine snail illustrates the difficulty.",
+      whyCorrect:
+        "The answer completes the species name.",
+      whyWrong:
+        "Moss is the host plant, not the relocated species.",
+      skill: "Locating explicit information",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Similar keyword trap",
+      strategyTip:
+        "For note completion, check whether the gap is part of a species name or habitat description.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p2",
+      type: "matching-information",
+      groupTitle: "Match the information to the paragraph.",
+      prompt: "A recommendation to monitor moisture through the breeding period",
+      options: ["A", "B", "C", "D", "E"],
+      answer: "D",
+      explanation:
+        "Paragraph D recommends a second release only if moss moisture can be tracked through the breeding period.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "It recommended a second release only if moss moisture, not just air temperature, could be tracked through the breeding period.",
+      whyCorrect:
+        "This paragraph gives the condition for any second release.",
+      whyWrong:
+        "Paragraph B reports the first trial outcome; Paragraph D gives the monitoring recommendation.",
+      skill: "Time-efficient scanning",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Wrong paragraph trap",
+      strategyTip:
+        "Scan for technical phrases such as breeding period when matching information.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p2",
+      type: "summary-completion",
+      prompt:
+        "The monitoring report proposed leaving a marked group on the ______ slope.",
+      answer: "original",
+      acceptedAnswers: ["original"],
+      explanation:
+        "Paragraph D says the report proposed leaving a marked group on the original slope.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "The report also proposed leaving a marked group on the original slope.",
+      whyCorrect:
+        "The answer identifies the comparison location that should remain monitored.",
+      whyWrong:
+        "A wrong answer such as new would reverse the comparison and hide decline at the old site.",
+      skill: "Understanding detail",
+      secondarySkills: ["Understanding comparison"],
+      trapType: "Opposite meaning trap",
+      strategyTip:
+        "In relocation passages, keep original and new sites distinct.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p2",
+      type: "flow-chart-completion",
+      prompt: "Snails moved uphill -> host moss present -> moss dries earlier -> reproduction remains ______.",
+      answer: "low",
+      acceptedAnswers: ["low"],
+      explanation:
+        "Paragraph B links early moss drying on the new slope with low reproduction.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "Reproduction was low because the moss dried earlier on the new slope than temperature records had predicted.",
+      whyCorrect:
+        "The answer completes the causal chain from microhabitat timing to reproductive outcome.",
+      whyWrong:
+        "High belongs to first-winter survival, not reproduction.",
+      skill: "Recognising cause and effect",
+      secondarySkills: ["Recognising contrast"],
+      trapType: "Cause-effect confusion",
+      strategyTip:
+        "Do not transfer the adjective from one outcome measure to another.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p2",
+      type: "diagram-label-completion",
+      groupTitle: "Text schematic: Relocation decision",
+      prompt: "Air temperature + moss moisture + original-slope group -> [label 19]",
+      answer: "second release decision",
+      acceptedAnswers: ["second release decision", "second release"],
+      explanation:
+        "Paragraph D says a second release should depend on moss moisture tracking and continued monitoring of the original slope.",
+      evidenceParagraph: "Paragraph D",
+      evidenceText:
+        "It recommended a second release only if moss moisture... could be tracked... The report also proposed leaving a marked group on the original slope.",
+      whyCorrect:
+        "The schematic combines the decision condition and comparison group.",
+      whyWrong:
+        "A wrong answer such as first winter survival uses an observed outcome rather than the future decision.",
+      skill: "Making inference",
+      secondarySkills: ["Following reference words"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "For text schematics, infer what the listed evidence sources are meant to support.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "D",
+    }),
+    q({
+      passageId: "p2",
+      type: "multiple-choice",
+      prompt: "What is the final ethical point of Passage 2?",
+      options: [
+        "Conservation choices involve different responsibilities under uncertainty.",
+        "Non-intervention avoids responsibility for ecological change.",
+        "Managed displacement is always wiser than assisted migration.",
+        "Temperature records alone can settle relocation decisions.",
+      ],
+      answer:
+        "Conservation choices involve different responsibilities under uncertainty.",
+      explanation:
+        "Paragraph E says conservationists choose between different ways of accepting responsibility for change and must judge tolerable uncertainty.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "Conservationists are not choosing between intervention and non-intervention, but between different ways of accepting responsibility for change.",
+      whyCorrect:
+        "The option captures the abstract ethical conclusion without reducing it to one policy answer.",
+      whyWrong:
+        "The distractors choose one side or one measurement and ignore the passage's uncertainty framing.",
+      skill: "Understanding main idea",
+      secondarySkills: ["Making inference"],
+      trapType: "Overgeneralisation trap",
+      strategyTip:
+        "For final-position MCQs, avoid options that settle a debate the passage deliberately leaves conditional.",
+      difficulty: "Band 8-9 Challenge",
+      paragraphRef: "E",
+    }),
+  ],
+});
+
+const portArchiveRepairTest = makeTest({
+  testId: "realism-repair-01",
+  title: "Mapping a Port's Hidden Work",
+  description:
+    "A weak-question-type repair mini test focused on Matching Headings, Matching Information and Matching Features inside a full Academic Reading test.",
+  topic: "Sociology",
+  difficulty: "Hard",
+  targetBand: "Band 7.0-8.0",
+  timeLimitMinutes: 30,
+  subtopic: "Labour history and port records",
+  passages: [
+    {
+      passageId: "p1",
+      title: "The Ledger Behind the Harbour Map",
+      topic: "Sociology",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        { label: "A", text: "The harbour map of Elwick shows cranes, warehouses and rail sidings, but not the temporary labour office that made the system work. Each morning, casual workers waited beside a brick arch while clerks copied names into a narrow ledger. The map presents infrastructure; the ledger records dependence." },
+        { label: "B", text: "For years, historians treated the ledger as a poor source because the spelling of names shifted and many entries lacked addresses. A newer reading treats those irregularities as evidence. Repeated misspellings show which workers were known by sight rather than by written identity." },
+        { label: "C", text: "The ledger also complicates the image of a purely male dock workforce. Women's names appear less often, but they cluster around tasks such as rope repair, food stalls and the cleaning of customs sheds. These entries are brief, yet they show that port labour extended beyond the loading line." },
+        { label: "D", text: "A second archive changes the picture again. Injury claims filed by workers' families describe night shifts, informal substitutions and unpaid waiting time. The claims were written to obtain compensation, so they cannot be read as neutral diaries. Still, they reveal costs that the harbour map cannot show." },
+        { label: "E", text: "The most persuasive account of Elwick now combines map, ledger and claim file. No single document captures the port's social organisation. Together, however, they show how a visible machine of trade rested on unstable, often invisible work." },
+      ],
+    },
+    {
+      passageId: "p2",
+      title: "Tokens, Gates and Informal Authority",
+      topic: "Sociology",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        { label: "A", text: "Entry tokens were introduced at Elwick in 1912 to reduce arguments at the labour office. In theory, each token gave one worker access to a shift. In practice, tokens circulated through families, boarding houses and favoured drinking rooms before dawn." },
+        { label: "B", text: "The harbour company described the system as fair because tokens were numbered. Workers described it as fair only when the foreman distributed tokens in public. The difference matters: one definition of fairness depended on procedure, the other on visibility." },
+        { label: "C", text: "Foremen gained influence from the gap between rule and practice. They could refuse a token that looked damaged, accept a substitute worker or delay a group until a ship's schedule became clearer. None of these actions broke the written rule, but each affected who earned money that day." },
+        { label: "D", text: "A reform committee later proposed metal identity badges to replace tokens. The badge scheme reduced resale, but it also excluded migrants whose papers had not yet been regularised. Reform removed one unfairness while hardening another." },
+        { label: "E", text: "The Elwick records therefore resist a simple story of progress from disorder to order. Administrative devices made labour easier to count, but not necessarily easier to treat justly. Their effects depended on who controlled the gate and who could prove they belonged there." },
+      ],
+    },
+  ],
+  questions: [
+    ...[
+      ["p1", "A", "A visible map and an invisible labour system", "The map presents infrastructure; the ledger records dependence."],
+      ["p1", "B", "Errors that become historical evidence", "Repeated misspellings show which workers were known by sight rather than by written identity."],
+      ["p1", "C", "Evidence that port work extended beyond loading", "Port labour extended beyond the loading line."],
+      ["p2", "B", "Two competing definitions of fairness", "One definition of fairness depended on procedure, the other on visibility."],
+      ["p2", "E", "Why administrative order did not guarantee justice", "Administrative devices made labour easier to count, but not necessarily easier to treat justly."],
+    ].map(([passageId, paragraphRef, answer, evidenceText]) =>
+      q({
+        passageId,
+        type: "matching-headings",
+        groupTitle: "Choose the best heading for the paragraph.",
+        prompt: `Paragraph ${paragraphRef}`,
+        options: [
+          "A visible map and an invisible labour system",
+          "Errors that become historical evidence",
+          "Evidence that port work extended beyond loading",
+          "Two competing definitions of fairness",
+          "Why administrative order did not guarantee justice",
+          "A complete replacement of informal authority",
+          "The disappearance of all casual port work",
+        ],
+        answer,
+        explanation:
+          "The correct heading captures the paragraph's main function rather than a single attractive detail.",
+        evidenceParagraph: `Paragraph ${paragraphRef}`,
+        evidenceText,
+        whyCorrect:
+          "The heading matches the paragraph-wide argument and preserves its qualification.",
+        whyWrong:
+          "Wrong headings borrow details from nearby paragraphs or overstate a limited claim into a total change.",
+        skill: "Understanding main idea",
+        secondarySkills: ["Identifying paragraph function"],
+        trapType: "Distractor detail trap",
+        strategyTip:
+          "Read the full paragraph before matching; headings should describe the whole move of the paragraph.",
+        difficulty: "Hard",
+        paragraphRef,
+      }),
+    ),
+    ...[
+      ["p1", "B", "Evidence that unstable spelling may itself be historically meaningful", "Repeated misspellings show which workers were known by sight rather than by written identity."],
+      ["p1", "D", "A source written for compensation rather than neutral description", "The claims were written to obtain compensation, so they cannot be read as neutral diaries."],
+      ["p2", "A", "A formal object that circulated informally before shifts began", "Tokens circulated through families, boarding houses and favoured drinking rooms before dawn."],
+      ["p2", "C", "Discretionary actions that shaped access without breaking the rule", "None of these actions broke the written rule, but each affected who earned money that day."],
+      ["p2", "D", "A reform that reduced resale while excluding some migrants", "The badge scheme reduced resale, but it also excluded migrants whose papers had not yet been regularised."],
+    ].map(([passageId, paragraphRef, prompt, evidenceText]) =>
+      q({
+        passageId,
+        type: "matching-information",
+        groupTitle: "Match the information to the paragraph.",
+        prompt,
+        options: ["A", "B", "C", "D", "E"],
+        answer: paragraphRef,
+        explanation:
+          "The answer is the paragraph that contains the full information item, not only a related keyword.",
+        evidenceParagraph: `Paragraph ${paragraphRef}`,
+        evidenceText,
+        whyCorrect:
+          "This paragraph contains the exact relationship described in the question.",
+        whyWrong:
+          "Other paragraphs share the port-labour topic but do not contain the full information item.",
+        skill: "Time-efficient scanning",
+        secondarySkills: ["Recognising paraphrase"],
+        trapType: "Wrong paragraph trap",
+        strategyTip:
+          "For Matching Information, confirm the whole information item before choosing a paragraph.",
+        difficulty: "Hard",
+        paragraphRef,
+      }),
+    ),
+    ...[
+      ["p1", "Filed injury claims describing informal substitutions", "workers' families", "Injury claims filed by workers' families describe night shifts, informal substitutions and unpaid waiting time."],
+      ["p2", "Could refuse damaged tokens or accept substitute workers", "foremen", "They could refuse a token that looked damaged, accept a substitute worker or delay a group."],
+      ["p2", "Proposed identity badges to replace tokens", "reform committee", "A reform committee later proposed metal identity badges to replace tokens."],
+      ["p2", "Defined fairness through public distribution", "workers", "Workers described it as fair only when the foreman distributed tokens in public."],
+    ].map(([passageId, prompt, answer, evidenceText]) =>
+      q({
+        passageId,
+        type: "matching-features",
+        groupTitle: "Match each action or view with the correct group.",
+        prompt,
+        options: ["clerks", "workers", "workers' families", "foremen", "reform committee", "harbour company"],
+        answer,
+        explanation:
+          "The correct feature is the actor explicitly connected to the action or view in the passage.",
+        evidenceParagraph: passageId === "p1" ? "Paragraph D" : answer === "reform committee" ? "Paragraph D" : answer === "workers" ? "Paragraph B" : "Paragraph C",
+        evidenceText,
+        whyCorrect:
+          "The action is attached to this group in the evidence sentence.",
+        whyWrong:
+          "Wrong features are plausible port actors but are linked to different roles.",
+        skill: "Locating explicit information",
+        secondarySkills: ["Understanding detail"],
+        trapType: "Similar keyword trap",
+        strategyTip:
+          "For Matching Features, track actor-action links, not just the general topic.",
+        difficulty: "Hard",
+      }),
+    ),
+    ...[
+      ["What did the harbour map fail to show?", "temporary labour office", "The harbour map of Elwick shows cranes, warehouses and rail sidings, but not the temporary labour office."],
+      ["What scheme reduced resale?", "badge scheme", "The badge scheme reduced resale, but it also excluded migrants."],
+    ].map(([prompt, answer, evidenceText]) =>
+      q({
+        passageId: prompt.includes("scheme") ? "p2" : "p1",
+        type: "short-answer",
+        prompt,
+        answer,
+        acceptedAnswers: [answer],
+        explanation:
+          "The answer is a precise noun phrase directly named in the evidence.",
+        evidenceParagraph: prompt.includes("scheme") ? "Paragraph D" : "Paragraph A",
+        evidenceText,
+        whyCorrect:
+          "The answer matches the object or scheme named by the passage.",
+        whyWrong:
+          "A wrong answer usually copies a nearby institution rather than the requested object.",
+        skill: "Locating explicit information",
+        secondarySkills: ["Understanding detail"],
+        trapType: "Similar keyword trap",
+        strategyTip:
+          "For short answers, identify the exact noun phrase requested by the question.",
+        difficulty: "Hard",
+      }),
+    ),
+    q({
+      passageId: "p2",
+      type: "flow-chart-completion",
+      prompt: "Tokens introduced -> tokens circulate informally -> foremen control damaged or substitute tokens -> access remains partly ______.",
+      answer: "discretionary",
+      acceptedAnswers: ["discretionary", "informal"],
+      explanation:
+        "The flow chart summarises how formal tokens still left room for foremen's discretionary control.",
+      evidenceParagraph: "Paragraph C",
+      evidenceText:
+        "Foremen gained influence from the gap between rule and practice.",
+      whyCorrect:
+        "The answer captures the remaining informal control inside the formal system.",
+      whyWrong:
+        "A wrong answer such as numbered describes the formal token system, not the access outcome.",
+      skill: "Recognising cause and effect",
+      secondarySkills: ["Making inference"],
+      trapType: "Cause-effect confusion",
+      strategyTip:
+        "For flow charts, infer the state produced by the sequence rather than repeating the first step.",
+      difficulty: "Hard",
+      paragraphRef: "C",
+    }),
+    q({
+      passageId: "p2",
+      type: "diagram-label-completion",
+      groupTitle: "Text schematic: Gate authority",
+      prompt: "Written token rule + foreman's public distribution + proof of identity -> [label 18]",
+      answer: "access to work",
+      acceptedAnswers: ["access to work", "work access"],
+      explanation:
+        "The schematic combines the formal rule, public visibility and proof of belonging that determined who could work.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "Their effects depended on who controlled the gate and who could prove they belonged there.",
+      whyCorrect:
+        "The label names the practical outcome controlled by these conditions.",
+      whyWrong:
+        "A wrong answer such as resale focuses on one problem rather than the broader gate outcome.",
+      skill: "Making inference",
+      secondarySkills: ["Following reference words"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "For text schematics, ask what the combined factors control.",
+      difficulty: "Hard",
+      paragraphRef: "E",
+    }),
+    ...[
+      ["What is the main argument of Passage 1?", "The port's social organisation is best understood by combining different imperfect records.", "The most persuasive account of Elwick now combines map, ledger and claim file."],
+      ["Why is the badge reform presented as ambiguous?", "It reduced one unfairness while making another exclusion stronger.", "Reform removed one unfairness while hardening another."],
+    ].map(([prompt, answer, evidenceText], index) =>
+      q({
+        passageId: index === 0 ? "p1" : "p2",
+        type: "multiple-choice",
+        prompt,
+        options: [
+          answer,
+          "Administrative records always provide a complete and neutral account.",
+          "Informal labour systems disappeared as soon as written rules were introduced.",
+          "Maps are more reliable than all written records of labour.",
+        ],
+        answer,
+        explanation:
+          "The correct option preserves the passage's qualified argument; the distractors turn partial evidence into simplistic certainty.",
+        evidenceParagraph: index === 0 ? "Paragraph E" : "Paragraph D",
+        evidenceText,
+        whyCorrect:
+          "The option reflects the passage-wide conclusion without overstating it.",
+        whyWrong:
+          "The wrong options sound administratively plausible but contradict the text's emphasis on partial records and mixed reforms.",
+        skill: "Understanding main idea",
+        secondarySkills: ["Making inference"],
+        trapType: "Overgeneralisation trap",
+        strategyTip:
+          "Reject MCQ options that erase the passage's ambiguity.",
+        difficulty: "Hard",
+      }),
+    ),
+  ],
+});
+
+const floodGateRepairTest = makeTest({
+  testId: "realism-repair-02",
+  title: "From Sensors to Flood Gates",
+  description:
+    "A weak-question-type repair mini test focused on Flow-chart Completion, Diagram Label Completion and plausible MCQ distractors.",
+  topic: "Smart Cities",
+  difficulty: "Hard",
+  targetBand: "Band 7.0-8.0",
+  timeLimitMinutes: 30,
+  subtopic: "Urban flood sensing and public infrastructure",
+  passages: [
+    {
+      passageId: "p1",
+      title: "The Gate That Waited",
+      topic: "Smart Cities",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        { label: "A", text: "The eastern flood gate in Morven is not opened whenever rain begins. Sensors first compare canal level, tide height and predicted runoff from two steep streets. If the tide is already high, opening the gate can push water back through basement drains." },
+        { label: "B", text: "The first version of the control system responded too quickly. It opened the gate after short bursts of rain, then closed it again when the tide rose. Residents saw movement but not protection, and several assumed the gate was faulty." },
+        { label: "C", text: "Engineers revised the sequence. The system now waits for a ten-minute trend, checks whether tide height is still rising, and sends an alert to a human operator before moving the gate. The delay is deliberate, not a sign of indecision." },
+        { label: "D", text: "A public display beside the canal shows only three colours: watch, hold and release. It does not show the full calculation because officials feared that too much technical detail would reduce trust rather than increase it." },
+        { label: "E", text: "The Morven gate illustrates a broader problem in smart-city design. A system may be technically responsive while appearing hesitant to the public. Designers therefore need to explain not only what the system does, but why waiting can sometimes be the safer action." },
+      ],
+    },
+    {
+      passageId: "p2",
+      title: "Who Reads the Warning?",
+      topic: "Public Health",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        { label: "A", text: "Flood warnings in Morven are sent by phone alert, radio bulletin and signs at three bus stops. The bus-stop signs were added after interviews showed that older residents often checked the street before checking their phones." },
+        { label: "B", text: "The alert wording was also changed. The original message said 'gate release possible', a phrase engineers understood but residents found vague. The revised message said 'avoid canal-side basements for the next hour'." },
+        { label: "C", text: "Not every group received the warning equally. Delivery drivers often entered the canal district from a road without signs. The city later placed a portable display at the freight entrance, but only during months when tide levels were historically highest." },
+        { label: "D", text: "Officials measured warning success by the number of people who changed route, not by the number who received the message. This was controversial: a widely received warning that changes no behaviour may be less useful than a narrower warning that reaches people at the right decision point." },
+        { label: "E", text: "The evaluation concluded that flood communication is part of the infrastructure. Gates and sensors reduce risk only when people understand which action is being asked of them at the moment when that action still matters." },
+      ],
+    },
+  ],
+  questions: [
+    ...[
+      ["p1", "Rain starts -> sensors compare canal level, tide height and ______.", "predicted runoff", "Sensors first compare canal level, tide height and predicted runoff from two steep streets.", "A"],
+      ["p1", "Short rain burst -> old system opens gate -> rising tide forces gate to ______ again.", "close", "It opened the gate after short bursts of rain, then closed it again when the tide rose.", "B"],
+      ["p1", "New system waits for ten-minute trend -> checks tide direction -> alerts human operator -> gate ______.", "moves", "Sends an alert to a human operator before moving the gate.", "C"],
+      ["p2", "Phone alert + radio bulletin + bus-stop signs -> warning reaches residents before they choose a ______.", "route", "Officials measured warning success by the number of people who changed route.", "D"],
+    ].map(([passageId, prompt, answer, evidenceText, paragraphRef]) =>
+      q({
+        passageId,
+        type: "flow-chart-completion",
+        prompt,
+        answer,
+        acceptedAnswers: [answer],
+        explanation:
+          "The flow-chart answer follows the actual sequence described in the passage.",
+        evidenceParagraph: `Paragraph ${paragraphRef}`,
+        evidenceText,
+        whyCorrect:
+          "The answer completes the next step or outcome in the process.",
+        whyWrong:
+          "A wrong answer usually repeats an earlier step or chooses a technically related but wrongly sequenced detail.",
+        skill: "Recognising cause and effect",
+        secondarySkills: ["Understanding detail"],
+        trapType: "Chronology trap",
+        strategyTip:
+          "For flow-chart completion, follow the sequence rather than scanning for any related technical word.",
+        difficulty: "Hard",
+        paragraphRef,
+      }),
+    ),
+    ...[
+      ["p1", "Text schematic: Gate decision", "Canal level + tide height + predicted runoff + human alert -> [label 5]", "gate movement", "Sends an alert to a human operator before moving the gate.", "C"],
+      ["p1", "Text schematic: Public display", "watch / hold / release -> [label 6]", "simplified status", "A public display beside the canal shows only three colours: watch, hold and release.", "D"],
+      ["p2", "Text schematic: Warning channels", "phone + radio + bus-stop signs -> [label 7]", "flood warnings", "Flood warnings in Morven are sent by phone alert, radio bulletin and signs at three bus stops.", "A"],
+    ].map(([passageId, groupTitle, prompt, answer, evidenceText, paragraphRef]) =>
+      q({
+        passageId,
+        type: "diagram-label-completion",
+        groupTitle,
+        prompt,
+        answer,
+        acceptedAnswers: [answer],
+        explanation:
+          "The text schematic condenses the process or display described in the evidence.",
+        evidenceParagraph: `Paragraph ${paragraphRef}`,
+        evidenceText,
+        whyCorrect:
+          "The label names the function of the connected elements.",
+        whyWrong:
+          "Wrong labels focus on one component rather than the relationship shown in the schematic.",
+        skill: "Making inference",
+        secondarySkills: ["Following reference words"],
+        trapType: "Partial match trap",
+        strategyTip:
+          "Read a text schematic as a relationship between parts, not as a list of isolated nouns.",
+        difficulty: "Hard",
+        paragraphRef,
+      }),
+    ),
+    ...[
+      ["Why can opening the gate during high tide be dangerous?", "It can push water back through basement drains.", "If the tide is already high, opening the gate can push water back through basement drains.", "p1", "A"],
+      ["Why did residents think the first control system was faulty?", "They saw the gate move without seeing protection.", "Residents saw movement but not protection, and several assumed the gate was faulty.", "p1", "B"],
+      ["Why did officials avoid showing the full calculation?", "They feared too much technical detail would reduce trust.", "Officials feared that too much technical detail would reduce trust rather than increase it.", "p1", "D"],
+      ["Why were bus-stop signs added?", "Older residents often checked the street before checking their phones.", "Older residents often checked the street before checking their phones.", "p2", "A"],
+      ["Why was the original alert wording replaced?", "Residents found the phrase vague.", "The original message said 'gate release possible', a phrase engineers understood but residents found vague.", "p2", "B"],
+    ].map(([prompt, answer, evidenceText, passageId, paragraphRef], index) =>
+      q({
+        passageId,
+        type: "multiple-choice",
+        prompt,
+        options: [
+          index % 4 === 0 ? answer : "The gate was designed to ignore tide levels.",
+          index % 4 === 1 ? answer : "Officials wanted to remove all human operators.",
+          index % 4 === 2 ? answer : "Residents had already stopped using phones.",
+          index % 4 === 3 ? answer : "The system had no public display at all.",
+        ],
+        answer,
+        explanation:
+          "The correct option gives the passage's specific causal reason; the distractors are plausible civic-design concerns but unsupported here.",
+        evidenceParagraph: `Paragraph ${paragraphRef}`,
+        evidenceText,
+        whyCorrect:
+          "The answer preserves the reason given in the passage.",
+        whyWrong:
+          "The wrong answers distort the cause or import an unsupported policy intention.",
+        skill: "Recognising cause and effect",
+        secondarySkills: ["Understanding detail"],
+        trapType: "Cause-effect confusion",
+        strategyTip:
+          "For MCQs asking why, choose the reason stated or implied by the passage, not a generally plausible reason.",
+        difficulty: "Hard",
+        paragraphRef,
+      }),
+    ),
+    ...[
+      ["p1", "D", "A simplified display that hides the full calculation", "It does not show the full calculation."],
+      ["p2", "C", "A group entering through a route without warning signs", "Delivery drivers often entered the canal district from a road without signs."],
+      ["p2", "D", "A controversial measure of warning success", "Officials measured warning success by the number of people who changed route, not by the number who received the message."],
+    ].map(([passageId, paragraphRef, prompt, evidenceText]) =>
+      q({
+        passageId,
+        type: "matching-information",
+        groupTitle: "Match the information to the paragraph.",
+        prompt,
+        options: ["A", "B", "C", "D", "E"],
+        answer: paragraphRef,
+        explanation:
+          "The answer is the paragraph containing the full paraphrased information.",
+        evidenceParagraph: `Paragraph ${paragraphRef}`,
+        evidenceText,
+        whyCorrect:
+          "The paragraph contains the precise issue named in the question.",
+        whyWrong:
+          "Other paragraphs are about the same flood system but not this specific issue.",
+        skill: "Time-efficient scanning",
+        secondarySkills: ["Recognising paraphrase"],
+        trapType: "Wrong paragraph trap",
+        strategyTip:
+          "Scan for distinctive terms, then confirm the whole information item.",
+        difficulty: "Hard",
+        paragraphRef,
+      }),
+    ),
+    ...[
+      ["The revised warning asked residents to avoid canal-side basements for the next hour.", "True", "The revised message said 'avoid canal-side basements for the next hour'.", "p2", "B"],
+      ["The city used portable displays at the freight entrance throughout the entire year.", "False", "The city later placed a portable display at the freight entrance, but only during months when tide levels were historically highest.", "p2", "C"],
+      ["The gate opens automatically whenever rain begins.", "False", "The eastern flood gate in Morven is not opened whenever rain begins.", "p1", "A"],
+      ["The passage gives the exact cost of installing the bus-stop signs.", "Not Given", "The passage explains why bus-stop signs were added, but does not state their cost.", "p2", "A"],
+    ].map(([prompt, answer, evidenceText, passageId, paragraphRef]) =>
+      q({
+        passageId,
+        type: "true-false-not-given",
+        prompt,
+        options: ["True", "False", "Not Given"],
+        answer,
+        explanation:
+          "The answer depends on comparing the exact claim with the evidence, including limits such as only and whenever.",
+        evidenceParagraph: answer === "Not Given" ? "No confirming evidence" : `Paragraph ${paragraphRef}`,
+        evidenceText,
+        whyCorrect:
+          "The statement either matches, contradicts, or lacks support in the passage.",
+        whyWrong:
+          "Wrong choices usually come from treating a limited claim as universal or inferring a detail not supplied.",
+        skill: "Understanding detail",
+        secondarySkills: ["Avoiding overgeneralisation"],
+        trapType: answer === "Not Given" ? "Not Given trap" : "Extreme wording trap",
+        strategyTip:
+          "Check limiting words before choosing True, False or Not Given.",
+        difficulty: "Hard",
+        paragraphRef: answer === "Not Given" ? undefined : paragraphRef,
+      }),
+    ),
+    q({
+      passageId: "p2",
+      type: "summary-completion",
+      prompt: "The evaluation treated flood communication as part of the ______.",
+      answer: "infrastructure",
+      acceptedAnswers: ["infrastructure"],
+      explanation:
+        "Paragraph E states that flood communication is part of the infrastructure.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "The evaluation concluded that flood communication is part of the infrastructure.",
+      whyCorrect:
+        "The answer names the broader system that communication belongs to.",
+      whyWrong:
+        "A wrong answer such as warning is too narrow; the passage makes communication infrastructural.",
+      skill: "Understanding main idea",
+      secondarySkills: ["Recognising paraphrase"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "Look for the noun after 'part of' when a summary asks for a category.",
+      difficulty: "Hard",
+      paragraphRef: "E",
+    }),
+  ],
+});
+
+const manuscriptMarginsRepairTest = makeTest({
+  testId: "realism-repair-03",
+  title: "The Manuscript's Moving Margins",
+  description:
+    "A weak-question-type repair mini test using strong Matching Headings, Matching Features, Matching Information and plausible MCQ options.",
+  topic: "Linguistics",
+  difficulty: "Hard",
+  targetBand: "Band 7.0-8.0",
+  timeLimitMinutes: 30,
+  subtopic: "Manuscript annotation and language change",
+  passages: [
+    {
+      passageId: "p1",
+      title: "Notes That Became Text",
+      topic: "Linguistics",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        { label: "A", text: "A coastal grammar manuscript from 1734 contains two kinds of writing: a neat central text and rougher notes in the margin. Earlier editors ignored the margin, assuming it was a teacher's private reminder. A recent edition argues that some marginal notes record spoken alternatives that later entered the dialect." },
+        { label: "B", text: "The strongest evidence is not the notes alone but their position. Several are placed beside rules that the central text presents as settled. The margin does not merely add examples; it questions whether the rule was already changing in everyday speech." },
+        { label: "C", text: "One note replaces a formal plural ending with a shorter spoken form. The change appears minor until it is compared with sailors' letters from the same port, where the shorter form appears in hurried descriptions of cargo and weather." },
+        { label: "D", text: "A second note is more ambiguous. It may record a child's error, a regional form or a copyist's experiment. The editor keeps it in the edition but refuses to count it as evidence of language change without supporting examples." },
+        { label: "E", text: "The manuscript therefore matters because it catches uncertainty in motion. It is not a clean record of a completed shift. It shows formal grammar, spoken practice and editorial hesitation occupying the same page." },
+      ],
+    },
+    {
+      passageId: "p2",
+      title: "Who Changed the Spelling?",
+      topic: "History of Science",
+      sourceNote: "Original IELTS-style practice passage created for this app.",
+      paragraphs: [
+        { label: "A", text: "The same manuscript passed through at least three hands. The schoolmaster wrote the central grammar, a pupil added examples in brown ink, and a later collector added shelf marks in pencil. Confusing these hands can turn a cataloguing note into false linguistic evidence." },
+        { label: "B", text: "Ink analysis helped separate the layers. The brown ink contained more iron than the schoolmaster's ink, while the pencil marks sat above later dust stains. The test did not date the words precisely, but it prevented all annotations from being treated as one event." },
+        { label: "C", text: "The pupil's examples are valuable because they are inconsistent. Sometimes they copy the central rule; sometimes they write the shorter spoken form. That inconsistency suggests learning in progress rather than careless copying." },
+        { label: "D", text: "The collector's shelf marks are linguistically useless but historically useful. They show when the manuscript entered a private library and why one page was repaired with stiff paper. That repair accidentally covered two marginal notes until conservation work lifted the edge." },
+        { label: "E", text: "The revised catalogue now separates grammatical evidence, ownership evidence and conservation evidence. The categories overlap on the page, but they should not be collapsed in interpretation. A manuscript can be one object and several kinds of evidence at once." },
+      ],
+    },
+  ],
+  questions: [
+    ...[
+      ["p1", "A", "A neglected margin reconsidered as linguistic evidence", "A recent edition argues that some marginal notes record spoken alternatives that later entered the dialect."],
+      ["p1", "B", "Why the placement of notes changes their significance", "The strongest evidence is not the notes alone but their position."],
+      ["p1", "D", "An ambiguous note kept out of the main evidence count", "The editor keeps it in the edition but refuses to count it as evidence of language change without supporting examples."],
+      ["p1", "E", "A page showing grammar change before it is settled", "It shows formal grammar, spoken practice and editorial hesitation occupying the same page."],
+      ["p2", "E", "Separate evidence categories within one object", "A manuscript can be one object and several kinds of evidence at once."],
+    ].map(([passageId, paragraphRef, answer, evidenceText]) =>
+      q({
+        passageId,
+        type: "matching-headings",
+        groupTitle: "Choose the best heading for the paragraph.",
+        prompt: `Paragraph ${paragraphRef}`,
+        options: [
+          "A neglected margin reconsidered as linguistic evidence",
+          "Why the placement of notes changes their significance",
+          "An ambiguous note kept out of the main evidence count",
+          "A page showing grammar change before it is settled",
+          "Separate evidence categories within one object",
+          "A final proof that all marginal notes are spoken forms",
+          "A collector's attempt to rewrite the central grammar",
+        ],
+        answer,
+        explanation:
+          "The heading reflects the paragraph's role in the argument, not merely a term that appears there.",
+        evidenceParagraph: `Paragraph ${paragraphRef}`,
+        evidenceText,
+        whyCorrect:
+          "The heading captures the main interpretive move of the paragraph.",
+        whyWrong:
+          "Wrong headings exaggerate the evidence or attach a role to the wrong hand.",
+        skill: "Understanding main idea",
+        secondarySkills: ["Identifying paragraph function"],
+        trapType: "Partial match trap",
+        strategyTip:
+          "For Matching Headings, choose the option that explains what the paragraph contributes.",
+        difficulty: "Hard",
+        paragraphRef,
+      }),
+    ),
+    ...[
+      ["p2", "Wrote the central grammar", "schoolmaster", "The schoolmaster wrote the central grammar."],
+      ["p2", "Added examples in brown ink", "pupil", "A pupil added examples in brown ink."],
+      ["p2", "Added shelf marks in pencil", "later collector", "A later collector added shelf marks in pencil."],
+      ["p1", "Refuses to count one note as evidence without support", "editor", "The editor keeps it in the edition but refuses to count it as evidence of language change without supporting examples."],
+    ].map(([passageId, prompt, answer, evidenceText]) =>
+      q({
+        passageId,
+        type: "matching-features",
+        groupTitle: "Match each action with the correct person.",
+        prompt,
+        options: ["schoolmaster", "pupil", "later collector", "editor", "sailors"],
+        answer,
+        explanation:
+          "The correct option is the person explicitly linked to the action in the passage.",
+        evidenceParagraph: passageId === "p1" ? "Paragraph D" : "Paragraph A",
+        evidenceText,
+        whyCorrect:
+          "The actor-action link is stated directly.",
+        whyWrong:
+          "The other people are real within the passage but perform different roles.",
+        skill: "Locating explicit information",
+        secondarySkills: ["Understanding detail"],
+        trapType: "Similar keyword trap",
+        strategyTip:
+          "For Matching Features, keep each hand or person separate.",
+        difficulty: "Hard",
+      }),
+    ),
+    ...[
+      ["p1", "A comparison source where shorter forms appear in hurried writing", "Sailors' letters from the same port, where the shorter form appears in hurried descriptions of cargo and weather.", "C"],
+      ["p2", "A test that separated annotation layers without dating words precisely", "Ink analysis helped separate the layers... The test did not date the words precisely.", "B"],
+      ["p2", "A repair that hid marginal notes until conservation work", "One page was repaired with stiff paper. That repair accidentally covered two marginal notes.", "D"],
+    ].map(([passageId, prompt, evidenceText, paragraphRef]) =>
+      q({
+        passageId,
+        type: "matching-information",
+        groupTitle: "Match the information to the paragraph.",
+        prompt,
+        options: ["A", "B", "C", "D", "E"],
+        answer: paragraphRef,
+        explanation:
+          "The paragraph contains the complete paraphrased information, not just a related manuscript term.",
+        evidenceParagraph: `Paragraph ${paragraphRef}`,
+        evidenceText,
+        whyCorrect:
+          "The evidence sentence supplies the key source or method described.",
+        whyWrong:
+          "Other paragraphs mention annotation, but not the same source-method relationship.",
+        skill: "Time-efficient scanning",
+        secondarySkills: ["Recognising paraphrase"],
+        trapType: "Wrong paragraph trap",
+        strategyTip:
+          "Use distinctive nouns such as sailors, ink analysis or stiff paper as scanning anchors.",
+        difficulty: "Hard",
+        paragraphRef,
+      }),
+    ),
+    ...[
+      ["The manuscript from 1734 contains a neat central text and rougher notes in the margin.", "True", "A coastal grammar manuscript from 1734 contains two kinds of writing: a neat central text and rougher notes in the margin.", "p1", "A"],
+      ["Ink analysis precisely dated every word in the manuscript.", "False", "The test did not date the words precisely.", "p2", "B"],
+      ["The passage states the exact name of the private collector.", "Not Given", "The passage mentions a later collector but does not give the person's name.", "p2", "A"],
+    ].map(([prompt, answer, evidenceText, passageId, paragraphRef]) =>
+      q({
+        passageId,
+        type: "true-false-not-given",
+        prompt,
+        options: ["True", "False", "Not Given"],
+        answer,
+        explanation:
+          "The answer depends on exact comparison with the passage, especially whether a detail is supplied or merely implied.",
+        evidenceParagraph: answer === "Not Given" ? "No confirming evidence" : `Paragraph ${paragraphRef}`,
+        evidenceText,
+        whyCorrect:
+          "The statement is either supported, contradicted or not supplied by the text.",
+        whyWrong:
+          "Wrong choices usually come from adding precision that the passage does not provide.",
+        skill: "Understanding detail",
+        secondarySkills: ["Distinguishing fact from claim"],
+        trapType: answer === "Not Given" ? "Not Given trap" : "Extreme wording trap",
+        strategyTip:
+          "For TFNG, do not infer exact names or dates beyond the passage.",
+        difficulty: "Hard",
+        paragraphRef: answer === "Not Given" ? undefined : paragraphRef,
+      }),
+    ),
+    ...[
+      ["Why is the position of marginal notes important?", "It shows they may question settled rules rather than simply add examples.", "The margin does not merely add examples; it questions whether the rule was already changing in everyday speech.", "p1", "B"],
+      ["Why are the pupil's examples described as valuable?", "Their inconsistency suggests learning in progress.", "That inconsistency suggests learning in progress rather than careless copying.", "p2", "C"],
+      ["What is the main claim of Passage 2?", "Different layers of the manuscript must be separated before interpretation.", "The categories overlap on the page, but they should not be collapsed in interpretation.", "p2", "E"],
+    ].map(([prompt, answer, evidenceText, passageId, paragraphRef], index) =>
+      q({
+        passageId,
+        type: "multiple-choice",
+        prompt,
+        options: [
+          index === 0 ? answer : "Every marginal note is reliable proof of dialect change.",
+          index === 1 ? answer : "The collector's pencil marks are the main grammatical evidence.",
+          index === 2 ? answer : "The manuscript should be interpreted as one undifferentiated event.",
+          "Sailors' letters make manuscript evidence unnecessary.",
+        ],
+        answer,
+        explanation:
+          "The correct option keeps the passage's evidential caution; the distractors flatten layers or exaggerate one source.",
+        evidenceParagraph: `Paragraph ${paragraphRef}`,
+        evidenceText,
+        whyCorrect:
+          "The answer matches the interpretive reason given in the passage.",
+        whyWrong:
+          "The wrong options are tempting because they use real terms but ignore the passage's limits.",
+        skill: "Making inference",
+        secondarySkills: ["Understanding main idea"],
+        trapType: "Overgeneralisation trap",
+        strategyTip:
+          "In evidence-history passages, avoid options that collapse distinct layers into one simple conclusion.",
+        difficulty: "Hard",
+        paragraphRef,
+      }),
+    ),
+    q({
+      passageId: "p2",
+      type: "flow-chart-completion",
+      prompt: "Ink analysis separates layers -> annotations are not treated as one ______.",
+      answer: "event",
+      acceptedAnswers: ["event", "one event"],
+      explanation:
+        "Paragraph B says ink analysis prevented all annotations from being treated as one event.",
+      evidenceParagraph: "Paragraph B",
+      evidenceText:
+        "It prevented all annotations from being treated as one event.",
+      whyCorrect:
+        "The answer completes the methodological outcome of separating layers.",
+      whyWrong:
+        "A wrong answer such as word refers to dating precision, not the interpretive grouping.",
+      skill: "Recognising cause and effect",
+      secondarySkills: ["Understanding detail"],
+      trapType: "Cause-effect confusion",
+      strategyTip:
+        "For flow charts, identify what the method prevents or enables.",
+      difficulty: "Hard",
+      paragraphRef: "B",
+    }),
+    q({
+      passageId: "p2",
+      type: "diagram-label-completion",
+      groupTitle: "Text schematic: Manuscript evidence layers",
+      prompt: "central grammar + pupil examples + collector marks + conservation repair -> [label 20]",
+      answer: "several kinds of evidence",
+      acceptedAnswers: ["several kinds of evidence", "different evidence categories"],
+      explanation:
+        "The schematic compresses Paragraph E's claim that one manuscript can contain several evidence categories.",
+      evidenceParagraph: "Paragraph E",
+      evidenceText:
+        "A manuscript can be one object and several kinds of evidence at once.",
+      whyCorrect:
+        "The label names the interpretive result of separating the layers.",
+      whyWrong:
+        "A wrong answer such as one event contradicts the passage's warning.",
+      skill: "Making inference",
+      secondarySkills: ["Following reference words"],
+      trapType: "Partial match trap",
+      strategyTip:
+        "For diagram labels, ask what the combined parts represent in the argument.",
+      difficulty: "Hard",
+      paragraphRef: "E",
+    }),
+  ],
+});
+
 export const readingTests: ReadingTest[] = [
   urbanHeatTest,
   pigmentTest,
@@ -5330,6 +7765,12 @@ export const readingTests: ReadingTest[] = [
   museumSeedsTest,
   schoolTimetableTest,
   gestureGrammarTest,
+  memoryReconstructionTest,
+  modelUncertaintyTest,
+  conservationTradeoffsTest,
+  portArchiveRepairTest,
+  floodGateRepairTest,
+  manuscriptMarginsRepairTest,
 ];
 
 export function getTestById(testId: string): ReadingTest | undefined {
